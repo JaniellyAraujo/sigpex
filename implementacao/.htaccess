@@ -1,0 +1,81 @@
+#RewriteEngine On
+
+# End the processing, if a rewrite already occurred
+#RewriteRule ^(app)/web/ - [L]
+
+# Handle the case of backend, skip ([S=1]) the following rule, if current matched
+# RewriteRule ^app(/(.*))?$ app/web/$2 [S=1]
+
+# handle the case of frontend
+#RewriteRule .* app/web/$0
+
+# Uncomment the following, if you want speaking URL
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule ^([^/]+/web)/.*$ $1/index.php
+
+
+
+
+# Set document root to be "basic/web"
+#DocumentRoot "path/to/basic/web"
+
+#<Directory "path/to/basic/web">
+    # use mod_rewrite for pretty URL support
+    #RewriteEngine on
+    # If a directory or a file exists, use the request directly
+    #RewriteCond %{REQUEST_FILENAME} !-f
+    #RewriteCond %{REQUEST_FILENAME} !-d
+    # Otherwise forward the request to index.php
+    #RewriteRule . index.php
+
+    # if $showScriptName is false in UrlManager, do not allow accessing URLs with script name
+    #RewriteRule ^index.php/ - [L,R=404]
+
+    # ...other settings...
+#</Directory>
+
+# ----------------------------------------------------------------------
+# Adds some security for the Apache server configuration for use with
+# ----------------------------------------------------------------------
+
+# "-Indexes" will have Apache block users from browsing folders without a default document
+# Usually you should leave this activated, because you shouldn't allow everybody to surf through
+# every folder on your server (which includes rather private places like CMS system folders).
+<IfModule mod_autoindex.c>
+  Options -Indexes
+</IfModule>
+
+
+# Block access to "hidden" directories whose names begin with a period. This
+# includes directories used by version control systems such as Subversion or Git.
+<IfModule mod_rewrite.c>
+  RewriteCond %{SCRIPT_FILENAME} -d
+  RewriteCond %{SCRIPT_FILENAME} -f
+  RewriteRule "(^|/)\." - [F]
+</IfModule>
+
+
+# Block access to backup and source files
+# This files may be left by some text/html editors and
+# pose a great security danger, when someone can access them
+<FilesMatch "(\.(bak|config|sql|fla|psd|ini|log|sh|inc|swp|dist)|~)$">
+  Order allow,deny
+  Deny from all
+  Satisfy All
+</FilesMatch>
+
+# Increase cookie security
+<IfModule php5_module>
+  php_value session.cookie_httponly true
+</IfModule>
+
+# Settings to hide index.php and ensure pretty urls
+RewriteEngine on
+
+# if a directory or a file exists, use it directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# otherwise forward it to index.php
+RewriteRule . index.php

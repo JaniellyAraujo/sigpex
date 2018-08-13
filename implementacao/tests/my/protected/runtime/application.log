@@ -1,0 +1,5 @@
+2018/06/24 22:47:10 [error] [exception.CDbException] SQLSTATE[HY000] [1049] Unknown database 'my'
+2018/06/24 22:47:37 [error] [exception.CDbException] SQLSTATE[HY000] [1045] Access denied for user 'roo'@'localhost' (using password: NO)
+2018/06/24 22:47:55 [error] [exception.CDbException] SQLSTATE[HY000] [1045] Access denied for user 'roo'@'localhost' (using password: NO)
+2018/06/24 22:49:04 [error] [exception.CDbException] SQLSTATE[HY000] [1049] Unknown database 'my'
+2018/06/24 22:50:57 [error] [exception.CDbException] SQLSTATE[HY000] [1049] Unknown database 'my'

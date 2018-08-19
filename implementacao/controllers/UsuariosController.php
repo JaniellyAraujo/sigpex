@@ -337,6 +337,8 @@ class UsuariosController extends Controller {
     public function actionDesativar($id) {
         if (Yii::$app->user->can('admin')) {
             $model = $this->findModel($id);
+            if ($model->role != 1) {
+            
             $model->isAtivo = '2';
             $model->save(false);
 
@@ -352,7 +354,18 @@ class UsuariosController extends Controller {
                 'positonY' => 'top',
                 'positonX' => 'right'
             ]);
-            $this->redirect(array("usuarios/index"));
+            
+            } else {
+            Yii::$app->getSession()->setFlash('warning', [
+                'type' => 'warning',
+                'duration' => 10000,
+                'message' => 'Não permitido desativar usuário ' . $model->nome,
+                //'message' => 'Não Permitido!',
+                'title' => 'Ação Negada.',
+                'positonY' => 'top',
+                'positonX' => 'right'
+            ]);
+        }$this->redirect(array("usuarios/index"));
         } else {
             throw new NotFoundHttpException('Você não tem permissão para desativar usuários.');
         }

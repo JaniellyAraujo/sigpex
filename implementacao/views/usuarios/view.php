@@ -67,7 +67,7 @@ use yii\widgets\DetailView;
                                 return 'Discente';
                             }
                         }],
-                    'password_hash',
+                    
                 ],
             ])
             ?>

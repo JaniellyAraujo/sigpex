@@ -21,7 +21,19 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 ?>
 <div class="projetos-aprovados">
-
+        <?php if (\app\models\Projetos::find()->where(['isAtivo' => 6])) { ?> 
+        <div class="alert alert-info" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="alert-heading">Atenção!</h4>
+            
+            <span class="sigpex-link-box-text"><strong> Existem </strong></span>
+            <span class="sigpex-link-box-number"><strong><?= \app\models\Projetos::find()->where(['isAtivo' => 6])->count(); ?></strong></span>
+            <span class="mb-0"><strong> projetos encerrados. </strong></span>  
+                                                      
+        </div>
+    <?php } ?>
     <h3 class="box-title"><i class="fa fa-list-ul"></i> Gerenciar Projetos</h3>
 
     <div class="panel panel-info">
@@ -33,23 +45,9 @@ use yii\grid\GridView;
         <div class="panel-body">
             <div class="table-responsive">
             <div class="pull-right" >
-                <!--div class="btn-group" >
-                    <button type="button" class="btn  btn-primary  "><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><b class="fa fa-list-alt"></b> Projetos</font></font> </button>
-                    <button type="button" class="btn btn-primary  dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <span class="caret"></span>
-                        <span class="sr-only"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Alternar o menu suspenso</font></font></span>
-                    </button>
-                    <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(57px, 42px, 0px);">
-                        <-?= Html::a('<b class="fa fa-folder"></b> Arquivados', ['projetos/encerrados'], ['class' => 'btn btn-social btn-primary', 'title' => 'Projetos Encerrados ', 'id' => 'modal-btn-encerrados']) ?>
-                        <--?= Html::a('<b class="fa fa-exclamation-circle"></b> Analisar Novos', ['projetos/solicitacao'], ['class' => 'btn btn-social btn-primary margin', 'title' => 'Analisar Projetos', 'id' => 'modal-btn-encerrados']) ?>
-                        <--?= Html::a('<b class="fa fa-pencil-square-o"></b> Solicitado Modificação', ['projetos/modificar'], ['class' => 'btn btn-social btn-primary ', 'title' => 'Projetos a serem Modificados', 'id' => 'modal-btn-encerrados']) ?>
-
-                        <div class="dropdown-divider"></div>
-                    </div>
-                </div-->
                 <?= Html::a('<b class="fa fa-arrow-left"></b> Voltar', ['projetos/solicitacao'], ['class' => 'btn btn-social btn-default', 'title' => 'Voltar', 'id' => 'modal-btn-voltar']) ?>
                 <?= Html::a('<b class="fa fa-plus"></b> Novo', ['create'], ['class' => 'btn btn-social btn-success', 'title' => 'Cadastrar Projeto']) ?>
-               <?= Html::a('<b class="fa fa-folder"></b> Arquivados', ['projetos/encerrados'], ['class' => 'btn btn-social btn-bitbucket ', 'title' => 'Projetos Encerrados ', 'id' => 'modal-btn-encerrados']) ?>
+               <?= Html::a('<b class="fa fa-folder"></b> Arquivados', ['projetos/arquivados'], ['class' => 'btn btn-social btn-bitbucket ', 'title' => 'Projetos Encerrados ', 'id' => 'modal-btn-encerrados']) ?>
                         
  <?= Html::a('<b class="fa fa-download"></b>', ['gerar'], ['target' => '_blank', 'class' => 'btn btn-default', 'title' => 'Exportar', 'id' => 'modal-btn-pdf']) ?>
 
@@ -94,15 +92,15 @@ use yii\grid\GridView;
                         'template' => ' {view} {status} ',
                         'buttons' => [
                             'status' => function ($url, $data) {
-                                if ($data->isAtivo == 2) {
-                                    $icon = '<span class="btn btn-bitbucket " role="button" title = "Encerrar e Arquivar"><i class="fa fa-folder-open fa fa-white"></i> </span> '; //fa-history
+                                if ($data->isAtivo == 6){
+                                    $icon = '<span class="btn btn-bitbucket " role="button" title = "Arquivar"><i class="fa fa-folder-open fa fa-white"></i> </span> '; //fa-history
                                     $label = $icon;
-                                    $url = Yii::$app->urlManager->createUrl(["/projetos/encerrar", "id" => $data->id]);
+                                    $url = Yii::$app->urlManager->createUrl(["/projetos/arquivar", "id" => $data->id]);
                                     return Html::a($label, $url);
                                 }
                             },
                             'view' => function ($url, $model) {
-                                return Html::a('<i class="fa fa-eye fa fa-white"></i>', $url, ['title' => 'Visualisar Projeto',
+                                return Html::a('<i class="fa fa-eye fa fa-white"></i>', $url, ['title' => 'Visualizar',
                                             'class' => 'btn btn-info',
                                 ]);
                             },

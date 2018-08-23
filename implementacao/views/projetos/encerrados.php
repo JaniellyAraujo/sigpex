@@ -27,7 +27,7 @@ use yii\grid\GridView;
     <div class="panel panel-primary">
 
         <div class="panel-heading">
-            <h5 class="panel-title"><i class="fa fa-folder "></i> Projetos Encerrados</h5>
+            <h5 class="panel-title"><i class="fa fa-folder "></i> Projetos Arquivados</h5>
         </div>
         <div class="panel-body">
             <div class="table-responsive">

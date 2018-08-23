@@ -22,7 +22,19 @@ use kartik\grid\GridView;
 
 ?>
 <div class="usuarios-index">
-
+    <?php if (\app\models\Projetos::find()->where(['isAtivo' => 1])) { ?> 
+        <div class="alert alert-warning" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="alert-heading">Atenção!</h4>
+            
+            <span class="sigpex-link-box-text"><strong> Existem </strong></span>
+            <span class="sigpex-link-box-number"><strong><?= \app\models\User::find()->where(['isAtivo' => 0])->count(); ?></strong></span>
+            <span class="mb-0"><strong> novos usuários para serem aprovados. </strong></span>  
+                                                      
+        </div>
+    <?php } ?>
     <div class="panel panel-info">
 
         <div class="panel-heading">

@@ -1,6 +1,5 @@
 <?php
-
-/******************************************************************
+/* * ****************************************************************
  * SIGPEX - SISTEMA  DE GERENCIAMENTO DE PROJETOS DE EXTENSÃO
 
  * O SigPex foi desenvolvido como Trabalho de Conclusão de Curso
@@ -11,7 +10,7 @@
  * Desenvolvido pela acadêmica: Janielly Araújo Lopes.
  * Orientadora: Cleiane Gonçalves Oliveira.
  *
- /******************************************************************/
+  /***************************************************************** */
 
 use yii\helpers\Html;
 
@@ -44,7 +43,7 @@ use yii\helpers\Html;
     }
 
 </style>
-<div class="box-info box view-item col-xs-12 col-lg-12">
+<div class="box-primary box view-item col-xs-12 col-lg-12">
     <h4 class="box-title"><p><i class="fa fa-file-text-o"></i> DADOS DO PROJETO</p></h4>
 
     <div class="box-body">
@@ -53,7 +52,7 @@ use yii\helpers\Html;
 
             <div class="form-group" align='right'>
                 <button onClick="history.go(-1)" class="btn btn-social btn-default" ><b class="fa fa-arrow-left"></b> Voltar</button> <!--Exemmlo botão voltar -->           
-            
+
                 <?php if (Yii::$app->user->can('servidor')) { ?>
                     <?php if (($model->isAtivo) == 3) { ?>
                         <?= Html::a(Yii::t('app', '<b class="fa  fa-eyedropper"></b> Atualizar'), ['update2', 'id' => $model->id], ['class' => 'btn btn-social btn-primary', 'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 3]) ?>
@@ -64,22 +63,6 @@ use yii\helpers\Html;
             </div>
 
         </div><br><br> <!--?= Html::a('<b class="fa fa-user-plus"></b> Equipe', ['/equipe/create/'], ['class' => 'btn btn-default']) ?-->
-        <!-- ?= Html::a('<b class="fa fa-download"></b>', [''], ['target' => '_blank', 'class' => 'btn btn-default', 'title' => 'Exportar', 'id' => 'modal-btn-pdf']) ? -->
-
-
-
-
-
-        <!--?php
-        $form = ActiveForm::begin([
-                    'id' => 'projetos-form',
-                    'enableAjaxValidation' => true,
-                    'fieldConfig' => [
-                        'template' => "{label}{input}{error}",
-                    ],
-        ]);
-        ?-->
-
 
         <?php if (($model->justificativa) != null) { ?> 
             <div class="box box-solid box-warning col-xs-12 col-lg-12 no-padding"> <!--Exemmlo botão voltar -->
@@ -99,7 +82,7 @@ use yii\helpers\Html;
             </div>
         <?php } ?>
 
-        <div class="box box-solid box-success col-xs-12 col-lg-12 no-padding"> <!--Exemmlo botão voltar -->
+        <div class="box box-solid box-primary col-xs-12 col-lg-12 no-padding"> <!--Exemmlo botão voltar -->
             <div class="box-header with-border">
                 <h4 class="box-title"><i class="fa fa-info-circle"></i> IDENTIFICAÇÃO DO PROJETO DE EXTENSÃO</h4>
             </div>
@@ -142,7 +125,7 @@ use yii\helpers\Html;
             </div> 
         </div>
 
-        <div class="box box-solid box-info col-xs-12 col-lg-12 no-padding">
+        <div class="box box-solid box-primary col-xs-12 col-lg-12 no-padding">
             <div class="box-header with-border">
                 <h4 class="box-title"><i class="fa fa-info-circle"></i> DETALHAMENTO DO PROJETO DE EXTENSÃO</h4>
             </div>
@@ -162,13 +145,29 @@ use yii\helpers\Html;
                             <td><div class="sigpex-link-box-text"  class="col-xs-12 col-sm-12 col-lg-12 no-padding">
                                     <div class="col-md-12"><b>RESUMO: </b><p align="justify"><?= Html::encode($model->resumo) ?></p></div><br><br><br>
                                 </div></td>
+
                         </tr>
+
                         <tr>
                             <td><div class="sigpex-link-box-text"  class="col-xs-12 col-sm-12 col-lg-12 no-padding">
                                     <div class="col-md-4"><b>LOCAL DE EXECUÇÃO: </b><?= Html::encode($model->localExecucao) ?></div>
                                     <div class="col-md-8"><b>PARCEIROS: </b><?= Html::encode($model->parceiros) ?></div><br><br>
 
                                 </div></td></tr>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="box box-solid box-primary col-xs-12 col-lg-12 no-padding">
+            <div class="box-header with-border">
+                <h4 class="box-title"><i class="fa fa-info-circle"></i> OUTRAS ESPECIFICAÇÕES</h4>
+            </div>
+            <div class="box-body">
+                <div class="col-lg-12 table-responsive  no-padding " style="margin-bottom:15px">
+                    <table class="table table-striped">
+
                         <tr>
                             <td><div class="sigpex-link-box-text"  class="col-xs-12 col-sm-12 col-lg-12 no-padding">
                                     <div class="col-md-6"><b>POSSUI VÍNCULO COM ALGUM PROGRAMA/EVENTO/CURSO? </b><?= Html::encode($model->vinculo) ?></div>

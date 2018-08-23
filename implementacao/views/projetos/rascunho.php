@@ -79,49 +79,7 @@ $form = ActiveForm::begin([
                             }
                         },
                     ],
-                        /*[
-                        'attribute' => 'Status',
-                        'value' => 'Status',
-                        'format' => 'raw',
-                        'contentOptions' => ['class' => 'text-center'],
-                        'headerOptions' => ['style' => 'width: 10%;'],
-                        'value' => function ($data) {
-                            if ($data->isAtivo == 2) {
-                                $icon = '<span class="btn btn-primary btn-xs" role="button" title = "Clique para Enviar",> Enviar </span> '
-                                        . ' <label class="badge bagde-success"></label> ';
-                                $label = $icon;
-                                $url = Yii::$app->urlManager->createUrl(["/projetos/submeter", "id" => $data->id]);
-                                return Html::a($label, $url);
-                            } else if ($data->isAtivo == 0) {
-                                $icon = ' <label class="badge bagde-success ">Enviado</label> ';
-                                $label = $icon;
-                                // $url = Yii::$app->urlManager->createUrl([""]);
-                                return Html::a($label);
-                            }
-                        },
-                    ],
-                    /* [
-                      'label' => 'Ação',
-                      'visible' => ((\Yii::$app->user->can('servidor'))),
-                      'format' => 'raw',
-                      'value' => function ($data) {
-                      return Html::a('Visualizar', ['projetos/visualizar', 'id' => $data->id], ['class' => 'profile-link']);
-                      },
-                      ],
-                      //['class' => 'yii\grid\ActionColumn'],
-                      ['class' => 'yii\grid\ActionColumn', 'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 3,
-                      'header' => "Ações",
-                      'template' => '{view} {update}',
-                      'buttons' => [
-                      'view' => function ($url) {
-                      return Html::a('', $url, ['title' => 'Visualisar Projeto', 'class' => 'glyphicon glyphicon-eye-open']);
-                      },
-                      'update' => function ($url) {
-                      return Html::a('', $url, ['title' => 'Editar Projeto', 'class' => 'glyphicon glyphicon-pencil']);
-                      },
-
-                      ]
-                      ], */
+                       
                         ['class' => 'yii\grid\ActionColumn', 'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 3,
                         'header' => "Ações",
                         'headerOptions' => ['style' => 'width: 25%;'],

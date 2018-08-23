@@ -60,7 +60,7 @@ AppAsset::register($this);
                                     <div class="row"><br>
                                         <div class="col-md-4 col-sm-3 col-xs-6">
                                             <div class="sigpex-link-box bg-gray-active">
-                                                <span class="sigpex-link-box-icon bg-yellow"><i class="fa fa-folder-open"></i></span>
+                                                <span class="sigpex-link-box-icon bg-light-blue-gradient"><i class="fa fa-folder-open"></i></span>
                                                 <div class="sigpex-link-box-content">
                                                     <span class="sigpex-link-box-text"><strong> PROJETOS em</strong></span>
                                                     <span class="sigpex-link-box-text"><strong> andamento:</strong></span>
@@ -73,7 +73,7 @@ AppAsset::register($this);
 
                                         <div class="col-md-4 col-sm-3 col-xs-6">
                                             <div class="sigpex-link-box bg-gray-active">
-                                                <span class="sigpex-link-box-icon bg-green"><i class="fa fa-sitemap"></i></span>
+                                                <span class="sigpex-link-box-icon bg-light-blue-gradient"><i class="fa fa-sitemap"></i></span>
                                                 <div class="sigpex-link-box-content">
                                                     <span class="sigpex-link-box-text"><strong>Total de </strong></span>
                                                     <span class="sigpex-link-box-text"><strong>projetos: </strong></span>
@@ -86,7 +86,7 @@ AppAsset::register($this);
 
                                         <div class="col-md-4 col-sm-3 col-xs-6">
                                             <div class="sigpex-link-box bg-gray-active">
-                                                <span class="sigpex-link-box-icon bg-teal"><i class="fa fa-users""></i></span>
+                                                <span class="sigpex-link-box-icon bg-light-blue-gradient"><i class="fa fa-users""></i></span>
                                                 <div class="sigpex-link-box-content">
                                                     <span class="sigpex-link-box-text"><strong>Usuários</strong></span>
                                                     <span class="sigpex-link-box-text"><strong>cadastrados: </strong></span>
@@ -262,7 +262,7 @@ AppAsset::register($this);
     .sigpex-link-box-text {
         text-transform: uppercase;
         display: block;
-        font-size: 14px;
+        font-size: 12px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;

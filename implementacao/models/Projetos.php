@@ -18,7 +18,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "j_projetos".
+ * This is the model class for table "projetos".
  *
  * @property int $id
  * @property string $titulo
@@ -62,6 +62,7 @@ use Yii;
  *  
  * @property User $idUser
  * @property Users $tipoUsuario0
+ * @property RelatoriosProjetos[] $relatoriosProjetos
  */
 class Projetos extends \yii\db\ActiveRecord {
 
@@ -69,7 +70,7 @@ class Projetos extends \yii\db\ActiveRecord {
      * @inheritdoc
      */
     public static function tableName() {
-        return 'j_projetos';
+        return 'projetos';
     }
 
     // use \mootensai\relation\RelationTrait;

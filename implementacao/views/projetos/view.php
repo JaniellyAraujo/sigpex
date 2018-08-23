@@ -44,7 +44,7 @@ use yii\helpers\Html;
     }
 
 </style>
-<div class="box-info box view-item col-xs-12 col-lg-12">
+<div class="box-primary box view-item col-xs-12 col-lg-12">
     <h4 class="box-title"><p><i class="fa fa-file-text-o"></i> DADOS DO PROJETO</p></h4>
 
     <div class="box-body">
@@ -55,7 +55,7 @@ use yii\helpers\Html;
 
         </div> <br><br>
 
-        <div class="box box-solid box-success col-xs-12 col-lg-12 no-padding"> <!--Exemmlo botão voltar -->
+        <div class="box box-solid box-primary col-xs-12 col-lg-12 no-padding"> <!--Exemmlo botão voltar -->
             <div class="box-header with-border">
                 <h4 class="box-title"><i class="fa fa-info-circle"></i> IDENTIFICAÇÃO DO PROJETO DE EXTENSÃO</h4>
             </div>
@@ -97,8 +97,7 @@ use yii\helpers\Html;
                 </div>
             </div>
         </div>
-
-        <div class="box box-solid box-info col-xs-12 col-lg-12 no-padding">
+        <div class="box box-solid box-primary col-xs-12 col-lg-12 no-padding">
             <div class="box-header with-border">
                 <h4 class="box-title"><i class="fa fa-info-circle"></i> DETALHAMENTO DO PROJETO DE EXTENSÃO</h4>
             </div>
@@ -125,6 +124,20 @@ use yii\helpers\Html;
                                     <div class="col-md-8"><b>PARCEIROS: </b><?= Html::encode($model->parceiros) ?></div><br><br>
 
                                 </div></td></tr>
+                       
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        <div class="box box-solid box-primary col-xs-12 col-lg-12 no-padding">
+            <div class="box-header with-border">
+                <h4 class="box-title"><i class="fa fa-info-circle"></i> OUTRAS ESPECIFICAÇÕES</h4>
+            </div>
+            <div class="box-body">
+                <div class="col-lg-12 table-responsive  no-padding " style="margin-bottom:15px">
+                    <table class="table table-striped">
+                       
                         <tr>
                             <td><div class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
                                     <div class="col-md-6"><b>POSSUI VÍNCULO COM ALGUM PROGRAMA/EVENTO/CURSO? </b><?= Html::encode($model->vinculo) ?></div>
@@ -155,6 +168,7 @@ use yii\helpers\Html;
 
             </div>
         </div>
+        
 
         <div class="box box-solid box-primary col-xs-12 col-lg-12 no-padding"> <!--Exemmlo botão voltar -->
             <div class="box-header with-border">

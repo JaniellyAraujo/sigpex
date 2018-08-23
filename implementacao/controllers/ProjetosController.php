@@ -150,52 +150,6 @@ class ProjetosController extends Controller {
         }
     }
 
-    public function actionParticipante($id) {
-        if ((Yii::$app->user->can('coordenador')) || (Yii::$app->user->can('servidor'))) {
-
-            $model = $this->findModel($id);
-            $participanteModel = new Projeto();
-            $participanteModel->id = $model->id;
-            $model->save(false);
-
-            return $this->render('particip', [
-                        'model' => $model,
-                        'participanteModel' => $participanteModel,
-            ]);
-        } else {
-            throw new NotFoundHttpException('Você não tem permissão para acessar esta página.');
-        }
-    }
-
-    public function actionInserirParticipante($q = null, $id = null) {
-        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        $out = ['results' => ['id' => '', 'text' => '']];
-        if (!is_null($q)) {
-
-            $query = new \yii\db\Query;
-            $query->select('id, nome AS text')
-                    ->from('j_usuarios')
-                    ->where(['like', 'nome', $q])
-                    ->limit(20);
-            $command = $query->createCommand();
-            $data = $command->queryAll();
-            $out['results'] = array_values($data);
-        } elseif ($id > 0) {
-            $out['results'] = ['id' => $id, 'text' => \app\models\User::find($id)->nome];
-        }
-        return $out;
-    }
-
-    public function actionAdicionaparticipante() {
-        $model = new \app\models\User();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['nome', 'id' => $model->id]); //mexi
-        }
-
-        return $this->redirect(['/projetos']);
-    }
-
     public function actionVisualizar($id) {
         $model = $this->findModel($id);
         if (($model->id == Yii::$app->user->identity->id) || (Yii::$app->user->can('coordenador')) || (Yii::$app->user->can('servidor'))) {
@@ -211,14 +165,6 @@ class ProjetosController extends Controller {
         $model = $this->findModel($id);
 
         return $this->render('justificativa', [
-                    'model' => $model,
-        ]);
-    }
-
-    public function actionParticip($id) {
-        $model = $this->findModel($id);
-
-        return $this->render('participante', [
                     'model' => $model,
         ]);
     }
@@ -271,7 +217,7 @@ class ProjetosController extends Controller {
 
 
                 if (Yii::$app->user->identity->role == 2) {
-                    $model->isAtivo = '1'; //SALVA AUTOMATICAMENTE
+                    $model->isAtivo = '5'; //SALVA AUTOMATICAMENTE
                     $model->save(false);
                     Yii::$app->getSession()->setFlash('success', [
                         'type' => 'success',
@@ -374,19 +320,13 @@ class ProjetosController extends Controller {
             throw new ForbiddenHttpException('Você não tem permissão para acessar esta página.');
         }
     }
-    /*public function actionUpdate2($id) {
-            $model = $this->findModel($id);
-
-            return $this->render('modificar', [
-                        'model' => $model,
-            ]);
-        }*/
+    
         public function actionUpdate2($id) {
         $model = $this->findModel($id);
         //$model->justificativa = null;
         if (Yii::$app->user->can('servidor')) {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                $model->isAtivo = '4'; //SOLICITADO MODIFICAÇÃO
+                $model->isAtivo = '4'; // MODIFICADO
                 $model->save(false);
                 Yii::$app->getSession()->setFlash('success', [
                     'type' => 'success',
@@ -436,7 +376,7 @@ class ProjetosController extends Controller {
         if (Yii::$app->user->can('coordenador')) {
             $model = $this->findModel($id);
             $model->justificativa = null;
-            $model->isAtivo = '2'; //APROVADO
+            $model->isAtivo = '5'; //APROVADO
             $model->save(false);
             Yii::$app->getSession()->setFlash('success', [
                 'type' => 'success',
@@ -468,11 +408,36 @@ class ProjetosController extends Controller {
     }
     
     public function actionEncerrar($id) {
+        if (Yii::$app->user->can('servidor')) {
+            $model = $this->findModel($id);
+            $model->isAtivo = '6'; //ENCERRADO
+            $model->save(false);
+            $this->redirect(array("projetos/index"));
+            //$this->redirect(array("projetos/reprovados"));
+        } else {
+            throw new NotFoundHttpException('Você não tem permissão para acessar esta página.');
+        }
+    }
+    
+        public function actionArquivar($id) {
         if (Yii::$app->user->can('coordenador')) {
             $model = $this->findModel($id);
-            $model->isAtivo = '5'; //ENCERRADO
+            $model->isAtivo = '7'; //ARQUIVADO
             $model->save(false);
             $this->redirect(array("projetos/aprovados"));
+            //$this->redirect(array("projetos/reprovados"));
+        } else {
+            throw new NotFoundHttpException('Você não tem permissão para acessar esta página.');
+        }
+    }
+    
+        public function actionReitoria($id) {
+        if (Yii::$app->user->can('coordenador')) {
+            $model = $this->findModel($id);
+            $model->justificativa = null;
+            $model->isAtivo = '2'; //ENVIADO REITORIA
+            $model->save(false);
+            $this->redirect(array("projetos/solicitacao"));
             //$this->redirect(array("projetos/reprovados"));
         } else {
             throw new NotFoundHttpException('Você não tem permissão para acessar esta página.');
@@ -504,7 +469,7 @@ class ProjetosController extends Controller {
             $searchModel = new ProjetosSearch();
 
             $dataProvider = new ActiveDataProvider([
-                'query' => Projetos::find()->where(['OR', ['isAtivo' => 0], ['isAtivo' => 1], ['isAtivo' => 2], ['isAtivo' => 3], ['isAtivo' => 4], ['isAtivo' => 5]]),
+                'query' => Projetos::find()->where(['OR', ['isAtivo' => 0], ['isAtivo' => 1], ['isAtivo' => 2], ['isAtivo' => 3], ['isAtivo' => 4], ['isAtivo' => 5], ['isAtivo' => 6], ['isAtivo' => 7]]),
                 'pagination' => [
                     'pageSize' => 10,
                 ],
@@ -544,9 +509,9 @@ class ProjetosController extends Controller {
         if (Yii::$app->user->can('servidor') || (Yii::$app->user->can('coordenador'))) {
             $searchModel = new ProjetosSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+            
             $dataProvider = new ActiveDataProvider([
-    'query' => Projetos::find()->where(['OR',['isAtivo' => 1],['isAtivo' => 4],['isAtivo' => 3]]), // EM ANALISE
+    'query' => Projetos::find()->where(['OR',['isAtivo' => 1],['isAtivo' => 4],['isAtivo' => 3],['isAtivo' => 2]]), // EM ANALISE
                 'pagination' => [
                     'pageSize' => 10,
                 ],
@@ -599,7 +564,7 @@ class ProjetosController extends Controller {
             $searchModel = new ProjetosSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
             $dataProvider = new ActiveDataProvider([
-                'query' => Projetos::find()->where(['isAtivo' => 2]), // APROVADOS
+                'query' => Projetos::find()->where(['OR', ['isAtivo' => 5], ['isAtivo' => 6]]), // APROVADO E ENCERRADO
                 'pagination' => [
                     'pageSize' => 10,
                 ],
@@ -612,20 +577,59 @@ class ProjetosController extends Controller {
             throw new ForbiddenHttpException('Você não tem permissão para acessar esta página.');
         }
     }
-
+    
+        public function actionReitorias() {
+        if (Yii::$app->user->can('coordenador')) {
+            $searchModel = new ProjetosSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            $dataProvider = new ActiveDataProvider([
+                'query' => Projetos::find()->where(['isAtivo' => 2]), // APROVADOS
+                'pagination' => [
+                    'pageSize' => 10,
+                ],
+            ]);
+            return $this->render('reitoria', [
+                        'dataProvider' => $dataProvider,
+                        'searchModel' => $searchModel,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Você não tem permissão para acessar esta página.');
+        }
+    }
     public function actionEncerrados() {
         if (Yii::$app->user->can('coordenador')) {
             $searchModel = new ProjetosSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
             $dataProvider = new ActiveDataProvider([
-                'query' => Projetos::find()->where(['isAtivo' => 5]), // ENCERRADOS
+                'query' => Projetos::find()->where(['isAtivo' => 6]), // ENCERRADOS
                 'pagination' => [
                     'pageSize' => 10,
                 ],
             ]);
 
             return $this->render('encerrados', [
+                        'dataProvider' => $dataProvider,
+                        'searchModel' => $searchModel,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Você não tem permissão para acessar esta ação.');
+        }
+    }
+    
+        public function actionArquivados() {
+        if (Yii::$app->user->can('coordenador')) {
+            $searchModel = new ProjetosSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+            $dataProvider = new ActiveDataProvider([
+                'query' => Projetos::find()->where(['isAtivo' => 7]), // ARQUIVADOS
+                'pagination' => [
+                    'pageSize' => 10,
+                ],
+            ]);
+
+            return $this->render('arquivados', [
                         'dataProvider' => $dataProvider,
                         'searchModel' => $searchModel,
             ]);

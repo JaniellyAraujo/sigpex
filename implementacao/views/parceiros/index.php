@@ -54,21 +54,24 @@ use yii\grid\GridView;
                                             'class' => 'btn btn-info',
                                 ]);
                             },
-                            /*'update' => function ($url, $model) {
+                        'update' => function ($url, $model) {
+                                if (Yii::$app->user->identity->role == 2) {
                                 return Html::a('<i class="fa fa-user fa fa-white"></i>', $url, ['title' => 'Editar Parceiro',
                                              ['update', 'id' => $model['id']],'class' => 'btn btn-primary',
                                 ]);
-                            },*/
-                            'update' => function($url, $model) {
+                        }},
+                               /* 'update' => function($url, $model) {
                                 return Html::a('<span class="btn btn-primary"><b class="fa fa-user"></b></span>', ['update', 'id' => $model['id']], ['title' => 'Alterar', 'id' => 'modal-btn-view']);
-                             },        
+                             }, */       
                             
                             'delete' => function ($url, $model) {
+                            if (Yii::$app->user->identity->role == 2) {
                                 return Html::a('<i class="fa fa-trash fa fa-white"></i>', $url, ['title' => 'Excluir Parceiro',
                                             'class' => 'btn btn-danger',
                                             'data-confirm' => 'Tem certeza de que deseja excluir este item?', // altera a mensagem de confirmação
                                             'data-method' => 'post',
                                 ]);
+                            }
                             }
                         ]
                     ]

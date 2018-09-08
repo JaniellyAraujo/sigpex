@@ -57,6 +57,14 @@ class ProjetosSearch extends Projetos {
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                    'defaultOrder' => [
+                    'isAtivo' => [
+                    'asc' => ['isAtivo' == 0 => SORT_ASC, 'isAtivo' == 1 => SORT_ASC, 'isAtivo' == 2 => SORT_ASC, 'isAtivo' == 3 => SORT_ASC, 'isAtivo' == 4 => SORT_ASC, 'isAtivo' == 5 => SORT_ASC, 'isAtivo' == 6 => SORT_ASC],
+      
+                ],
+                ]
+            ],
         ]);
 
 

@@ -48,6 +48,8 @@ use yii\grid\GridView;
             GridView::widget([
                 //'filterModel' => $searchModel,
                 'dataProvider' => $dataProvider,
+                'responsive'=>true,
+                'summary' => "Exibindo <strong> {begin}</strong> - <strong>{end}</strong> de <strong>{totalCount}</strong> itens",
                 'columns' => [
                     'titulo',
                     'coordenador',

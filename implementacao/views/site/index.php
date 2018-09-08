@@ -60,39 +60,39 @@ AppAsset::register($this);
                                     <div class="row"><br>
                                         <div class="col-md-4 col-sm-3 col-xs-6">
                                             <div class="sigpex-link-box bg-gray-active">
-                                                <span class="sigpex-link-box-icon bg-light-blue-gradient"><i class="fa fa-folder-open"></i></span>
+                                                <span class="sigpex-link-box-icon bg-light-blue-gradient"><div class="grow"><i class="fa fa-folder-open"></i></div></span>
                                                 <div class="sigpex-link-box-content">
                                                     <span class="sigpex-link-box-text"><strong> PROJETOS em</strong></span>
-                                                    <span class="sigpex-link-box-text"><strong> andamento:</strong></span>
-                                                    <span class="sigpex-link-box-number"><?= \app\models\Projetos::find()->where(['isAtivo' => 2])->count(); ?></span>
+                                                    <span class="sigpex-link-box-text"><strong> Andamento:</strong></span>
+                                                    <span class="sigpex-link-box-number"><?= \app\models\Projetos::find()->where(['isAtivo' => 5])->count(); ?></span>
                                                     <span class="sigpex-link-box-desc"></span>
-                                                    <span class="sigpex-link-box-bottom"><?= Html::a(Yii::t('app', 'Detalhes') . ' <i class="fa fa-arrow-circle-right"></i>', ['#'], ['target' => '_blank', 'class' => 'small-box-footer']); ?></span>
+                                                    <span class="sigpex-link-box-bottom"><?= Html::a(Yii::t('app', 'Detalhes') . ' <i class="fa fa-arrow-circle-right"></i>', ['projetos/infoprojeto'], ['target' => '_blank', 'class' => 'small-box-footer']); ?></span>
                                                 </div><!-- /.info-box-content -->
                                             </div><!-- /.info-box -->
                                         </div>
 
                                         <div class="col-md-4 col-sm-3 col-xs-6">
                                             <div class="sigpex-link-box bg-gray-active">
-                                                <span class="sigpex-link-box-icon bg-light-blue-gradient"><i class="fa fa-sitemap"></i></span>
+                                                <span class="sigpex-link-box-icon bg-light-blue-gradient"><div class="grow"><i class="fa fa-sitemap"></i></div></span>
                                                 <div class="sigpex-link-box-content">
                                                     <span class="sigpex-link-box-text"><strong>Total de </strong></span>
-                                                    <span class="sigpex-link-box-text"><strong>projetos: </strong></span>
-                                                    <span class="sigpex-link-box-number"><?= \app\models\Projetos::find()->where(['OR', ['isAtivo' => 2], ['isAtivo' => 5]])->count(); ?></span>
+                                                    <span class="sigpex-link-box-text"><strong>Projetos: </strong></span>
+                                                    <span class="sigpex-link-box-number"><?= \app\models\Projetos::find()->where(['OR', ['isAtivo' => 5], ['isAtivo' => 6], ['isAtivo' => 7]])->count(); ?></span>
                                                     <span class="sigpex-link-box-desc"></span>
-                                                    <span class="sigpex-link-box-bottom"><?= Html::a(Yii::t('app', 'Detalhes') . ' <i class="fa fa-arrow-circle-right"></i>', ['#'], ['target' => '_blank', 'class' => 'small-box-footer']); ?></span>
+                                                    <span class="sigpex-link-box-bottom"><?= Html::a(Yii::t('app', 'Detalhes') . ' <i class="fa fa-arrow-circle-right"></i>', ['projetos/infoprojetotipo'], ['target' => '_blank', 'class' => 'small-box-footer']); ?></span>
                                                 </div><!-- /.info-box-content -->
                                             </div><!-- /.info-box -->
                                         </div>
 
                                         <div class="col-md-4 col-sm-3 col-xs-6">
                                             <div class="sigpex-link-box bg-gray-active">
-                                                <span class="sigpex-link-box-icon bg-light-blue-gradient"><i class="fa fa-users""></i></span>
+                                                <span class="sigpex-link-box-icon bg-light-blue-gradient"><div class="grow"><i class="fa fa-users"></i></div></span>
                                                 <div class="sigpex-link-box-content">
                                                     <span class="sigpex-link-box-text"><strong>Usuários</strong></span>
-                                                    <span class="sigpex-link-box-text"><strong>cadastrados: </strong></span>
+                                                    <span class="sigpex-link-box-text"><strong>Ativos: </strong></span>
                                                     <span class="sigpex-link-box-number"><?= \app\models\User::find()->where(['OR', ['role' => 3], ['role' => 4]])->count(); ?></span>
                                                     <span class="sigpex-link-box-desc"></span>
-                                                    <span class="sigpex-link-box-bottom"><?= Html::a(Yii::t('app', 'Detalhes') . ' <i class="fa fa-arrow-circle-right"></i>', ['#'], ['target' => '_blank', 'class' => 'small-box-footer']); ?></span>
+                                                    <span class="sigpex-link-box-bottom"><?= Html::a(Yii::t('app', 'Detalhes') . ' <i class="fa fa-arrow-circle-right"></i>', ['projetos/infoprojetouser'], ['target' => '_blank', 'class' => 'small-box-footer']); ?></span>
                                                 </div><!-- /.info-box-content -->
                                             </div><!-- /.info-box -->
                                         </div>
@@ -284,4 +284,9 @@ AppAsset::register($this);
         bottom:5px;
         right:6px;
     }
+    .grow:hover{
+        -webkit-transform: scale(1.3);
+        -ms-transform: scale(1.3);
+        transform: scale(1.3);
+}
 </style>

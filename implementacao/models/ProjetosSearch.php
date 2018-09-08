@@ -15,9 +15,9 @@
 
 namespace app\models;
 
+use app\assets\AppAsset;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Projetos;
 
 /**
  * ProjetosSearch represents the model behind the search form of `app\models\Projetos`.
@@ -53,17 +53,15 @@ class ProjetosSearch extends Projetos {
     public function search($params) {
         $query = Projetos::find();
 
-        // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+             
+           
             
         ]);
         $dataProvider->setSort([
             'attributes' => [
-                'id',
                 'titulo',
-                'coordenador',
                 'dataInicio' => [
                     'asc' => ['dataInicio' => SORT_ASC],
                     'desc' => ['dataInicio' => SORT_DESC],
@@ -75,11 +73,15 @@ class ProjetosSearch extends Projetos {
                     'default' => SORT_ASC,
                 ],
                 'isAtivo' => [
-                    'asc' => ['isAtivo' == 0 => SORT_ASC, 'isAtivo' == 1 => SORT_ASC, 'isAtivo' == 2 => SORT_ASC, 'isAtivo' == 3 => SORT_ASC, 'isAtivo' == 4 => SORT_ASC, 'isAtivo' == 5 => SORT_ASC],
-                    'desc' => ['isAtivo' == 0 => SORT_DESC, 'isAtivo' == 1 => SORT_DESC, 'isAtivo' == 2 => SORT_DESC, 'isAtivo' == 3 => SORT_DESC, 'isAtivo' == 4 => SORT_DESC, 'isAtivo' == 5 => SORT_DESC],
+                    'asc' => ['isAtivo' == 0 => SORT_ASC, 'isAtivo' == 1 => SORT_ASC, 'isAtivo' == 2 => SORT_ASC, 'isAtivo' == 3 => SORT_ASC, 'isAtivo' == 4 => SORT_ASC, 'isAtivo' == 5 => SORT_ASC, 'isAtivo' == 6 => SORT_ASC],
+                    'desc' => ['isAtivo' == 0 => SORT_DESC, 'isAtivo' == 1 => SORT_DESC, 'isAtivo' == 2 => SORT_DESC, 'isAtivo' == 3 => SORT_DESC, 'isAtivo' == 4 => SORT_DESC, 'isAtivo' == 5 => SORT_DESC, 'isAtivo' == 6 => SORT_DESC],
                     'default' => SORT_ASC,
                 ],
+                'defaultOrder' => [
+                    'isAtivo' => SORT_ASC,
+                ]
             ],
+            
         ]);
 
         $this->load($params);

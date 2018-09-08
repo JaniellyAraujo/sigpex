@@ -23,33 +23,83 @@ use yii\grid\GridView;
 ?>
 <!--?php ercling\pace\PaceWidget::widget()?-->
 <div class="projetos-solicitacao">
+    <div class="row">
+        <div class="table-responsive">
+            <?php if (\app\models\Projetos::find()->where(['isAtivo' => 1])->count() != 0) { ?> 
 
-    <?php if (\app\models\Projetos::find()->where(['isAtivo' => 1])) { ?> 
-        <div class="alert alert-warning" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <h4 class="alert-heading">Atenção!</h4>
-            
-            <span class="sigpex-link-box-text"><strong> Existem </strong></span>
-            <span class="sigpex-link-box-number"><strong><?= \app\models\Projetos::find()->where(['isAtivo' => 1])->count(); ?></strong></span>
-            <span class="mb-0"><strong> novos projetos para serem analisados. </strong></span>  
-                                                      
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="sigpex-link-box bg-gray-active">
+                        <span class="sigpex-link-box-icon bg-orange"><div class="grow"><i class="fa fa-exclamation-triangle"></i></div></span>
+                        <div class="sigpex-link-box-content">
+                            <span class="sigpex-link-box-text"><strong> Novos</strong></span>
+                            <span class="sigpex-link-box-text"><strong> Projetos:</strong></span>
+                            <span class="sigpex-link-box-number"><?= \app\models\Projetos::find()->where(['isAtivo' => 1])->count(); ?></span>
+                            <span class="sigpex-link-box-desc"></span>
+                            <span class="sigpex-link-box-bottom"></span>
+                        </div><!-- /.info-box-content -->
+                    </div><!-- /.info-box -->
+                </div>
+            <?php } ?>
+
+
+            <!--?php if (\app\models\Projetos::find()->where(['isAtivo' => 2])->count() != 0) { ?> 
+
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="sigpex-link-box bg-gray-active">
+
+                        <span class="sigpex-link-box-icon bg-light-blue-gradient"><div class="grow"><i class="fa fa-university"></i></div></span>
+                        <div class="sigpex-link-box-content">
+                            <span class="sigpex-link-box-text"><strong> Enviado a</strong></span>
+                            <span class="sigpex-link-box-text"><strong> Reitoria:</strong></span>
+                            <span class="sigpex-link-box-number">< ?= \app\models\Projetos::find()->where(['isAtivo' => 2])->count(); ?></span>
+                            <span class="sigpex-link-box-desc"></span>
+                            <span class="sigpex-link-box-bottom"></span>
+                        </div><!-- /.info-box-content -->
+                    <!--/div><!-- /.info-box -->
+                <!--/div>
+            <!?php } ?-->
+
+
+            <?php if (\app\models\Projetos::find()->where(['isAtivo' => 3])->count() != 0) { ?> 
+
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="sigpex-link-box bg-gray-active">
+                        <span class="sigpex-link-box-icon bg-red-gradient"><div class="grow"><i class="fa fa-pencil-square-o"></i></div></span>
+                        <div class="sigpex-link-box-content">
+                            <span class="sigpex-link-box-text"><strong> Solicitado </strong></span>
+                            <span class="sigpex-link-box-text"><strong> Modificação:</strong></span>
+                            <span class="sigpex-link-box-number"><?= \app\models\Projetos::find()->where(['isAtivo' => 3])->count(); ?></span>
+                            <span class="sigpex-link-box-desc"></span>
+                            <span class="sigpex-link-box-bottom"></span>
+                        </div><!-- /.info-box-content -->
+                    </div><!-- /.info-box -->
+                </div>
+            <?php } ?>
+
+
+            <?php if (\app\models\Projetos::find()->where(['isAtivo' => 4])->count() != 0) { ?> 
+
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="sigpex-link-box bg-gray-active">
+                        <span class="sigpex-link-box-icon bg-blue-gradient"><div class="grow"><i class="fa fa-mail-forward"></i></div></span>
+                        <div class="sigpex-link-box-content">
+                            <span class="sigpex-link-box-text"><strong> Projetos</strong></span>
+                            <span class="sigpex-link-box-text"><strong> Modificados:</strong></span>
+                            <span class="sigpex-link-box-number"><?= \app\models\Projetos::find()->where(['isAtivo' => 4])->count(); ?></span>
+                            <span class="sigpex-link-box-desc"></span>
+                            <span class="sigpex-link-box-bottom"></span>
+                        </div><!-- /.info-box-content -->
+                    </div><!-- /.info-box -->
+                </div>
+            <?php } ?>
         </div>
-    <?php } ?>
-        <?php if (\app\models\Projetos::find()->where(['isAtivo' => 4])) { ?> 
-        <div class="alert alert-success" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <h4 class="alert-heading">Atenção!</h4>
-            
-            <span class="sigpex-link-box-text"><strong> Existem </strong></span>
-            <span class="sigpex-link-box-number"><strong><?= \app\models\Projetos::find()->where(['isAtivo' => 4])->count(); ?></strong></span>
-            <span class="mb-0"><strong> novas versões de projetos para serem analisadas. </strong></span>  
-                                                      
-        </div>
-    <?php } ?>
+
+    </div>
+
     <h3 class="box-title"><i class="fa fa-list-ul"></i> Gerenciar Projetos</h3>
 
     <div class="panel panel-warning">
@@ -69,7 +119,7 @@ use yii\grid\GridView;
                     'columns' => [
                         //'responsive' => true,
                         'titulo',
-                        'coordenador',
+                        //'coordenador',
                             [
                             'attribute' => 'dataInicio',
                             'format' => 'raw',
@@ -97,36 +147,39 @@ use yii\grid\GridView;
                             'value' => 'Status',
                             'format' => 'raw',
                             'contentOptions' => ['class' => 'text-center'],
-                            'headerOptions' => ['style' => 'width: 10%;'],
+                            'headerOptions' => ['style' => 'width: 10%;','class' => 'text-center'],
                             'value' => function ($data) {
                                 if ($data->isAtivo == 1) {
                                     $icon = ' <label class="badge bg-orange  ">Novo</label> ';
                                     $label = $icon;
                                     return Html::a($label);
                                 } else if ($data->isAtivo == 4) {
-                                    $icon = ' <label class="badge bg-olive">Modificado</label> ';
+                                    $icon = ' <label class="badge bg-blue">Modificado</label> ';
                                     $label = $icon;
                                     return Html::a($label);
                                 } else if ($data->isAtivo == 3) {
                                     $icon = ' <label class="badge bg-red  ">Solicitado Modificação</label> ';
                                     $label = $icon;
                                     return Html::a($label);
-                                } else if ($data->isAtivo == 2) {
+                                } /*else if ($data->isAtivo == 2) {
                                     $icon = ' <label class="badge bg-blue  ">Reitoria</label> ';
                                     $label = $icon;
                                     return Html::a($label);
-                                }
+                                }*/
                             },
                         ],
                             [
                             'class' => 'yii\grid\ActionColumn',
-                            'header' => "Ações",
-                            'headerOptions' => ['style' => 'width: 25%;'],
+                            'header' => "Visualizar",
+                            //'headerOptions' => ['style' => 'width: 25%;'],
+                             'headerOptions' => [
+                            'class' => 'CustomHeadClass ',
+                            ],
                             'contentOptions' => ['class' => 'text-center'],
-                            'template' => "{view} {visualizar} {aprovar} {status} {reitoria}  ", // altera a forma de exibição dos botões
+                            'template' => "{view} {visualizar} ", // altera a forma de exibição dos botões
                             'buttons' => [
                                 'view' => function ($url, $data) {
-                                    if (($data->isAtivo == 1) || ($data->isAtivo == 2)) {
+                                    if (($data->isAtivo == 1) /*|| ($data->isAtivo == 2)*/) {
                                         return Html::a('<i class="fa fa-eye fa fa-white"></i>', $url, ['title' => 'Visualizar',
                                                     'class' => 'btn btn-info',
                                         ]);
@@ -137,30 +190,23 @@ use yii\grid\GridView;
                                         return Html::a('<span class="btn btn-info " role="button" title = "Visualizar"><i class="fa fa-eye fa fa-white" /n ></i></span> ', ['projetos/visualizar', 'id' => $data->id], ['class' => 'profile-link']);
                                     }
                                 },
-                                'reitoria' => function ($url, $data) {
+                                /*'reitoria' => function ($url, $data) {
                                     if (($data->isAtivo == 1) || ($data->isAtivo == 4)) {
                                         $icon = '<span class="btn btn-primary " role="button" title = "Enviar para Reitoria",><i class="fa fa-university" /n ></i> </span> '; //fa-history
                                         $label = $icon;
                                         $url = Yii::$app->urlManager->createUrl(["/projetos/reitoria", "id" => $data->id]);
                                         return Html::a($label, $url);
                                     }
-                                },
-                                'status' => function ($url, $data) {
-                                    if (($data->isAtivo == 1) || ($data->isAtivo == 4)) {
-                                        $icon = '<span class="btn btn-danger " role="button" title = "Solicitar Modificação",><i class="fa fa-pencil-square-o" /n ></i> </span> '; //fa-history
-                                        $label = $icon;
-                                        $url = Yii::$app->urlManager->createUrl(["/projetos/update1", "id" => $data->id]);
-                                        return Html::a($label, $url);
-                                    }
-                                },
-                                'aprovar' => function ($url, $data) {
-                                    if ($data->isAtivo == 2) {
+                                },*/
+                               
+                                /*'aprovar' => function ($url, $data) {
+                                    if (($data->isAtivo == 1)||($data->isAtivo == 4)) {
                                         $icon = '<span class="btn btn-success " role="button" title = "Aprovar Projeto",><i class="fa fa-check-square-o" /n ></i> </span> '; //fa-history
                                         $label = $icon;
                                         $url = Yii::$app->urlManager->createUrl(["/projetos/aprovar", "id" => $data->id]);
                                         return Html::a($label, $url);
                                     }
-                                },
+                                },*/
                             ]
                         ]
                     ],
@@ -172,5 +218,71 @@ use yii\grid\GridView;
 </div>
 
 
+<style>
+    .sigpex-link-box {
+        background: none repeat scroll 0 0 #fff;
+        border-radius: 2px;
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+        display: block;
+        margin-bottom: 15px;
+        min-height: 70px;
+        width: 100%;
+        border: 1px solid #ddd;
+        position:relative;
+    }
+    .sigpex-link-box-icon {
+        background: none repeat scroll 0 0 rgba(0, 0, 0, 0.2);
+        border-radius: 2px 0 0 2px;
+        display: block;
+        float: left;
+        font-size: 35px;
+        height: 75px;
+        line-height: 70px;
+        text-align: center;
+        width: 70px;
+    }
+    .sigpex-link-box-content {
+        margin-left: 50px;
+        //margin-right:10px;
+        padding: 2px 3px;
+    }
+    .sigpex-link-box-text {
+        text-transform: uppercase;
+        display: block;
+        font-size: 13px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-left: 30px;
+    }
+    .sigpex-link-box-number {
+        display: block;
+        font-size:25px;
+        font-weight: bold;
+        margin-left: 30px;
+    }
+    .sigpex-link-box-desc {
+        color:#aaa;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: block;
+    }
+    .sigpex-link-box-bottom {
+        position:absolute;
+        bottom:5px;
+        right:6px;
+    }
+    .grow:hover{
+        -webkit-transform: scale(1.3);
+        -ms-transform: scale(1.3);
+        transform: scale(1.3);
+    }
+    .CustomHeadClass {
+        color: #3c8dbc;
+        width: 15%;
+        text-align:center;
+    }
 
+</style>
 

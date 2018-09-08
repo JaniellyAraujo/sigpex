@@ -22,7 +22,6 @@ use Yii;
  *
  * @property int $id
  * @property string $titulo
- * @property string $coordenador
  * @property string $tipoProjeto
  * @property string $objetivo
  * @property string $resumo
@@ -44,10 +43,6 @@ use Yii;
  * @property string $gerFundacao
  * @property string $citarFundacao
  * @property string $multicampi
- * @property string $financiamento
- * @property string $tipoFinanciamento
- * @property string $citarFinanciamento
- * @property double $valorFinanciamento
  * @property string $areaConhecimento
  * @property string $campusDesenvolvido
  * @property integer $isControle
@@ -59,6 +54,13 @@ use Yii;
  * @property string $dataAnalise   
  * @property string $participante
  * @property string $tipoUsuario 
+ * 
+ * 
+ * @property string $coordenador
+ * @property string $financiamento
+ * @property string $tipoFinanciamento
+ * @property string $citarFinanciamento
+ * @property double $valorFinanciamento
  *  
  * @property User $idUser
  * @property Users $tipoUsuario0
@@ -138,7 +140,7 @@ class Projetos extends \yii\db\ActiveRecord {
             'financiamento' => Yii::t('app', 'Há necessidade de Financiamento?'),
             'tipoFinanciamento' => Yii::t('app', 'Tipo de Financiamento'),
             'citarFinanciamento' => Yii::t('app', 'Citar a Fonte:'),
-            'valorFinanciamento' => Yii::t('app', 'Valor do Financiamento'),
+            'valorFinanciamento' => Yii::t('app', ' Financiamento'),
             'areaConhecimento' => Yii::t('app', 'Área de Conhecimento'),
             'campusDesenvolvido' => Yii::t('app', 'Campus onde o projeto será desenvolvido:'),
             'justificativa' => Yii::t('app', 'Informe o(s) motivo(s) da necessidade de modificação do projeto:'),
@@ -167,7 +169,15 @@ class Projetos extends \yii\db\ActiveRecord {
     public function getIdUser0() {
         return $this->hasOne(User::className(), ['id' => 'idUser']);
     }
-
+ 
+        /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRelatoriosProjetos()
+    {
+        return $this->hasMany(RelatoriosProjetos::className(), ['id_projeto' => 'id']);
+    }
+    
     /* public function geTipoUsuario()
       {
       return $this->hasOne(Users::className(), ['tipoUsuario' => 'tipoUsuario']);

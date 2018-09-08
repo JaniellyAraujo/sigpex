@@ -22,6 +22,7 @@ $this->title = 'Atualizar Dados do Projeto: ' . $model->titulo;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'modelUsuarios' => $modelUsuarios
     ]) ?>
 
 </div>

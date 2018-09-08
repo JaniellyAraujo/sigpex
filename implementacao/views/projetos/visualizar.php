@@ -36,23 +36,21 @@ use yii\helpers\Html;
     }
 
     tr:nth-child(even) {
-        background-color: #dddddd;
+        background-color: #ffffff;
     }
     .sigpex-link-box-text {
         text-transform: uppercase;
     }
 
 </style>
-<div class="box-primary box view-item col-xs-12 col-lg-12">
-    <h4 class="box-title"><p><i class="fa fa-file-text-o"></i> DADOS DO PROJETO</p></h4>
 
+<div class="box-primary box view-item col-xs-12 col-lg-12">
     <div class="box-body">
 
         <div class="pull-right">
 
             <div class="form-group" align='right'>
-                <button onClick="history.go(-1)" class="btn btn-social btn-default" ><b class="fa fa-arrow-left"></b> Voltar</button> <!--Exemmlo botão voltar -->           
-
+                
                 <?php if (Yii::$app->user->can('servidor')) { ?>
                     <?php if (($model->isAtivo) == 3) { ?>
                         <?= Html::a(Yii::t('app', '<b class="fa  fa-eyedropper"></b> Atualizar'), ['update2', 'id' => $model->id], ['class' => 'btn btn-social btn-primary', 'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 3]) ?>
@@ -67,7 +65,7 @@ use yii\helpers\Html;
         <?php if (($model->justificativa) != null) { ?> 
             <div class="box box-solid box-warning col-xs-12 col-lg-12 no-padding"> <!--Exemmlo botão voltar -->
                 <div class="box-header with-border">
-                    <h4 class="box-title"><i class="fa fa-info-circle"></i> JUSTIFICATIVA</h4>
+                    <h4 class="box-title"><i class="fa fa-info-circle"></i> SOLICITADO MODIFICAÇÃO</h4>
                 </div>
                 <div class="box-body">
                     <table class="table table-striped">
@@ -216,10 +214,15 @@ use yii\helpers\Html;
                 </div>
             </div> 
         </div>     
-
-
+         <div class="box-footer text-right" style="margin-top: 20px"> 
+            <button onClick="history.go(-1)" class="btn btn-social btn-default" ><b class="fa fa-arrow-left"></b> Voltar</button>                  
+            <?php
+                if ((($model->isAtivo == 1) || ($model->isAtivo == 4)) && ((Yii::$app->user->identity->role == 2))) {
+                    echo Html::a('<b class="fa fa-pencil-square-o"></b> Solicitar Modificação', ['/projetos/update1', "id" => $model->id], ['class' => 'btn btn-social btn-danger', 'style' => 'margin-left:10px']);
+                    echo Html::a('<b class="fa fa-check-square-o"></b> Confirmar', ['/projetos/aprovar', "id" => $model->id], ['class' => 'btn btn-social btn-success', 'style' => 'margin-left:10px']);
+                }
+            ?>
+        </div>
     </div>
 </div>
-<?php $this->registerJs("(function($) {
-      fakewaffle.responsiveTabs(['xs', 'sm']);
-  })(jQuery);", yii\web\View::POS_END, 'responsive-tab'); ?>
+<?php $this->registerJs("(function($) {fakewaffle.responsiveTabs(['xs', 'sm']);})(jQuery);", yii\web\View::POS_END, 'responsive-tab'); ?>

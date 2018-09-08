@@ -14,14 +14,14 @@
  /******************************************************************/
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\ViagemSearchh */
+/* @var $searchModel app\models\ProjetosSearchh */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 
 $nome = \app\models\Projetos::getnome($dataProvider->models, 'nome');
 
 ?>
-<div class="viagem-index">
+<div class="declaracao-index">
     <div class="panel panel-heading">
         <h3>  <?php $files = glob("img/*.*");  
             for ($i=0; $i<count ($files); $i++){

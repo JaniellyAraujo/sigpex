@@ -41,15 +41,9 @@ use yii\widgets\MaskedInput;
             </div>
 
             <div class="row">
-                <div class="col-md-4"><?=
-                    $form->field($model, 'cpf')->widget(MaskedInput::className(), [
-                        'mask' => '999.999.999-99',])
-                    ?></div>
+                <div class="col-md-4"><?=$form->field($model, 'cpf')->widget(MaskedInput::className(), ['mask' => '999.999.999-99',]) ?></div>
                 <div class="col-md-4"><?= $form->field($model, 'rg')->textInput(['maxlength' => true]) ?></div>
-                <div class="col-md-4"> <?=
-                    $form->field($model, 'telefone')->widget(MaskedInput::className(), [
-                        'mask' => '(99)99999-9999',])
-                    ?>
+                <div class="col-md-4"> <?=$form->field($model, 'telefone')->widget(MaskedInput::className(), ['mask' => '(99)99999-9999',])?>
                 </div>
 
             </div>
@@ -79,28 +73,35 @@ use yii\widgets\MaskedInput;
 
             <div class="row">
                 
+
                  <div class="col-lg-4">
-                                <?php if (Yii::$app->user->can('admin')) { ?>
+                                <?php if (Yii::$app->user->identity->role == 1) {?>
 
                                 <?=$form->field($model, 'role')->dropDownList(array('1' => 'Administrador',
                                 '2' => 'Coordenador de Projetos',
                                 '3' => 'Discente',
                                 '4' => 'Servidor'), ['prompt' => 'Selecione'], array('selected' => true))?>
                                 <?php } else { ?>
-                                
-                                <?=$form->field($model, 'role')->dropDownList(array(//'1' => 'Administrador',
-                                //'2' => 'Coordenador de Extensão',
-                                '3' => 'Discente',
-                                '4' => 'Servidor'), ['prompt' => 'Selecione'], array('selected' => true))?>
+                                <?php if ($this->context->action->id == 'create'){ ?>
+                                    <?=$form->field($model, 'role')->dropDownList(array(//'1' => 'Administrador',
+                                    //'2' => 'Coordenador de Extensão',
+                                    '3' => 'Discente',
+                                    '4' => 'Servidor'), ['prompt' => 'Selecione'], array('selected' => true))?>
+                                    <?php }  ?>
                                 <?php }  ?>
                             </div>
-                
+                 
                 <div class="col-md-4"><?= $form->field($model, 'password_hash')->passwordInput(['maxlength' => true]) ?></div>
                 <div class="col-md-4"><?= $form->field($model, 'password_hash_repeat')->passwordInput(['maxlength' => true]) ?></div>
             </div>
 
             <div class="box-footer">
-                <?= Html::a('Cancelar', ['usuarios/index'], ['class' => 'btn btn-default']) ?>
+                <?php if (Yii::$app->user->identity->role == 1) { ?>
+                    <?= Html::a('Cancelar', ['usuarios/index'], ['class' => 'btn btn-default']) ?>
+                <?php } ?>
+                <?php if (Yii::$app->user->identity->role != 1) { ?>
+                    <?= Html::a('Cancelar', ['usuarios/index0'], ['class' => 'btn btn-default']) ?>
+                <?php } ?>
                 <button type="submit" class="btn btn-info pull-right"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Salvar</font></font></button>
             </div>
 

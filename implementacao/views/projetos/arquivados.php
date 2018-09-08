@@ -48,9 +48,11 @@ use yii\grid\GridView;
             GridView::widget([
                 //'filterModel' => $searchModel,
                 'dataProvider' => $dataProvider,
+                //'responsive'=>true,
+                'summary' => "Exibindo <strong> {begin}</strong> - <strong>{end}</strong> de <strong>{totalCount}</strong> itens",
                 'columns' => [
                     'titulo',
-                    'coordenador',
+                   // 'coordenador',
                         [
                         'attribute' => 'dataInicio',
                         'format' => 'raw',
@@ -75,10 +77,12 @@ use yii\grid\GridView;
                     ],
                     'modalidade',
                         ['class' => 'yii\grid\ActionColumn',
-                        'header' => "Ações",
-                        'headerOptions' => ['style' => 'width: 25%;'],
+                        'header' => "Visualizar",
+                        'headerOptions' => [
+                                'class' => 'CustomHeadClass ',
+                            ],
                         'contentOptions' => ['class' => 'text-center'],
-                        'template' => '{view} {update} {delete}',
+                        'template' => '{view}',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return Html::a('<i class="fa fa-eye fa fa-white"></i>', $url, ['title' => 'Visualisar Projeto',
@@ -87,7 +91,7 @@ use yii\grid\GridView;
                             },
                             'update' => function ($url, $model) {
                                 return Html::a('<i class="fa  fa-eyedropper fa fa-white"></i>', $url, ['title' => 'Editar Projeto',
-                                            'class' => 'btn btn-primary disabled',
+                                            'class' => 'btn btn-primary',
                                 ]);
                             },
                             'delete' => function ($url, $model) {
@@ -106,7 +110,13 @@ use yii\grid\GridView;
         </div>
     </div>
 </div>
-
+<style>
+    .CustomHeadClass {
+        color: #3c8dbc;
+        width: 15%;
+        text-align:center;
+    }
+</style>
 
 
 

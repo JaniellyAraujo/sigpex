@@ -82,11 +82,11 @@ $fieldOptions2 = [
             </div>
 
             <div style="color:#999;margin:1em 0">
-<?= Html::a('Alterar minha senha', ['site/recoverpass']) ?>
+                <?= Html::a('Esqueceu a senha?', ['request-password-reset']) ?>
             </div>
 
 
-<?php ActiveForm::end(); ?>
+        <?php ActiveForm::end(); ?>
 
 
         </div>

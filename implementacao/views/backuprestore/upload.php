@@ -11,7 +11,7 @@ use kartik\file\FileInput;
 $this->title = 'Base de Dados - Administrador';
 //$this->params['breadcrumbs'][] = ['label' => 'Administrador','url' => array('upload')];
 ?>
-
+<div class="body">
 <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
 
@@ -32,5 +32,4 @@ $form->field($model, 'upload_file')->widget(FileInput::classname(), [
 </div>
 
 <?php ActiveForm::end(); ?>
-
-<!-- form -->
+</div><!-- form -->

@@ -28,43 +28,39 @@ use yii\widgets\ActiveForm;
     </div>
     <div class="box-body">
 
-       
-        
-       <?php
-       if (!isset($id)) {
-           $id = 0;
-       
 
-       if ($this->context->action->id == 'update')
-            $action = ['update', 'id' => $_REQUEST['id']]
-           ;
-        else
-            $action = ['create'];
+        <?php
+        if (!isset($id)) {
+            $id = 0;
+            if ($this->context->action->id == 'update')
+                $action = ['update', 'id' => $_REQUEST['id']];
+            else
+                $action = ['create'];
         }
         ?>
-        
-         <?php
-        $form = ActiveForm::begin([
 
-                    'id' => 'panel panel-info',
-                    'enableAjaxValidation' => true,
-                    'action' => $action,
-                    'fieldConfig' => [
-                        'template' => " <strong>Nome</strong> {input}{error}",
-                    ],
+        <?php
+        $form = ActiveForm::begin([
+            'id' => 'panel panel-info',
+            'enableAjaxValidation' => true,
+            'action' => $action,
+            'fieldConfig' => [
+                'template' => " <strong>Nome</strong> {input}{error}",
+            ],
         ]);
         ?>
-        
-           
-       <div class="box-header with-border-md-4">
-                    <div class="row">
-                        <div class="col-md-4"><?= $form->field($model, 'nome')->textInput(['maxlength' => false]) ?></div>
-                    </div></div>
+
+
+        <div class="box-header with-border-md-12">
+            <div class="row">
+                <div class="col-md-12"><?= $form->field($model, 'nome')->textInput(['maxlength' => false]) ?></div>
+            </div>
+        </div>
         <!--?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?-->
 
-        <div class="form-group">
+        <div class="form-group pull-right" >
             <!--?= Html::submitButton(Yii::t('app', 'Salvar'), ['class' => 'btn btn-success']) ?-->
-            <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Salvar') : Yii::t('app', 'Alterar'), ['class' => $model->isNewRecord  ? 'btn btn-block btn-success' : 'btn btn-block btn-primary']) ?> 
+            <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Salvar') : Yii::t('app', 'Alterar'), ['class' => $model->isNewRecord ? 'btn  btn-success' : 'btn  btn-primary']) ?>
         </div>
     </div>
     <?php ActiveForm::end(); ?>

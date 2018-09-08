@@ -21,6 +21,7 @@
 
     <?= $this->render('modificar', [
         'model' => $model,
+        'modelUsuarios' => $modelUsuarios
     ]) ?>
 
 </div>

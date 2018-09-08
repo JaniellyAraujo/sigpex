@@ -21,6 +21,7 @@ use app\models\ParceirosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * ParceirosController implements the CRUD actions for Parceiros model.
@@ -87,6 +88,24 @@ class ParceirosController extends Controller {
     }
 
     /**
+     * Creates a new Parceiros model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreateModal() {
+        $model = new Parceiros();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
+        }
+
+        return $this->renderAjax('create', [
+            'model' => $model,
+        ]);
+    }
+
+
+    /**
      * Updates an existing Parceiros model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -130,6 +149,29 @@ class ParceirosController extends Controller {
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+
+    public function actionParceirosAjax()
+    {
+        $retorno = [];
+
+        $model = Parceiros::find()->all();
+
+        if ($model) {
+            /* @var $parceiro Parceiros */
+            foreach ($model as $parceiro) {
+                $saida = new \stdClass();
+                $saida->parceiro_id = $parceiro->id;
+                $saida->primaryText = $parceiro->nome;
+
+                $retorno[] = $saida;
+            }
+        }
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        return $retorno;
     }
 
 }

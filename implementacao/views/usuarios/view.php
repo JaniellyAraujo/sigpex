@@ -27,12 +27,22 @@ use yii\widgets\DetailView;
     <br>
     <div class="panel panel-info">
         <div class="panel-heading">
+            <?php if (Yii::$app->user->identity->role == 1) {?>
             <h5 class="panel-title"><i class="fa fa-user"></i> Dados do Usuário</h5>
+           <?php } ?>
+           <?php if (Yii::$app->user->identity->role != 1) {?>
+            <h5 class="panel-title"><i class="fa fa-user"></i> Meus Dados</h5>
+           <?php } ?>
         </div>
 
         <div class="box-body">
             <div class="pull-right">
-                <?= Html::a('<b class="fa fa-arrow-left"></b> Voltar', ['usuarios/index'], ['class' => 'btn btn-default', 'title' => 'Voltar', 'id' => 'modal-btn-voltar']) ?>
+                <?php if (Yii::$app->user->identity->role == 1) {?>
+                    <?= Html::a('<b class="fa fa-arrow-left"></b> Voltar', ['usuarios/index'], ['class' => 'btn btn-default', 'title' => 'Voltar', 'id' => 'modal-btn-voltar']) ?>
+                <?php } ?>
+                <?php if (Yii::$app->user->identity->role != 1) {?>
+                    <?= Html::a('<b class="fa fa-arrow-left"></b> Voltar', ['usuarios/index0'], ['class' => 'btn btn-default', 'title' => 'Voltar', 'id' => 'modal-btn-voltar']) ?>
+                <?php } ?>
                 <?= Html::a('Atualizar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
                 </div> <br><br>
             <?=
@@ -50,9 +60,11 @@ use yii\widgets\DetailView;
                     'estado',
                     'email:email',
                     'telefone',
-                        [
+                        
+                    [
                         'label' => 'Perfil',
                         'format' => 'raw',
+                        'visible' => Yii::$app->user->identity->role == 1,
                         'value' => function($data) {
                             if ($data->role == 1) {
                                 return 'Administrador';
@@ -66,7 +78,8 @@ use yii\widgets\DetailView;
                             if ($data->role == 4) {
                                 return 'Discente';
                             }
-                        }],
+                        }
+                        ],
                     
                 ],
             ])

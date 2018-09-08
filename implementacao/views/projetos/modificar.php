@@ -18,6 +18,9 @@ use \yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use app\models\User;
 use app\models\Users;
+use kartik\dialog\Dialog;
+
+echo Dialog::widget(['overrideYiiConfirm' => true]);
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Projetos */
@@ -116,8 +119,28 @@ use app\models\Users;
                     </div>
                     <div class="col-xs-12 col-sm-12 col-lg-12 no-padding">
                         <div class="col-md-4"><?= $form->field($model, 'vinculo')->radioList(array('Sim' => 'Sim', 'Não' => 'Não')); ?></div>
-                        <div class="col-md-4"><?= $form->field($model, 'citarVinculo')->textInput(['maxlength' => true]) ?></div>
-                        <div class="col-md-4"><?= $form->field($model, 'parceiros')->dropDownList(ArrayHelper::map(\app\models\Parceiros::find()->asArray()->all(), 'nome', 'nome'), ['prompt' => 'Selecione'], array('selected' => true)) ?></div>
+                        <div class="col-md-3"><?= $form->field($model, 'citarVinculo')->textInput(['maxlength' => true]) ?></div>
+                        <div class="col-md-3">
+                            <?= $form->field($model, 'parceiros')->dropDownList(ArrayHelper::map(\app\models\Parceiros::find()->asArray()->all(), 'nome', 'nome'), ['prompt' => 'Selecione'], array('selected' => true)) ?>
+                        </div>
+                        <div class="col-md-1">
+                            <?= Html::beginTag('a', [
+                                'href' => '/parceiros/create',
+                                'target' => '_blank'
+                            ]) . Html::tag('i', '', [
+                                'class' => 'glyphicon glyphicon-plus-sign',
+                                'style' => 'font-size:29px;padding-top: 29px;'
+                            ]) . Html::endTag('a'); ?>
+
+                            <?= Html::beginTag('a', [
+                                'href' => '#',
+                                'target' => '_blank',
+                                'class' => 'reload'
+                            ]) . Html::tag('i', '', [
+                                'class' => 'glyphicon glyphicon-refresh',
+                                'style' => 'font-size:29px;padding-top: 29px;float:left;'
+                            ]) . Html::endTag('a'); ?>
+                        </div>
 
                     </div>
 
@@ -162,42 +185,54 @@ use app\models\Users;
                     <h4 class="box-title"><i class="fa fa-info-circle"></i> EQUIPE EXECUTORA</h4>
                 </div>
                 <div class="box-body">
+                    <ul id="item-usuario" class="list-unstyled">
+                        <?php $first = true;?>
+                        <?php foreach ($modelUsuarios as $modelUsuario) { ?>
+                            <div id="div<?= $modelUsuario->idForm ?>" data-id="<?= $modelUsuario->idForm ?>" class="usuario">
+                                <li id="subitem-usr" class="row mb-20 usr">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <?php $usuarios = User::find()->asArray()->all(); ?>
+                                            <label class="control-label" for="projetos-participante">Participante:</label>
+                                            <select id="projetos-participante" class="form-control" name="ProjetosUsuariosForm[<?= $modelUsuario->idForm ?>][usuario]" aria-invalid="false">
+                                                <option value="">Selecione</option>
+                                                <?php foreach ($usuarios as $usuario) {?>
+                                                    <option value="<?= $usuario['id'] ?>" <?= ($modelUsuario->usuario == $usuario['id'] ? 'selected=""' : '')?>><?= $usuario['nome'] ?></option>
+                                                <?php } ?>
+                                            </select>
 
-                    <div class="col-xs-12 col-sm-12 col-lg-12 no-padding">
+                                            <div class="help-block"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <?php $tipos = Users::find()->asArray()->all(); ?>
+                                            <label class="control-label" for="projetos-participante">Tipo:</label>
+                                            <select id="projetos-participante" class="form-control" name="ProjetosUsuariosForm[<?= $modelUsuario->idForm ?>][tipo]" aria-invalid="false">
+                                                <option value="">Selecione</option>
+                                                <?php foreach ($tipos as $tipo) {?>
+                                                    <option value="<?= $tipo['nome'] ?>" <?= ($modelUsuario->tipo == $tipo['nome'] ? 'selected=""' : '')?>><?= $tipo['nome'] ?></option>
+                                                <?php } ?>
+                                            </select>
 
-                        <div class="row"><div class="col-md-7">
-    <!--?php
-    $url = Yii::$app->urlManager->createUrl(["/projetos/inserir-participante"]);
-    $url = Url::to(['/projetos/inserir-participante']);
-
-    echo $form->field($model, 'participante')->widget(Select2::classname(), [
-        'options' => ['placeholder' => 'Buque pelo nome do participante...'],
-        'pluginOptions' => [
-            'allowClear' => false,
-            'minimumInputLength' => 2,
-            'language' => [
-                'errorLoading' => new JsExpression("function () { return 'Aguarde...'; }"),
-            ],
-            'ajax' => [
-                'url' => $url,
-                'dataType' => 'json',
-                'data' => new JsExpression('function(params) { return {q:params.term}; }')
-            ],
-            'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
-            'templateResult' => new JsExpression('function(j_usuarios) { return nome.text; }'),
-            'templateSelection' => new JsExpression('function (j_usuarios) { return nome.text; }'),
-        ],
-    ]);
-    echo $form->field($model, 'tipoUsuario')->dropDownList(ArrayHelper::map(\app\models\Users::find()->asArray()->all(), 'nome', 'nome'), ['prompt' => 'Selecione'], array('selected' => true));
-    ?--></div>
-
-
-                        </div>
-
-
-                        <div class="col-md-8"><?= $form->field($model, 'participante')->dropDownList(ArrayHelper::map(User::find()->where(['OR', ['role' => 3], ['role' => 4]])->asArray()->all(), 'nome', 'nome'), ['prompt' => 'Selecione'], array('selected' => true)) ?></div>
-                        <div class="col-md-4"><?= $form->field($model, 'tipoUsuario')->dropDownList(ArrayHelper::map(Users::find()->asArray()->all(), 'nome', 'nome'), ['prompt' => 'Selecione'], array('selected' => true)) ?></div>
-                    </div>
+                                            <div class="help-block"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-2">
+                                        <div class="form-group">
+                                            <label class="control-label" style="display:block;">&nbsp;</label>
+                                            <?php if ($first) { ?>
+                                                <a class="btn btn-primary btn-add-item">+</a>
+                                                <?php $first = false;?>
+                                            <?php } else { ?>
+                                                <button type='button' id="btn-remove-item" class='btn btn-remover btn-danger' onclick="$(this).closest('#div<?= $modelUsuario->idForm ?>').remove();">-</button>
+                                            <?php } ?>
+                                        </div>
+                                    </div>
+                                </li>
+                            </div>
+                        <?php } ?>
+                    </ul><!-- /#item-nf -->
 
                 </div> 
             </div>
@@ -214,3 +249,89 @@ use app\models\Users;
 
     </div>
 </div>
+
+<script>
+    <?php $this->beginBlock('page-script') ?>
+    (function () {
+        var parceiros = '[name="' + '<?php echo Html::getInputName($model, 'parceiros'); ?>' + '"]';
+
+        $('.reload').on('click', function() {
+            $.ajax({
+                type: 'get',
+                url: '/parceiros/parceiros-ajax',
+            }).done(function (retorno) {
+                for (var i = 0; i < retorno.length; i++) {
+                    var parceiro = retorno[i];
+                    $('<option>').val(parceiro.parceiros_id).html(parceiro.primaryText).appendTo(parceiros);
+                }
+                $(parceiros).selectpicker('refresh');
+            });
+
+            return false;
+        });
+
+
+        var users = document.getElementById('item-usuario').getElementsByClassName('usuario');
+        var last = users[users.length - 1];
+        var id = last.dataset.id;
+
+        $('.btn-add-item').click(function () {
+            id++;
+
+            var lista = document.getElementById("item-usuario");
+
+            let contentHTML = `
+            <div id="div${id}">
+                <li>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <?php $usuarios = User::find()->asArray()->all(); ?>
+                            <label class="control-label" for="projetos-participante">Participante:</label>
+                            <select id="projetos-participante" class="form-control" name="ProjetosUsuariosForm[${id}][usuario]" aria-invalid="false">
+                                <option value="">Selecione</option>
+                                <?php foreach ($usuarios as $usuario) {?>
+                                    <option value="<?= $usuario['id'] ?>"><?= $usuario['nome'] ?></option>
+                                <?php } ?>
+                            </select>
+
+                            <div class="help-block"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <?php $usuarios = Users::find()->asArray()->all(); ?>
+                            <label class="control-label" for="projetos-participante">Tipo:</label>
+                            <select id="projetos-participante" class="form-control" name="ProjetosUsuariosForm[${id}][tipo]" aria-invalid="false">
+                                <option value="">Selecione</option>
+                                <?php foreach ($usuarios as $usuario) {?>
+                                    <option value="<?= $usuario['nome'] ?>"><?= $usuario['nome'] ?></option>
+                                <?php } ?>
+                            </select>
+
+                            <div class="help-block"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-2">
+                        <div class="form-group">
+                            <label class="control-label" style="display:block;">&nbsp;</label>
+                            <button type='button' id="btn-remove-item" class='btn btn-remover btn-danger' onclick="$(this).closest('#div${id}').remove();">-</button>
+                        </div>
+                    </div>
+                </li>
+            </div>`;
+
+
+            lista.insertAdjacentHTML('beforeend', contentHTML);
+
+            var lis = document.getElementById("item-usuario").getElementsByTagName('li');
+            for (var i = 0; i < lis.length; i++) {
+                var list = lis[i].className = 'row mt-20 itens-checklist:' + i;
+            }
+        });
+
+    })();
+    <?php $this->endBlock() ?>
+</script>
+
+<?php $this->registerJs($this->blocks['page-script']) ?>
+

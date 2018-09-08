@@ -36,12 +36,11 @@ use yii\grid\GridView;
                   <?php if((Yii::$app->user->can('servidor'))) { ?>
                 <?= Html::a('<b class="fa fa-plus"></b> Novo', ['create'], ['class' => 'btn btn  btn-social btn-success']) ?>
                 <?php } ?>
-                <?= Html::a('<b class="fa fa-download"></b>', ['gerar'], ['target' => '_blank', 'class' => 'btn btn-default', 'title' => 'Exportar', 'id' => 'modal-btn-pdf']) ?>
+                <!--?= Html::a('<b class="fa fa-download"></b>', ['gerar'], ['target' => '_blank', 'class' => 'btn btn-default', 'title' => 'Exportar', 'id' => 'modal-btn-pdf']) ?-->
             </div><br>
             <?=
             GridView::widget([
                 'dataProvider' => $dataProvider,
-                //'filterModel' => $searchModel,
                 'summary' => "Exibindo <strong> {begin}</strong> - <strong>{end}</strong> de <strong>{totalCount}</strong> itens",
                 'rowOptions' => function($model) {
                     if ($model->isAtivo == '5') { //EM ANDAMENTO
@@ -58,7 +57,7 @@ use yii\grid\GridView;
                 },
                 'columns' => [
                     'titulo',
-                    'coordenador',
+                    //'coordenador',
                         [
                         'attribute' => 'dataInicio',
                         'format' => 'raw',
@@ -85,6 +84,7 @@ use yii\grid\GridView;
                         'attribute' => 'isAtivo',
                         'value' => 'Status',
                         'format' => 'raw',
+                    
                         // 'filter' => ['0' => 'Rascunhos', '1' => 'Em Análise', '2' => 'Em Andamento', '3 '=> 'Solicitado Modificação', '4' => 'Modificado ', '5' => 'Encerrado', '6' => 'Arquivado'],
                         'contentOptions' => ['class' => 'text-center'],
                         'headerOptions' => ['style' => 'width: 10%;'],
@@ -114,18 +114,18 @@ use yii\grid\GridView;
                                 $icon = ' <label class="badge bg-blue ">Encerrado</label> ';
                                 $label = $icon;
                                 return Html::a($label);
-                            }else if ($data->isAtivo == 2) {
+                            }/*else if ($data->isAtivo == 2) {
                                 $icon = ' <label class="badge bg-orange ">Reitoria</label> ';
                                 $label = $icon;
                                 return Html::a($label);
-                            }
+                            }*/
                         },
                     ],
                         ['class' => 'yii\grid\ActionColumn',
                         'header' => "Ações",
-                        'headerOptions' => ['style' => 'width: 25%;'],
+                        'headerOptions' => [ 'class' => 'CustomHeadClass ',],
                         'contentOptions' => ['class' => 'text-center'],
-                        'template' => '{view} {status} {visualizar} {update} {modificar} {teste} {final}',
+                        'template' => '{view}{visualizar} {update} {modificar} {teste}',
                         'buttons' => [
                             'delete' => function ($url, $model) {
                                 return Html::a('<i class="fa fa-trash fa fa-white"></i>', $url, ['title' => 'Excluir Status do Projeto',
@@ -143,22 +143,7 @@ use yii\grid\GridView;
                                     ]);
                                 }
                             },
-                            'final' => function ($url, $data) {
-                                if ($data->isAtivo == 5) {
-                                    $icon = '<span class="btn btn-bitbucket " role="button" title = "Encerrar"><i class="fa fa-unlock-alt fa fa-white"></i> </span> '; //fa-history
-                                    $label = $icon;
-                                    $url = Yii::$app->urlManager->createUrl(["/projetos/encerrar", "id" => $data->id]);
-                                    return Html::a($label, $url);
-                                }
-                            },
-                            'status' => function ($url, $data) {
-                                if ($data->isAtivo == 0) {
-                                    $icon = '<span class="btn btn-success " role="button" title = "Enviar",><i class="fa fa-send (alias)" /n ></i> </span> '; //fa-history
-                                    $label = $icon;
-                                    $url = Yii::$app->urlManager->createUrl(["/projetos/submeter", "id" => $data->id]);
-                                    return Html::a($label, $url);
-                                }
-                            },
+                           
                             'modificar' => function ($url, $data) {
                                 if ($data->isAtivo == 3) {
                                     return Html::a('<span class="btn btn-primary " role="button" title = "Modificar"><i class="fa fa-eyedropper fa fa-white" /n ></i></span> ', ['projetos/update2', 'id' => $data->id], ['class' => 'profile-link']);
@@ -193,3 +178,10 @@ use yii\grid\GridView;
         </div>
     </div>
 </div>
+<style>
+.CustomHeadClass {
+  color: #3c8dbc;
+  width: 25%;
+  text-align:center;
+}
+</style>

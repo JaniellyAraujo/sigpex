@@ -1,6 +1,6 @@
 <?php
 
-/******************************************************************
+/* * ****************************************************************
  * SIGPEX - SISTEMA  DE GERENCIAMENTO DE PROJETOS DE EXTENSÃO
 
  * O SigPex foi desenvolvido como Trabalho de Conclusão de Curso
@@ -11,7 +11,7 @@
  * Desenvolvido pela acadêmica: Janielly Araújo Lopes.
  * Orientadora: Cleiane Gonçalves Oliveira.
  *
- /******************************************************************/
+  /***************************************************************** */
 
 namespace app\controllers;
 
@@ -26,6 +26,7 @@ use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use app\models\PasswordResetRequestForm;
 use app\models\ResetPasswordForm;
+use app\models\AuthAssignment;
 
 class SiteController extends Controller {
 
@@ -179,7 +180,7 @@ class SiteController extends Controller {
     public function beforeAction($action) {
         if (parent::beforeAction($action)) {
             // change layout for error action
-            if ($action->id == 'login')
+            if ($action->id == 'login' || $action->id == 'request-password-reset' || $action->id == 'reset-password')
                 $this->layout = 'login';
             return true;
         } else {
@@ -319,15 +320,30 @@ class SiteController extends Controller {
         $model = new PasswordResetRequestForm();
 
         if (!$model->load(Yii::$app->request->post()) || !$model->validate()) {
-            return $this->render('requestPasswordResetToken', ['model' => $model]);
+            return $this->render('passwordRequest', ['model' => $model]);
         }
 
         if (!$model->sendEmail()) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'Desculpe, não podemos redefinir a senha para o email fornecido.'));
+            Yii::$app->getSession()->setFlash('info', [
+                'type' => 'info',
+                'duration' => 10000,
+                'message' => 'Desculpe, não podemos redefinir a senha para o email fornecido.',
+                'title' => '',
+                'positonY' => 'top',
+                'positonX' => 'right'
+            ]);
+
             return $this->refresh();
         }
 
-        Yii::$app->session->setFlash('success', Yii::t('app', 'Verifique seu e-mail para mais instruções.'));
+        Yii::$app->getSession()->setFlash('info', [
+            'type' => 'info',
+            'duration' => 10000,
+            'message' => 'Verifique seu e-mail para mais instruções.',
+            'title' => '',
+            'positonY' => 'top',
+            'positonX' => 'right'
+        ]);
 
         return $this->goHome();
     }
@@ -338,12 +354,20 @@ class SiteController extends Controller {
         } catch (InvalidParamException $e) {
             throw new BadRequestHttpException($e->getMessage());
         }
-
         if (!$model->load(Yii::$app->request->post()) || !$model->validate() || !$model->resetPassword()) {
+
             return $this->render('resetPassword', ['model' => $model]);
         }
+     
+        Yii::$app->getSession()->setFlash('info', [
+            'type' => 'info',
+            'duration' => 10000,
+            'message' => 'Nova senha foi salva',
+            'title' => '',
+            'positonY' => 'top',
+            'positonX' => 'right'
+        ]);
 
-        Yii::$app->session->setFlash('success', Yii::t('app', 'Nova senha foi salva.'));
 
         return $this->goHome();
     }

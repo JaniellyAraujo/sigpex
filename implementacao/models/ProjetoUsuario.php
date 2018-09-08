@@ -23,6 +23,7 @@ use Yii;
  * @property int $id
  * @property int $projeto_id
  * @property int $usuario_id
+ * @property string $tipo
  *
  * @property Projetos $projeto
  * @property User $idUser
@@ -43,10 +44,11 @@ class ProjetoUsuario extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-                [['projeto_id', '$usuario_id'], 'required'],
-                [['projeto_id', '$usuario_id'], 'integer'],
+                [['projeto_id', 'usuario_id'], 'required'],
+                [['projeto_id', 'usuario_id'], 'integer'],
+                ['tipo', 'string'],
                 [['projeto_id'], 'exist', 'skipOnError' => true, 'targetClass' => Projetos::className(), 'targetAttribute' => ['projeto_id' => 'id']],
-                [['participante_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['usuario_id' => 'idUser']],
+//                [['participante_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['usuario_id' => 'idUser']],
                 //[['tipoUsuario'], 'exist', 'skipOnError' => true, 'targetClass' => Equipe::className(), 'targetAttribute' => ['tipoUsuario' => 'tipoUsuario']],
         ];
     }

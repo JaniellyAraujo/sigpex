@@ -1,6 +1,5 @@
 <?php
-
-/******************************************************************
+/* * ****************************************************************
  * SIGPEX - SISTEMA  DE GERENCIAMENTO DE PROJETOS DE EXTENSÃO
 
  * O SigPex foi desenvolvido como Trabalho de Conclusão de Curso
@@ -11,9 +10,11 @@
  * Desenvolvido pela acadêmica: Janielly Araújo Lopes.
  * Orientadora: Cleiane Gonçalves Oliveira.
  *
- /******************************************************************/
+  /***************************************************************** */
+
 use yii\helpers\Url;
 use yii\helpers\Html;
+use app\models\User;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Projetos */
@@ -37,7 +38,7 @@ use yii\helpers\Html;
     }
 
     tr:nth-child(even) {
-        background-color: #dddddd;
+        background-color: #ffffff;
     }
     .sigpex-link-box-text {
         text-transform: uppercase;
@@ -45,12 +46,26 @@ use yii\helpers\Html;
 
 </style>
 <div class="box-primary box view-item col-xs-12 col-lg-12">
-    <h4 class="box-title"><p><i class="fa fa-file-text-o"></i> DADOS DO PROJETO</p></h4>
-
     <div class="box-body">
         <div class="pull-right">
-            <button onClick="history.go(-1)" class="btn btn-social btn-default" ><b class="fa fa-arrow-left"></b> Voltar</button> <!--Exemmlo botão voltar -->           
-             <?= Html::a('<b class="fa fa-download"></b>', [''], ['target' => '_blank', 'class' => 'btn btn-default', 'title' => 'Exportar', 'id' => 'modal-btn-pdf']) ?>
+            <?php
+            echo Html::a('<b class="fa fa-building-o fa fa-white"></b> Relatório Mensal', ['/relatorios-projetos/create', "id" => $model->id], ['class' => 'btn btn-social btn-primary', 'style' => 'margin-left:10px']);
+            echo Html::a('<b class="fa fa-building fa fa-white"></b> Relatório Final', ['/relatorios-projetos/create', "id" => $model->id], ['class' => 'btn btn-social btn-primary', 'style' => 'margin-left:10px']);?>
+            
+            <?php
+            if ($model->isAtivo == 0) {
+                echo Html::a(Yii::t('app', '<b class="fa fa-eyedropper fa fa-white"></b> Atualizar'), ['update', 'id' => $model->id], ['class' => 'btn btn-social btn-primary', 'style' => 'margin-left:10px']);
+                echo Html::a(Yii::t('app', '<b class="fa fa-trash fa fa-white"></b> Excluir'), ['delete', 'id' => $model->id], [
+                    'class' => 'btn btn-social btn-danger', 'style' => 'margin-left:10px',
+                    'data' => [
+                        'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                        'method' => 'post',
+                    ],
+                ]);
+            }
+            ?>
+
+            <?= Html::a('<b class="fa fa-download"></b>', [''], ['target' => '_blank', 'class' => 'btn btn-default', 'title' => 'Exportar', 'id' => 'modal-btn-pdf']) ?>
 
 
         </div> <br><br>
@@ -124,7 +139,7 @@ use yii\helpers\Html;
                                     <div class="col-md-8"><b>PARCEIROS: </b><?= Html::encode($model->parceiros) ?></div><br><br>
 
                                 </div></td></tr>
-                       
+
                     </table>
                 </div>
 
@@ -137,7 +152,7 @@ use yii\helpers\Html;
             <div class="box-body">
                 <div class="col-lg-12 table-responsive  no-padding " style="margin-bottom:15px">
                     <table class="table table-striped">
-                       
+
                         <tr>
                             <td><div class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
                                     <div class="col-md-6"><b>POSSUI VÍNCULO COM ALGUM PROGRAMA/EVENTO/CURSO? </b><?= Html::encode($model->vinculo) ?></div>
@@ -168,7 +183,7 @@ use yii\helpers\Html;
 
             </div>
         </div>
-        
+
 
         <div class="box box-solid box-primary col-xs-12 col-lg-12 no-padding"> <!--Exemmlo botão voltar -->
             <div class="box-header with-border">
@@ -188,12 +203,27 @@ use yii\helpers\Html;
             </div>
         </div>
 
-
-
+        <div class="box-footer text-right" style="margin-top: 20px"> 
+            <button onClick="history.go(-1)" class="btn btn-social btn-default" ><b class="fa fa-arrow-left"></b> Voltar</button>                  
+            <?php
+            //if (($model->isAtivo == 5 && (($model->tipoUsuario == 'Técnico Administrativo - Coordenador')||($model->tipoUsuario == 'Docente - Coordenador')))) {
+            if (($model->isAtivo == 5) && (Yii::$app->user->identity->role == 3)) {
+                echo Html::a('<b class="fa fa-unlock-alt fa fa-white"></b> Encerrar', ['/projetos/encerrar', "id" => $model->id], ['class' => 'btn btn-social btn-bitbucket', 'style' => 'margin-left:10px']);
+            } else if ($model->isAtivo == 0) {
+                echo Html::a('<b class="fa fa-send"></b> Enviar', ['/projetos/submeter', "id" => $model->id], ['class' => 'btn btn-social btn-success', 'style' => 'margin-left:10px']);
+            }
+            ?>
+            <?php
+            if ((($model->isAtivo == 1) || ($model->isAtivo == 4)) && ((Yii::$app->user->identity->role == 2))) {
+                echo Html::a('<b class="fa fa-pencil-square-o"></b> Solicitar Modificação', ['/projetos/update1', "id" => $model->id], ['class' => 'btn btn-social btn-danger', 'style' => 'margin-left:10px']);
+                echo Html::a('<b class="fa fa-check-square-o"></b> Confirmar', ['/projetos/aprovar', "id" => $model->id], ['class' => 'btn btn-social btn-success', 'style' => 'margin-left:10px']);
+            }
+            ?>
+            <?php if (($model->isAtivo == 6) && ((Yii::$app->user->identity->role == 2))) {
+                echo Html::a('<b class="fa fa-folder-open fa fa-white"></b> Arquivar', ['/projetos/arquivar', "id" => $model->id], ['class' => 'btn btn-social btn-bitbucket', 'style' => 'margin-left:10px']);
+            }?>
+        </div>
 
     </div>
 </div>
-<?php $this->registerJs("(function($) {
-      fakewaffle.responsiveTabs(['xs', 'sm']);
-  })(jQuery);", yii\web\View::POS_END, 'responsive-tab'); ?>
-
+<?php $this->registerJs("(function($) {fakewaffle.responsiveTabs(['xs', 'sm']);})(jQuery);", yii\web\View::POS_END, 'responsive-tab'); ?>

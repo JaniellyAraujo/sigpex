@@ -26,14 +26,14 @@ use yii\widgets\ActiveForm;
     <h3 class="box-title"><i class="fa fa-list-ul"></i> Gerenciar Projetos</h3>
     <div class="panel-body">
 
-        <div class="panel panel-danger">
+        <div class="panel panel-warning">
             <div class="panel-heading">
                 <h3 class="panel-title"><i class="fa fa-pencil-square-o"></i> Solicitar Modificação - Cadastro de Projetos</h3>
             </div>
 
 
             <div class="panel-body">     
-
+                <div class="responsive"> 
                 <?php if (Yii::$app->user->can('coordenador') || (Yii::$app->user->can('servidor'))) { ?>
 
                     <?= $form->field($model, 'justificativa')->textarea(['rows' => 6], ['responsive' => TRUE]) ?>
@@ -44,7 +44,7 @@ use yii\widgets\ActiveForm;
                     </div>
 
                 <?php } ?>  
-
+                </div>
             </div>
 
         </div>

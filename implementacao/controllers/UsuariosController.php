@@ -43,11 +43,35 @@ class UsuariosController extends Controller {
     }
 
     public function actionIndex() {
-        if (Yii::$app->user->can('admin')) {
+        if (Yii::$app->user->identity->role == 1 || Yii::$app->user->identity->role == 2 || Yii::$app->user->identity->role == 3 || Yii::$app->user->identity->role == 4) {
             $searchModel = new UsuariosSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            
+             if (Yii::$app->user->identity->role != 1) {
+                $dataProvider->query
+                    ->andWhere(['USUARIOS.id' => \Yii::$app->user->identity->getId()]);
+            }
 
             return $this->render('index', [
+                        'searchModel' => $searchModel,
+                        'dataProvider' => $dataProvider,
+            ]);
+        } else {
+            throw new NotFoundHttpException('Você não tem permissão para acessar esta página.');
+        }
+    }
+    
+    public function actionIndex0() {
+        if (Yii::$app->user->identity->role == 2 || Yii::$app->user->identity->role == 3 || Yii::$app->user->identity->role == 4) {
+            $searchModel = new UsuariosSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            
+             if (Yii::$app->user->identity->role != 1) {
+                $dataProvider->query
+                    ->andWhere(['USUARIOS.id' => \Yii::$app->user->identity->getId()]);
+            }
+
+            return $this->render('index0', [
                         'searchModel' => $searchModel,
                         'dataProvider' => $dataProvider,
             ]);
@@ -67,11 +91,7 @@ class UsuariosController extends Controller {
                     'model' => $this->findModel($id),
         ]);
     }
-     public function actionView0($id) {
-        return $this->render('view', [
-                    'model' => $this->findModel($id),
-        ]);
-    }
+    
 
     /**
      * Creates a new Usuarios model.
@@ -84,7 +104,7 @@ class UsuariosController extends Controller {
         $model->isAtivo = '0';
         $model->codVerificacao = '0';
 
-        if ((Yii::$app->user->isGuest) || (Yii::$app->user->can('admin'))) {
+        if ((Yii::$app->user->isGuest) || (Yii::$app->user->identity->role == 1)) {
             if (isset($_POST['User'])) {
                 $model->attributes = $_POST['User'];
 
@@ -102,7 +122,7 @@ class UsuariosController extends Controller {
                     $hash = Yii::$app->security->generatePasswordHash($model->password_hash);
                     $model->password_hash = $hash;
 
-                    if ((Yii::$app->user->can('admin'))) {
+                    if (Yii::$app->user->identity->role == 1) {
                         $model->isAtivo = '1';
                         Yii::$app->getSession()->setFlash('success', [
                             'type' => 'success',
@@ -157,16 +177,17 @@ class UsuariosController extends Controller {
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id) {
-        if (Yii::$app->user->can('admin')) {
+        if (Yii::$app->user->identity->role == 1 || Yii::$app->user->identity->role == 2 || Yii::$app->user->identity->role == 3 || Yii::$app->user->identity->role == 4) {
             $model = $this->findModel($id);
             //$model->password_hash = $model->password_hash;
+            
             
               $hash = $model->password_hash;
               $model->password_hash_repeat = $model->password_hash;
             if (isset($_POST['User'])) {
                 $model->attributes = $_POST['User'];
 
-
+                if (Yii::$app->user->identity->role == 1 ) {
                 if ($model->role === '1') {
                     $model->role = 1; //admin
                     //$model->role = "Administrador";
@@ -176,7 +197,7 @@ class UsuariosController extends Controller {
                     $model->role = 3; //servidor
                 } else if ($model->role === '4') {
                     $model->role = 4; //discente
-                }
+                }}
 
                 if ($model->validate()) {
                     if ($hash !=$model->password_hash){
@@ -205,7 +226,7 @@ class UsuariosController extends Controller {
             throw new NotFoundHttpException('Você não tem permissão para acessar esta página.');
         }
     }    public function actionUpdate0($id) {
-        if (Yii::$app->user->can('admin')) {
+        if (Yii::$app->user->identity->role == 1) {
             $model = $this->findModel($id);
            
             if (isset($_POST['User'])) {
@@ -256,7 +277,7 @@ class UsuariosController extends Controller {
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id) {
-        if (Yii::$app->user->can('admin')) {
+        if (Yii::$app->user->identity->role == 1) {
             $this->findModel($id)->delete();
             Yii::$app->getSession()->setFlash('danger', [
                 'type' => 'danger',
@@ -288,7 +309,7 @@ class UsuariosController extends Controller {
     }
 
     public function actionAtivar($id) {
-        if (Yii::$app->user->can('admin')) {
+        if (Yii::$app->user->identity->role == 1) {
             $model = $this->findModel($id);
             $ativo = $model->isAtivo;
 
@@ -335,7 +356,7 @@ class UsuariosController extends Controller {
     }
 
     public function actionDesativar($id) {
-        if (Yii::$app->user->can('admin')) {
+        if (Yii::$app->user->identity->role == 1) {
             $model = $this->findModel($id);
             if ($model->role != 1) {
             
@@ -372,7 +393,7 @@ class UsuariosController extends Controller {
     }
 
     public function actionReativar($id) {
-        if (Yii::$app->user->can('admin')) {
+        if (Yii::$app->user->identity->role == 1) {
             $model = $this->findModel($id);
             $ativo = $model->isAtivo;
 

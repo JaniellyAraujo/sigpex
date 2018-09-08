@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 23-Ago-2018 às 01:36
+-- Generation Time: 08-Set-2018 às 16:01
 -- Versão do servidor: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -61,6 +61,7 @@ INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
 ('coordenador', '10', 1527798669),
 ('coordenador', '33', 1529100175),
 ('discente', '22', 1528837345),
+('discente', '35', 1535386692),
 ('discente', '4', 1529020175),
 ('discente', '5', 1523755901),
 ('servidor', '15', 1528835551),
@@ -9624,96 +9625,6 @@ INSERT INTO `estados` (`id`, `nome`, `sigla`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `j_atividades`
---
-
-CREATE TABLE `j_atividades` (
-  `id` int(11) NOT NULL,
-  `titulo` varchar(500) NOT NULL,
-  `nome` varchar(50) DEFAULT NULL,
-  `localExecucao` varchar(30) DEFAULT NULL,
-  `pesAtendidas` int(6) DEFAULT NULL,
-  `classificacaoAtivi` varchar(30) DEFAULT NULL,
-  `dataInicio` date DEFAULT NULL,
-  `datafim` date DEFAULT NULL,
-  `cargHoraria` int(10) DEFAULT NULL,
-  `turno` varchar(20) DEFAULT NULL,
-  `areaConhecimento` varchar(30) DEFAULT NULL,
-  `descricao` text,
-  `publicoAlvo` varchar(30) DEFAULT NULL,
-  `isAtivo` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `j_atividades`
---
-
-INSERT INTO `j_atividades` (`id`, `titulo`, `nome`, `localExecucao`, `pesAtendidas`, `classificacaoAtivi`, `dataInicio`, `datafim`, `cargHoraria`, `turno`, `areaConhecimento`, `descricao`, `publicoAlvo`, `isAtivo`) VALUES
-(1, 'ghghgh', 'João', 'januaria', 30, 'Seminário', '2018-04-18', '2018-04-18', 30, 'Matutino', 'saude', '', 'estagiario', 0),
-(2, 'meu primeiro cadastro', 'Isabela', '', NULL, 'Feira', '2018-04-30', '2018-05-01', NULL, '', '', '', '', 0);
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `j_certificados`
---
-
-CREATE TABLE `j_certificados` (
-  `id` int(11) NOT NULL,
-  `nome` varchar(50) NOT NULL,
-  `tipo` varchar(30) DEFAULT NULL,
-  `atividade` varchar(500) NOT NULL,
-  `projetoevento` varchar(500) NOT NULL,
-  `dia` int(2) NOT NULL,
-  `mes` varchar(30) NOT NULL,
-  `ano` varchar(30) NOT NULL,
-  `cargahoraria` int(6) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `j_declaracoes`
---
-
-CREATE TABLE `j_declaracoes` (
-  `id` int(11) NOT NULL,
-  `nome` varchar(50) NOT NULL,
-  `cpf` varchar(14) NOT NULL,
-  `titulo` varchar(500) NOT NULL,
-  `anoletivo` varchar(50) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `j_declaracoes`
---
-
-INSERT INTO `j_declaracoes` (`id`, `nome`, `cpf`, `titulo`, `anoletivo`) VALUES
-(1, 'Lopes', '344.343.432-43', 'sdhksdkjd', '2º Semestre 2016');
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `j_particeventos`
---
-
-CREATE TABLE `j_particeventos` (
-  `id` int(11) NOT NULL,
-  `titulo` varchar(500) NOT NULL,
-  `nome` varchar(30) DEFAULT NULL,
-  `email` varchar(100) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `j_particeventos`
---
-
-INSERT INTO `j_particeventos` (`id`, `titulo`, `nome`, `email`) VALUES
-(1, 'ghghgh', 'Maria', 'discente@gmail.com');
-
--- --------------------------------------------------------
-
---
 -- Estrutura da tabela `j_particprojetos`
 --
 
@@ -9732,50 +9643,6 @@ CREATE TABLE `j_particprojetos` (
 INSERT INTO `j_particprojetos` (`id`, `titulo`, `nome`, `tipoUsuario`, `justificativa`) VALUES
 (1, 'Educar', 'Jany', 'Discente Voluntário', NULL),
 (2, 'Educar', 'Bianca Dias Guedes', 'Discente Bolsista', NULL);
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `j_usuarios`
---
-
-CREATE TABLE `j_usuarios` (
-  `id` int(11) NOT NULL,
-  `nome` varchar(50) DEFAULT NULL,
-  `cpf` varchar(14) DEFAULT NULL,
-  `rg` varchar(13) DEFAULT NULL,
-  `email` varchar(50) NOT NULL,
-  `rua` varchar(50) DEFAULT NULL,
-  `numero` int(6) DEFAULT NULL,
-  `complemento` varchar(50) DEFAULT NULL,
-  `bairro` varchar(50) DEFAULT NULL,
-  `cidade` varchar(50) DEFAULT NULL,
-  `estado` varchar(30) DEFAULT NULL,
-  `telefone` varchar(15) DEFAULT NULL,
-  `role` varchar(30) DEFAULT NULL,
-  `siapeMatric` varchar(10) DEFAULT NULL,
-  `formacaoCurso` varchar(500) DEFAULT NULL,
-  `instituicao` varchar(100) DEFAULT NULL,
-  `password_hash` varchar(255) NOT NULL,
-  `isAtivo` tinyint(1) NOT NULL DEFAULT '0',
-  `codVerificacao` varchar(255) DEFAULT NULL,
-  `password_reset_token` varchar(45) DEFAULT NULL,
-  `dtnascimento` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `j_usuarios`
---
-
-INSERT INTO `j_usuarios` (`id`, `nome`, `cpf`, `rg`, `email`, `rua`, `numero`, `complemento`, `bairro`, `cidade`, `estado`, `telefone`, `role`, `siapeMatric`, `formacaoCurso`, `instituicao`, `password_hash`, `isAtivo`, `codVerificacao`, `password_reset_token`, `dtnascimento`) VALUES
-(1, 'admin', '111.111.111-11', '111111111111', 'admin@gmail.com', '11', 11, '7', '11', '11', 'Minas Gerais', '(11)11111-1111', '1', NULL, NULL, NULL, '$2y$13$7VxOj6vM5A4sdWsliy6WWuQq0vFSC9zg0XotFL2p.E5Ia1mMS0HAS', 1, '0', NULL, ''),
-(2, 'Maria', '222.222.222-22', '222222222222', 'mary@gmail.com', '22', 22, '22', '22', '22', 'Minas Gerais', '(22)22222-2222', '2', NULL, NULL, NULL, '$2y$13$DAnY3sclihz6P8TFOanPGu.CvKAHABA8ax77Jljiu9o.Bmnr5RLyy', 2, '0', NULL, ''),
-(4, 'Jany dis', '444.444.444-44', '444444444444', 'jany@gmail.com', '44', 44, '44', '44', '44', 'Minas Gerais', '(44)44444-4444', '4', NULL, NULL, NULL, '$2y$13$wC7n.F6n9wRGyxWyXv8pMOHQ1ccDQEvk7PK5Ua3pxpn2.VECo4A3a', 1, '0', NULL, ''),
-(10, 'Janielly Araujo Lopes', '234.324.234-23', '234324234234', 'janielly300@gmail.com', 'São Mateus', 567, 'A', 'Centro', 'Januária', 'Minas Gerais', '(34)34234-2342', '2', NULL, NULL, NULL, '$2y$13$aWksulRy4Wf4WSJi264zleLR3uybEmxEGfmunZz.22THpbZHTJ1OS', 1, '0', NULL, NULL),
-(28, 'Marcos Dias', '100.289.388-73', '237878273872', 'marcos@gmail.com', '', NULL, '', '', '', '', '', '3', NULL, NULL, NULL, '$2y$13$BxztmML8oTPhodcAA4E9m.gcoNIqGzMhmwQOudM/69zaAiX20/msK', 1, '0', NULL, NULL),
-(32, 'Jany ser', '984.434.354-35', '', 'KHD@GMAIL.COM', '', NULL, '', '', '', '', '', '3', NULL, NULL, NULL, '$2y$13$R6VICgx1qjjccyk6GUatCuLoYIsA52b5Rl88a943ggl7MjvHnulKC', 0, '0', NULL, NULL),
-(33, 'admin2', '121.212.121-21', '', 'admin2@gmail.com', '', NULL, '', '', '', '', '', '1', NULL, NULL, NULL, '$2y$13$Ci/5Sna8ojNqNlVxfxD0VeIh5Av1u0ha4ZmdDnst0iGzwChWrHX6.', 1, '0', NULL, NULL),
-(34, 'jany araujo', '121.212.232-33', '', 'ja@gmail.com', '', NULL, '', '', 'januaria', 'Mato Grosso do Sul', '', '4', NULL, NULL, NULL, '$2y$13$LXdCO6RVL6iRJ9rdiZTDCe2uHRZ2P0z8aRVU.3Z/esxJqpcuSjxDi', 2, '0', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -9805,7 +9672,8 @@ CREATE TABLE `modalidade` (
 
 INSERT INTO `modalidade` (`id`, `nome`) VALUES
 (1, 'Fomento Interno'),
-(2, 'Voluntário');
+(2, 'Voluntário'),
+(4, 'Fomento Externo');
 
 -- --------------------------------------------------------
 
@@ -9823,7 +9691,7 @@ CREATE TABLE `parceiros` (
 --
 
 INSERT INTO `parceiros` (`id`, `nome`) VALUES
-(1, 'maria'),
+(12, 'isaque'),
 (4, 'João'),
 (6, 'Cecília'),
 (7, 'Bruna');
@@ -9897,17 +9765,25 @@ CREATE TABLE `projetos` (
 --
 
 INSERT INTO `projetos` (`id`, `titulo`, `coordenador`, `tipoProjeto`, `objetivo`, `resumo`, `municipio`, `descricaoPopulacao`, `publicoAlvo`, `pesAtendidas`, `localExecucao`, `dataInicio`, `datafim`, `cargHorariaSemanal`, `cargHorariaTotal`, `parceiros`, `vinculo`, `citarVinculo`, `convenio`, `citarConvenio`, `gerFundacao`, `citarFundacao`, `multicampi`, `financiamento`, `tipoFinanciamento`, `citarFinanciamento`, `valorFinanciamento`, `areaConhecimento`, `campusDesenvolvido`, `isStatus`, `isControle`, `modalidade`, `isTipo`, `isAtivo`, `justificativa`, `mes`, `atividesenvolvidas`, `avaliacao`, `observacoes`, `objetalcancados`, `etapas`, `materiasutiliz`, `metodosutiliz`, `caracfacilitadora`, `caractdificultadora`, `contribuicao`, `avaliacao2`, `isAndamento`, `editaAluno`, `editaCoordenador`, `dataSolicitacao`, `dataAnalise`, `idUser`, `participante`, `tipoUsuario`) VALUES
-(3, 'Educar', 'Isabela', 'ArtÃ­stico', 'Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle quora plaxo ideeli hulu weebly balihoo...', 'Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle quora plaxo ideeli hulu weebly balihoo...', 'JanuÃ¡ria', 'Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle quora plaxo ideeli hulu weebly balihoo...', 'CrianÃ§as e adolescentes', 33, 'Servir', '2018-04-16', '2018-04-28', 40, 80, '--', 'NÃ£o', '---', 'NÃ£o', '--', 'NÃ£o', '--', 'NÃ£o', 'Sim', NULL, 'IFNMG', 232, 'Tecnologia', 'JanuÃ¡ria', NULL, 5, 'VoluntÃ¡rio', '0', 8, 'PerÃ­odo de tempo curto', 'Maio', 'kkjkjkj hkjhjhjkj jhjkhhkhk jhkhjkjhkjh', 'regular', 'jhghjghjgjhgjjjjjjjjjjjjjjjjjjjjjjj', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, '0', '1'),
-(25, 'Inclusão digital', 'Jany ser', 'Cultural', 'Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle quora plaxo ideeli hulu weebly balihoo...', 'Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle quora plaxo ideeli hulu weebly balihoo...', 'JanuÃ¡ria', 'Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle quora plaxo ideeli hulu weebly balihoo...', 'CrianÃ§as e adolescentes', 35, 'Servir', '2018-04-24', '2018-04-24', 30, 80, '', '', '---', '', '--', '', '--', '', '', NULL, '--', 0, 'Tecnologia', '', NULL, 2, 'Fomento Interno', '4', 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(26, 'Semana da Informática', 'Marcos', 'Tecnológico', 'I would like to meet you to discuss the latest news about the arrival of the new theme. They say it is going to be one the best themes on the market', 'I would like to meet you to discuss the latest news about the arrival of the new theme. They say it is going to be one the best themes on the market', 'Januária', 'I would like to meet you to discuss the latest news about the arrival of the new theme. They say it is going to be one the best themes on the market', 'Acadêmicos ', 350, 'IFNMG', '2018-04-30', '2018-05-11', 30, 60, '', 'Sim', 'TADS', '', '--', '', '--', '', '', NULL, '--', 0, 'Tecnologia', '', NULL, 2, 'Fomento Interno', '1', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(27, 'Pro Educ ', 'Marcos', 'Cultural', '', '', 'Januária', '', 'Crianças e adolescentes', 33, '', '2018-04-30', '2018-05-05', 30, 60, 'maria', 'Não', '', 'Não', '', 'Não', '--', 'Sim', 'Sim', NULL, 'IFNMG', 300, 'Tecnologia', 'IFNMG - Januária', NULL, 1, 'Fomento Interno', '1', 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(32, '+Up', 'Jany ser', 'Empreendedor', '', '', '', '', '', NULL, '', '2018-06-25', '2018-06-30', 30, 80, '', '', '', '', '', '', '', '', 'Sim', NULL, 'IFNMG', 232, '', '', NULL, 2, 'Fomento Interno', '1', 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(36, 'Tecno Show', 'Marcos', 'Tecnológico', '', '', 'Januária', '', 'Crianças e adolescentes', 33, '', '2018-07-26', '2018-08-04', 30, 60, '', '', '', '', '', '', '', 'Não', '', NULL, '', NULL, 'Tecnologia', 'IFNMG - Januária', NULL, 0, 'Fomento Interno', '1', 4, 'teste\r\n teste\r\n teste\r\n teste \r\nteste \r\nteste', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(37, 'teste', 'Marcos Dias', 'Tecnológico', '', '', '', '', '', NULL, '', '2018-07-18', '2018-07-28', 30, 60, '', '', '', '', '', '', '', '', '', NULL, '', NULL, '', '', NULL, 0, 'Fomento Interno', '1', 3, 'teste teste teste teste teste teste teste teste teste teste teste teste ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Jany dis', ''),
-(44, 'oi6', 'Jany ser', 'Social', '', '', 'Januária', '', 'Crianças e adolescentes', 33, '', '2018-07-31', '2018-08-04', 30, 60, '', '', '', '', '', '', '', 'Não', '', NULL, '', NULL, 'Tecnologia', 'IFNMG - Januária', NULL, 0, 'Voluntário', '3', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 28, '', ''),
-(45, 'hjsdhj', 'Jany ser', 'Tecnológico', '', '', '', '', '', NULL, '', '2018-08-22', '2018-08-31', 23, 443, '', '', '', '', '', '', '', '', '', NULL, '', NULL, '', '', NULL, 0, 'Voluntário', '1', 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(46, 'reitoriae', 'Jany ser', 'Tecnológico', '', '', '', '', '', NULL, '', '2018-08-07', '2018-08-20', 30, 60, '', '', '', '', '', '', '', '', '', NULL, '', NULL, '', '', NULL, 0, 'Fomento Interno', '1', 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
-(47, 'novo teste', 'Marcos Dias', 'Social', '', '', '', '', '', NULL, '', '2018-08-01', '2018-08-29', 30, 60, '', '', '', '', '', '', '', '', '', NULL, '', NULL, '', '', NULL, 0, 'Voluntário', '3', 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '');
+(3, 'Educar', 'Isabela', 'ArtÃ­stico', 'Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle quora plaxo ideeli hulu weebly balihoo...', 'Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle quora plaxo ideeli hulu weebly balihoo...', 'JanuÃ¡ria', 'Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle quora plaxo ideeli hulu weebly balihoo...', 'CrianÃ§as e adolescentes', 33, 'Servir', '2018-04-16', '2018-04-28', 40, 80, '--', 'NÃ£o', '---', 'NÃ£o', '--', 'NÃ£o', '--', 'NÃ£o', 'Sim', NULL, 'IFNMG', 232, 'Tecnologia', 'JanuÃ¡ria', NULL, 3, 'VoluntÃ¡rio', '0', 0, 'PerÃ­odo de tempo curto', 'Maio', 'kkjkjkj hkjhjhjkj jhjkhhkhk jhkhjkjhkjh', 'regular', 'jhghjghjgjhgjjjjjjjjjjjjjjjjjjjjjjj', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, '0', '1'),
+(25, 'Inclusão digital', 'Jany ser', 'Cultural', 'Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle quora plaxo ideeli hulu weebly balihoo...', 'Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle quora plaxo ideeli hulu weebly balihoo...', 'JanuÃ¡ria', 'Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle quora plaxo ideeli hulu weebly balihoo...', 'CrianÃ§as e adolescentes', 35, 'Servir', '2018-04-24', '2018-04-24', 30, 80, '', '', '---', '', '--', '', '--', '', '', NULL, '--', 0, 'Tecnologia', '', NULL, 5, 'Fomento Externo', '4', 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(26, 'Semana da Informática', 'Marcos', 'Tecnológico', 'I would like to meet you to discuss the latest news about the arrival of the new theme. They say it is going to be one the best themes on the market', 'I would like to meet you to discuss the latest news about the arrival of the new theme. They say it is going to be one the best themes on the market', 'Januária', 'I would like to meet you to discuss the latest news about the arrival of the new theme. They say it is going to be one the best themes on the market', 'Acadêmicos ', 350, 'IFNMG', '2018-04-30', '2018-05-11', 30, 60, '', 'Sim', 'TADS', '', '--', '', '--', '', '', NULL, '--', 0, 'Tecnologia', '', NULL, 1, 'Fomento Interno', '1', 3, 'teste teste teste teste teste', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(27, 'Pro Educ ', 'Marcos', 'Cultural', '', '', 'Januária', '', 'Crianças e adolescentes', 33, '', '2018-04-30', '2018-05-05', 30, 60, 'maria', 'Não', '', 'Não', '', 'Não', '--', 'Sim', 'Sim', NULL, 'IFNMG', 300, 'Tecnologia', 'IFNMG - Januária', NULL, 1, 'Fomento Interno', '1', 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(32, '+Up', 'Jany ser', 'Empreendedor', '', '', '', '', '', NULL, '', '2018-06-25', '2018-06-30', 30, 80, '', '', '', '', '', '', '', '', 'Sim', NULL, 'IFNMG', 232, '', '', NULL, 1, 'Fomento Interno', '1', 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(36, 'Tecno Show', 'Marcos', 'Tecnológico', '', '', 'Januária', '', 'Crianças e adolescentes', 33, '', '2018-07-26', '2018-08-04', 30, 60, '', '', '', '', '', '', '', 'Não', '', NULL, '', NULL, 'Tecnologia', 'IFNMG - Januária', NULL, 1, 'Fomento Interno', '1', 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(37, 'teste', 'Marcos Dias', 'Tecnológico', '', '', '', '', '', NULL, '', '2018-07-18', '2018-07-28', 30, 60, '', '', '', '', '', '', '', '', '', NULL, '', NULL, '', '', NULL, 1, 'Fomento Interno', '1', 4, 'teste teste teste teste teste teste teste teste teste teste teste teste ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Jany dis', ''),
+(44, 'oi6', 'Jany ser', 'Social', '', '', 'Januária', '', 'Crianças e adolescentes', 33, '', '2018-07-31', '2018-08-04', 30, 60, '', '', '', '', '', '', '', 'Não', '', NULL, '', NULL, 'Tecnologia', 'IFNMG - Januária', NULL, 3, 'Voluntário', '3', 3, 'teste', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 28, '', ''),
+(45, 'hjsdhj', 'Jany ser', 'Tecnológico', '', '', '', '', '', NULL, '', '2018-08-22', '2018-08-31', 23, 443, '', '', '', '', '', '', '', '', '', NULL, '', NULL, '', '', NULL, 3, 'Voluntário', '1', 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(46, 'reitoriae', 'Jany ser', 'Tecnológico', '', '', '', '', '', NULL, '', '2018-08-07', '2018-08-20', 30, 60, '', '', '', '', '', '', '', '', '', NULL, '', NULL, '', '', NULL, 1, 'Fomento Interno', '1', 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(47, 'novo teste', 'Marcos Dias', 'Social', '', '', '', '', '', NULL, '', '2018-08-01', '2018-08-29', 30, 60, '', '', '', '', '', '', '', '', '', NULL, '', NULL, '', '', NULL, 5, 'Fomento Externo', '3', 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(48, 'voluntario', 'Marcos Dias', 'Tecnológico', '', '', '', '', '', NULL, '', '2018-08-02', '2018-08-02', 30, 80, '', '', '', '', '', '', '', '', '', NULL, '', NULL, '', '', NULL, 3, 'Voluntário', '1', 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(49, 'projeto marcos', 'Marcos Dias', 'Social', '', '', '', '', '', NULL, '', '2018-08-01', '2018-08-30', 30, 80, 'João', '', '', '', '', '', '', '', '', NULL, '', NULL, '', '', NULL, 0, 'Voluntário', '0', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(50, 'projeto marcos 1', 'Marcos Dias', 'Empreendedor', '', '', '', '', '', NULL, '', '2018-08-01', '2018-08-28', 30, 60, 'João', '', '', '', '', '', '', '', '', NULL, '', NULL, '', '', NULL, 0, 'Fomento Interno', '2', 3, 'tuuilkjhvhlçlkbbhl', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(51, 'Melhor idade', NULL, 'Empreendedor', '', '', '', '', '', NULL, '', '2018-08-01', '2018-08-31', 30, 80, '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, '', '', NULL, 1, 'Fomento Interno', '2', 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(52, 'Melhor idade ew', NULL, 'Empreendedor', '', '', '', '', '', NULL, '', '2018-09-12', '2018-10-06', 30, 60, '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, '', '', NULL, 3, 'Voluntário', '2', 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(53, 'Semeando ', NULL, 'Tecnológico', '', '', '', '', '', NULL, '', '2018-09-11', '2018-09-26', 30, 60, '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, '', '', NULL, 3, 'Voluntário', '1', 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(54, 'jshsds', NULL, 'Social', '', '', '', '', '', NULL, '', '2018-09-19', '2018-09-26', 30, 60, '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, '', '', NULL, 1, 'Fomento Interno', '3', 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(55, 'Empreender', NULL, 'Cultural', '', '', '', '', '', NULL, '', '2018-09-01', '2018-09-30', 30, 80, '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, '', '', NULL, 3, 'Voluntário', '4', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -9930,8 +9806,23 @@ CREATE TABLE `projeto_equipe` (
 CREATE TABLE `projeto_usuario` (
   `id` int(11) NOT NULL,
   `projeto_id` int(11) NOT NULL,
-  `usuario_id` int(11) NOT NULL
+  `usuario_id` int(11) NOT NULL,
+  `tipo` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `projeto_usuario`
+--
+
+INSERT INTO `projeto_usuario` (`id`, `projeto_id`, `usuario_id`, `tipo`) VALUES
+(1, 50, 28, 'Docente - Coordenador'),
+(2, 50, 32, 'Docente - Colaborador'),
+(3, 50, 34, 'Discente Bolsista'),
+(4, 50, 4, 'Discente Voluntário'),
+(5, 52, 28, 'Docente - Coordenador'),
+(6, 53, 28, 'Docente - Coordenador'),
+(7, 54, 28, 'Docente - Coordenador'),
+(9, 55, 28, 'Docente - Coordenador');
 
 -- --------------------------------------------------------
 
@@ -10046,9 +9937,56 @@ CREATE TABLE `tipousuario` (
 
 INSERT INTO `tipousuario` (`id`, `nome`) VALUES
 (1, 'Discente Voluntário'),
-(4, 'Técnico Administrativo'),
-(5, 'Colaborador'),
-(6, 'Discente Bolsista');
+(15, 'Técnico Administrativo - Coordenador'),
+(13, 'Técnico Administrativo - Colaborador'),
+(6, 'Discente Bolsista'),
+(14, 'Docente - Colaborador'),
+(16, 'Docente - Coordenador');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(50) DEFAULT NULL,
+  `cpf` varchar(14) DEFAULT NULL,
+  `rg` varchar(13) DEFAULT NULL,
+  `email` varchar(50) NOT NULL,
+  `rua` varchar(50) DEFAULT NULL,
+  `numero` int(6) DEFAULT NULL,
+  `complemento` varchar(50) DEFAULT NULL,
+  `bairro` varchar(50) DEFAULT NULL,
+  `cidade` varchar(50) DEFAULT NULL,
+  `estado` varchar(30) DEFAULT NULL,
+  `telefone` varchar(15) DEFAULT NULL,
+  `role` varchar(30) DEFAULT NULL,
+  `siapeMatric` varchar(10) DEFAULT NULL,
+  `formacaoCurso` varchar(500) DEFAULT NULL,
+  `instituicao` varchar(100) DEFAULT NULL,
+  `password_hash` varchar(255) NOT NULL,
+  `isAtivo` tinyint(1) NOT NULL DEFAULT '0',
+  `codVerificacao` varchar(255) DEFAULT NULL,
+  `password_reset_token` varchar(45) DEFAULT NULL,
+  `dtnascimento` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `nome`, `cpf`, `rg`, `email`, `rua`, `numero`, `complemento`, `bairro`, `cidade`, `estado`, `telefone`, `role`, `siapeMatric`, `formacaoCurso`, `instituicao`, `password_hash`, `isAtivo`, `codVerificacao`, `password_reset_token`, `dtnascimento`) VALUES
+(1, 'admin', '111.111.111-11', '111111111111', 'admin@gmail.com', '11', 11, '7', '11', '11', 'Minas Gerais', '(11)11111-1111', '1', NULL, NULL, NULL, '$2y$13$PzIX61Z6oC6Hi5yX.WvNQOQmqkKTUWWrcvGkfYXWf6U9YrarBZf/i', 1, '0', NULL, ''),
+(2, 'Maria', '222.222.222-22', '222222222222', 'mary@gmail.com', '22', 22, '22', '22', '22', 'Minas Gerais', '(22)22222-2222', '2', NULL, NULL, NULL, '$2y$13$DAnY3sclihz6P8TFOanPGu.CvKAHABA8ax77Jljiu9o.Bmnr5RLyy', 2, '0', NULL, ''),
+(4, 'Jany dis', '444.444.444-44', '444444444444', 'jany@gmail.com', '44', 44, '44', '44', '44', 'Minas Gerais', '(44)44444-4444', '4', NULL, NULL, NULL, '$2y$13$wC7n.F6n9wRGyxWyXv8pMOHQ1ccDQEvk7PK5Ua3pxpn2.VECo4A3a', 1, '0', NULL, ''),
+(10, 'Janielly Araujo Lopes', '234.324.234-23', '234324234234', 'janielly300@gmail.com', 'São Mateus', 567, 'A', 'Centro', 'Januária', 'Minas Gerais', '(34)34234-2342', '2', NULL, NULL, NULL, '$2y$13$aWksulRy4Wf4WSJi264zleLR3uybEmxEGfmunZz.22THpbZHTJ1OS', 1, '0', NULL, NULL),
+(28, 'Marcos Dias', '100.289.388-73', '237878273872', 'marcos@gmail.com', '', NULL, '', '', '', '', '', '3', NULL, NULL, NULL, '$2y$13$BxztmML8oTPhodcAA4E9m.gcoNIqGzMhmwQOudM/69zaAiX20/msK', 1, '0', NULL, NULL),
+(32, 'Jany ser', '984.434.354-35', '', 'KHD@GMAIL.COM', '', NULL, '', '', '', '', '', '3', NULL, NULL, NULL, '$2y$13$R6VICgx1qjjccyk6GUatCuLoYIsA52b5Rl88a943ggl7MjvHnulKC', 0, '0', NULL, NULL),
+(33, 'admin2', '121.212.121-21', '', 'admin2@gmail.com', '', NULL, '', '', '', '', '', '1', NULL, NULL, NULL, '$2y$13$Ci/5Sna8ojNqNlVxfxD0VeIh5Av1u0ha4ZmdDnst0iGzwChWrHX6.', 1, '0', NULL, NULL),
+(34, 'jany araujo', '121.212.232-33', '', 'ja@gmail.com', '', NULL, '', '', 'januaria', 'Mato Grosso do Sul', '', '4', NULL, NULL, NULL, '$2y$13$LXdCO6RVL6iRJ9rdiZTDCe2uHRZ2P0z8aRVU.3Z/esxJqpcuSjxDi', 2, '0', NULL, NULL),
+(35, 'Teste', '938.998.298-49', '', 'city.janu@gmail.com', '', NULL, '', '', '', '', '', '4', NULL, NULL, NULL, '$2y$13$2m6j3lyJ4e8nCCdon4F9R.Hj4DEDQvCO2Njq/DFubNgxG2N9Hy.I2', 1, '0', 'fx1gUqdhOEGQqknqL5mET0fpaF82XTbW_1535403595', NULL);
 
 --
 -- Indexes for dumped tables
@@ -10109,39 +10047,9 @@ ALTER TABLE `estados`
   ADD UNIQUE KEY `sigla_UNIQUE` (`sigla`);
 
 --
--- Indexes for table `j_atividades`
---
-ALTER TABLE `j_atividades`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `j_certificados`
---
-ALTER TABLE `j_certificados`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `j_declaracoes`
---
-ALTER TABLE `j_declaracoes`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `j_particeventos`
---
-ALTER TABLE `j_particeventos`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `j_particprojetos`
 --
 ALTER TABLE `j_particprojetos`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `j_usuarios`
---
-ALTER TABLE `j_usuarios`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -10215,6 +10123,12 @@ ALTER TABLE `tipousuario`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -10229,50 +10143,25 @@ ALTER TABLE `areaconhecimento`
 ALTER TABLE `campus`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT for table `j_atividades`
---
-ALTER TABLE `j_atividades`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `j_certificados`
---
-ALTER TABLE `j_certificados`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `j_declaracoes`
---
-ALTER TABLE `j_declaracoes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `j_particeventos`
---
-ALTER TABLE `j_particeventos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
 -- AUTO_INCREMENT for table `j_particprojetos`
 --
 ALTER TABLE `j_particprojetos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT for table `j_usuarios`
---
-ALTER TABLE `j_usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
---
 -- AUTO_INCREMENT for table `modalidade`
 --
 ALTER TABLE `modalidade`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `parceiros`
 --
 ALTER TABLE `parceiros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `projetos`
 --
 ALTER TABLE `projetos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 --
 -- AUTO_INCREMENT for table `projeto_equipe`
 --
@@ -10282,7 +10171,7 @@ ALTER TABLE `projeto_equipe`
 -- AUTO_INCREMENT for table `projeto_usuario`
 --
 ALTER TABLE `projeto_usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `relatorios`
 --
@@ -10302,7 +10191,12 @@ ALTER TABLE `tipoprojeto`
 -- AUTO_INCREMENT for table `tipousuario`
 --
 ALTER TABLE `tipousuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+--
+-- AUTO_INCREMENT for table `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 --
 -- Constraints for dumped tables
 --
@@ -10344,7 +10238,7 @@ ALTER TABLE `projeto_equipe`
 --
 ALTER TABLE `projeto_usuario`
   ADD CONSTRAINT `projeto_usuario_ibfk_1` FOREIGN KEY (`projeto_id`) REFERENCES `projetos` (`id`),
-  ADD CONSTRAINT `projeto_usuario_ibfk_2` FOREIGN KEY (`usuario_id`) REFERENCES `j_usuarios` (`id`);
+  ADD CONSTRAINT `projeto_usuario_ibfk_2` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
 
 --
 -- Limitadores para a tabela `relatorios_projetos`

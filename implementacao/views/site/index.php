@@ -24,7 +24,7 @@ AppAsset::register($this);
 ?>
 <div class="site-index">
 
-
+    
     <!--h1>Bem vindo</h1-->
 
     <!--p class="lead" align="center">Sistema para Gerenciamento de Projetos de Extensão do IFNMG-Campus Januária.</p-->
@@ -132,7 +132,7 @@ AppAsset::register($this);
                 </div>
             </div>
         </div>
-    </div>
+    
     <!-- Main content -->
     <!--section class="content"-->
     <!-- Small boxes (Stat box) -->

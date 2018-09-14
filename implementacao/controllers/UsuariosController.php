@@ -46,7 +46,7 @@ class UsuariosController extends Controller {
         if (Yii::$app->user->identity->role == 1 || Yii::$app->user->identity->role == 2 || Yii::$app->user->identity->role == 3 || Yii::$app->user->identity->role == 4) {
             $searchModel = new UsuariosSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-            
+           
              if (Yii::$app->user->identity->role != 1) {
                 $dataProvider->query
                     ->andWhere(['USUARIOS.id' => \Yii::$app->user->identity->getId()]);
@@ -65,7 +65,7 @@ class UsuariosController extends Controller {
         if (Yii::$app->user->identity->role == 2 || Yii::$app->user->identity->role == 3 || Yii::$app->user->identity->role == 4) {
             $searchModel = new UsuariosSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-            
+             
              if (Yii::$app->user->identity->role != 1) {
                 $dataProvider->query
                     ->andWhere(['USUARIOS.id' => \Yii::$app->user->identity->getId()]);
@@ -86,10 +86,18 @@ class UsuariosController extends Controller {
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id) {
-        return $this->render('view', [
+    public function actionView($id)
+    {
+        $model = $this->findModel($id);
+        $permissao = $model->id;
+        
+            if (($permissao == Yii::$app->user->id)||(Yii::$app->user->can('admin'))){
+                return $this->render('view', [
                     'model' => $this->findModel($id),
-        ]);
+                ]);
+        } else {
+            throw new NotAcceptableHttpException('Você não tem permissão para acessar esta página.');
+        }
     }
     
 
@@ -225,7 +233,9 @@ class UsuariosController extends Controller {
         } else {
             throw new NotFoundHttpException('Você não tem permissão para acessar esta página.');
         }
-    }    public function actionUpdate0($id) {
+    }    
+    /*
+    public function actionUpdate0($id) {
         if (Yii::$app->user->identity->role == 1) {
             $model = $this->findModel($id);
            
@@ -265,9 +275,66 @@ class UsuariosController extends Controller {
         } else {
             throw new NotFoundHttpException('Você não tem permissão para acessar esta página.');
         }
+    }*/
+    
+     public function actionAtualiza($id)
+    {
+        $model = $this->findModel($id);
+        $permissao = $model->id;
+        
+        if ($permissao == Yii::$app->user->id){
+            $model->password_hash= null;
+
+            if(isset($_POST['User']))
+            {
+                $model->attributes=$_POST['User'];
+                
+                if ($model->role === '1') {
+                    $model->role = 1; //admin
+                    //$model->role = "Administrador";
+                } else if ($model->role === '2') {
+                    $model->role = 2; //coordenador
+                } else if ($model->role === '3') {
+                    $model->role = 3; //servidor
+                } else if ($model->role === '4') {
+                    $model->role = 4; //discente
+                }
+                if($model->validate())
+                {
+                                     
+
+                    $hash = Yii::$app->security->generatePasswordHash($model->password_hash);
+                    $model->password_hash = $hash;
+
+                    $model->save(false);    
+
+                    Yii::$app->getSession()->setFlash('success', [
+                                                    'type' => 'success',
+                                                    'duration' => 10000,
+                                                    'message' => 'Dados Alterados Com Sucesso.',
+                                                    'title' => '',
+                                                    'positonY' => 'top',
+                                                    'positonX' => 'left'
+                                                    ]);               
+                    return $this->redirect(array('view','id'=>$model->id));
+                }
+            } 
+            return $this->render('form', [
+                'model' => $model,
+            ]);    
+        } else {
+            throw new NotAcceptableHttpException('Você não tem permissão para acessar esta página.');
+        }
+      
     }
-    
-    
+     public function actionAtualizar($id)
+    {
+        $model = $this->findModel($id);           
+       
+        return $this->render('form', [
+            'model' => $model,
+        ]); 
+    }    
 
     /**
      * Deletes an existing Usuarios model.

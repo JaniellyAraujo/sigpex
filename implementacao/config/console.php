@@ -9,6 +9,11 @@ $config = [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'app\commands',
     'components' => [
+   
+    
+    'mailer' => require(__DIR__ . '/mailer.php'),
+   
+
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],

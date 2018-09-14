@@ -83,12 +83,14 @@ use yii\helpers\Html;
 
                         <tr>
                             <td><div class="sigpex-link-box-text" class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                                    <div class="col-md-3"><b>DATA DE INÍCIO: </b><?= Html::encode($model->dataInicio) ?></div>
+                                    <div class="col-md-3"><b>DATA DE INÍCIO: </b><?= Html::encode(Yii::$app->formatter->asDate($model->dataInicio)) ?></div>
                                 </div></td>
                         </tr>
+                                           
+                        
                         <tr>
                             <td><div class="sigpex-link-box-text" class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                                    <div class="col-md-3"><b>DATA DE TÉRMINO: </b><?= Html::encode($model->datafim) ?></div>
+                                    <div class="col-md-3"><b>DATA DE TÉRMINO: </b><?= Html::encode(Yii::$app->formatter->asDate($model->datafim)) ?></div>
                            </div></td>
                         </tr>
                         <td><div class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
@@ -105,3 +107,8 @@ use yii\helpers\Html;
       fakewaffle.responsiveTabs(['xs', 'sm']);
   })(jQuery);", yii\web\View::POS_END, 'responsive-tab'); ?>
 
+<style media="print">
+    .btn {
+    display: none;
+    }
+</style>

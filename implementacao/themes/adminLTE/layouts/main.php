@@ -10,10 +10,12 @@ use adminlte\widgets\Menu;
 //use app\themes\adminLTE\components\ThemeNav;
 use \kartik\growl\Growl;
 
+
 /* @var $this \yii\web\View */
 /* @var $content string */
 AdminlteAsset::register($this);
 AppAsset::register($this);
+
 ?>
 
 <?php $this->beginPage() ?>
@@ -28,6 +30,11 @@ AppAsset::register($this);
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
+
+  <script src="web/js/pace.js"></script>
+  <link href="/pace/themes/pace-theme-barber-shop.css" rel="stylesheet" />
+
+    
     </head>
     <body class="skin-green sidebar-mini">
 
@@ -85,7 +92,7 @@ AppAsset::register($this);
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-<?= Html::img('@web/dist/img/if.png', ['class' => 'img', 'alt' => 'User Image']) ?>
+                            <?= Html::img('@web/dist/img/if.png', ['class' => 'img', 'alt' => 'User Image']) ?>
                         </div>
                         <div class="pull-left info">
                             <p>
@@ -127,9 +134,19 @@ Menu::widget([
             'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 1,
         ],
         //Menu Coordenador
+        ['label' => 'Início',
+            'icon' => 'fa fa-list (alias)',
+            'url' => '@web/projetos/solicitacao/',
+            'options' => ['class' => 'pull-right-container', "treeview-menu"],
+            'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 2],
         ['label' => 'Projetos',
             'icon' => 'fa fa-paste (alias)',
             'url' => '@web/projetos/aprovados/',
+            'options' => ['class' => 'pull-right-container', "treeview-menu"],
+            'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 2],
+        ['label' => 'Relatórios',
+            'icon' => 'fa fa-file-text (alias)',
+            'url' => '@web/relatorios/index/',
             'options' => ['class' => 'pull-right-container', "treeview-menu"],
             'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 2],
         ['label' => 'Relatório Anual',
@@ -137,15 +154,7 @@ Menu::widget([
             'url' => '#',
             'options' => ['class' => 'pull-right-container', "treeview-menu"], 
             'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 2],
-        ['label' => 'Perfil ',
-            'icon' => 'fa fa-bar-chart',
-            'url' => '@web/usuarios/view0 => function ($url, $data) {
-                                
-                                    return Html::a([usuarios/view0, id => $data->id], [class => profile-link]);
-                                
-                            }',
-            'options' => ['class' => 'pull-right-container', "treeview-menu"], 
-            'visible' => !Yii::$app->user->isGuest &&((Yii::$app->user->identity->role == 2)||(Yii::$app->user->identity->role == 3)||(Yii::$app->user->identity->role == 4))],
+
         ['label' => 'Configurações',
             'icon' => 'fa fa-cogs',
             'url' => '#',
@@ -194,24 +203,38 @@ Menu::widget([
                 ],
             ],
             'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 2],
-        //Menu Servidor
-        ['label' => 'Projetos',
-            'icon' => 'fa fa-paste (alias)',
-            'url' => '@web/projetos/index',
+            ['label' => 'Perfil',
+            'icon' => 'fa fa-user (alias)',
+            'url' => '@web/usuarios/index',
             'options' => ['class' => 'pull-right-container', "treeview-menu"],
-            'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 3
-        ],
+            'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 2],
+        //Menu Servidor
+        ['label' => 'Início',
+            'icon' => 'fa fa-list (alias)',
+            'url' => '@web/projetos/index/',
+            'options' => ['class' => 'pull-right-container', "treeview-menu"],
+            'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 3],
+        ['label' => 'Perfil',
+            'icon' => 'fa fa-user (alias)',
+            'url' => '@web/usuarios/index0/',
+            'options' => ['class' => 'pull-right-container', "treeview-menu"],
+            'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 3],
+        
         //Menu Discente
-        ['label' => 'Projetos',
-            'icon' => 'fa fa-paste (alias)',
-            'url' => '@web/projetos/index',
-            
-            'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 4
-        ],
-            
-            ['label' => 'Certificados',
+        ['label' => 'Início',
+            'icon' => 'fa fa-list (alias)',
+            'url' => '@web/projetos/index/',
+            'options' => ['class' => 'pull-right-container', "treeview-menu"],
+            'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 4],
+        
+        ['label' => 'Certificados',
             'icon' => 'fa fa-graduation-cap',
             'url' => ['#'], 'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 4],
+        ['label' => 'Perfil',
+            'icon' => 'fa fa-user (alias)',
+            'url' => '@web/usuarios/index0/',
+            'options' => ['class' => 'pull-right-container', "treeview-menu"],
+            'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 4],
     ],
 ]);
 ?>

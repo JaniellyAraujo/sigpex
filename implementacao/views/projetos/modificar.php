@@ -152,12 +152,11 @@ echo Dialog::widget(['overrideYiiConfirm' => true]);
                         <div class="col-md-3"><?= $form->field($model, 'citarConvenio')->textInput(['maxlength' => true]) ?></div> 
                     </div>
                     <div class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                        <div class="col-md-3"><?= $form->field($model, 'financiamento')->radioList(array('Sim' => 'Sim', 'Não' => 'Não')); ?></div>
-                        <div class="col-md-3"><?=
-    $form->field($model, 'tipoFinanciamento')->dropDownList(array('Interno' => 'Interno',
+                        <!--div class="col-md-3">< ?= $form->field($model, 'financiamento')->radioList(array('Sim' => 'Sim', 'Não' => 'Não')); ?></div-->
+                        <!--div class="col-md-3">< ?=$form->field($model, 'tipoFinanciamento')->dropDownList(array('Interno' => 'Interno',
         'Próprio' => 'Próprio',), ['prompt' => 'Selecione'], array('selected' => true))
-    ?></div>
-                        <div class="col-md-3"><?= $form->field($model, 'citarFinanciamento')->textInput(['maxlength' => true]) ?></div>
+    ?></div-->
+                        <!--div class="col-md-3">< ?= $form->field($model, 'citarFinanciamento')->textInput(['maxlength' => true]) ? ></div -->
 
                         <div class="col-md-3"><?=
                         $form->field($model, 'valorFinanciamento', [

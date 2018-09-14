@@ -18,6 +18,7 @@ namespace app\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\User;
+use Yii;
 
 /**
  * UsuarioSearch represents the model behind the search form about `app\models\User`.
@@ -59,17 +60,19 @@ class UsuariosSearch extends User
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+             
             'sort' => [
                     'defaultOrder' => [
                     'nome' => SORT_DESC,
                     'nome' => SORT_ASC,
                 ]
             ],
+            
+           
             'pagination' => [
                     'pageSize' => 10,
             ],
         ]);
-        
         
 
         $this->load($params);

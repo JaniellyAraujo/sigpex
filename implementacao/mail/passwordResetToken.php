@@ -8,8 +8,8 @@ $resetLink = Yii::$app->urlManager->createAbsoluteUrl(['site/reset-password',
     'token' => $user->password_reset_token]);
 ?>
 
-Hello <?= Html::encode($user->nome) ?>,
+Olá <?= Html::encode($user->nome) ?>,
 
-Siga este link abaixo para redefinir sua senha:
+<p>Siga este link abaixo para redefinir sua senha:</p>
 
-<?= Html::a('Por favor, clique aqui para redefinir sua senha.', $resetLink) ?>
+<p><?= Html::a('Por favor, clique aqui para redefinir sua senha.', $resetLink) ?></p>

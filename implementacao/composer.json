@@ -27,11 +27,13 @@
         "kartik-v/yii2-widget-fileinput": "@dev",
         "sjaakp/yii2-cycle2": "*",
         "kartik-v/yii2-widget-alert": "*",
+        "kartik-v/yii2-grid": "^3.0",
         "mootensai/yii2-relation-trait": "^1.1",
         "kartik-v/yii2-widgets": "*",
         "nineinchnick/yii2-usr": "dev-master",
         "dchaofei/yii2-ajaxmodal": "dev-master",
-        "conquer/gii-modal": "^1.1"
+        "conquer/gii-modal": "^1.1",
+        "mdscomp/yii2-bootstrap-dialog": "~1.0"
         
                
         
@@ -53,7 +55,7 @@
             "yii\\composer\\Installer::postCreateProject"
         ]
     },
-    
+    "ercling/yii2-pace": "*",
     "extra": {
         "yii\\composer\\Installer::postCreateProject": {
             "setPermission": [
@@ -71,6 +73,7 @@
             "npm-asset-library": "vendor/npm",
             "bower-asset-library": "vendor/bower"
         }
+        
     }
     
     

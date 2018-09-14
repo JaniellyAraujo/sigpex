@@ -8,56 +8,63 @@ use Yii;
  * This is the model class for table "relatorios".
  *
  * @property int $id
- * @property string $versao
- * @property string $descricao
+ * @property string $projeto_id
+ * @property string $discente
+ * @property string $tipo
+ * @property string $dataEntrega
+ * @property int $mes
  * @property int $status
  * 
- * @property RelatoriosProjetos[] $relatoriosProjetos
+ * @property Projetos $projeto
  */
 class Relatorios extends \yii\db\ActiveRecord
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-    
-    use \mootensai\relation\RelationTrait;
-    
     public static function tableName()
     {
         return 'relatorios';
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['versao', 'descricao'], 'required'],
-            [['versao'], 'string', 'max' => 15],
-            [['descricao'], 'string', 'max' => 500],
-            [['status'], 'string', 'max' => 1],
+            [['projeto_id'], 'unique'],
+            [['projeto_id', 'discente', 'tipo', 'mes'], 'required'],
+            [['dataEntrega'], 'safe'],
+            [['mes','projeto_id','status'], 'integer'],
+            [['discente', 'tipo'], 'string', 'max' => 50],
+            [['projeto_id'], 'exist', 'skipOnError' => true, 'targetClass' => Projetos::className(), 'targetAttribute' => ['projeto_id' => 'id']],
+        
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'versao' => Yii::t('app', 'Versao'),
-            'descricao' => Yii::t('app', 'Descricao'),
-            'status' => Yii::t('app', 'Status'),
+            'projeto_id' => Yii::t('app', 'Projeto'),
+            'discente' => Yii::t('app', 'Discente'),
+            'tipo' => Yii::t('app', 'Tipo'),
+            'dataEntrega' => Yii::t('app', 'Data Entrega'),
+            'mes' => Yii::t('app', 'Mes'),
         ];
     }
+    
     
         /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRelatoriosProjetos()
+    public function getProjetos()
     {
-        return $this->hasMany(RelatoriosProjetos::className(), ['id_relatorios' => 'id']);
+        return $this->hasOne(Projetos::className(), ['id' => 'projeto_id']);
     }
+    
 }

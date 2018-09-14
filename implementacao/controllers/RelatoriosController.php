@@ -8,8 +8,6 @@ use app\models\RelatoriosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\data\ActiveDataProvider;
-use \app\models\RelatoriosProjetos;
 
 /**
  * RelatoriosController implements the CRUD actions for Relatorios model.
@@ -17,7 +15,7 @@ use \app\models\RelatoriosProjetos;
 class RelatoriosController extends Controller
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function behaviors()
     {
@@ -37,15 +35,41 @@ class RelatoriosController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new RelatoriosSearch();       
-        $relacao = \app\models\RelatoriosProjetos::find();
+        $searchModel = new RelatoriosSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
+        $dataProvider = new \yii\data\ActiveDataProvider([
+                'query' => Relatorios::find()->where(['status' => 0]), 
+                'pagination' => [
+                    'pageSize' => 10,
+                ],
+            ]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'relacao' => $relacao,
         ]);
+    }
+
+    public function actionArquivados() {
+        if (Yii::$app->user->can('coordenador')) {
+            $searchModel = new RelatoriosSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+            $dataProvider = new \yii\data\ActiveDataProvider([
+                'query' => Relatorios::find()->where(['status' => 1]), // ARQUIVADOS
+                'pagination' => [
+                    'pageSize' => 10,
+                ],
+            ]);
+
+            return $this->render('arquivados', [
+                        'dataProvider' => $dataProvider,
+                        'searchModel' => $searchModel,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Você não tem permissão para acessar esta ação.');
+        }
     }
 
     /**
@@ -69,44 +93,16 @@ class RelatoriosController extends Controller
     public function actionCreate()
     {
         $model = new Relatorios();
-        $modelRelatorios = [new RelatoriosProjetos()];
-        if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['editar-relatorio', 'id' => $model->id]);
-        }else {
-            return $this->render('create', [
-                        'model' => $model,
-                        'modelRelatorios' => (empty($modelRelatorios)) ? [new RelatoriosProjetos] : $modelRelatorios,
-                        
-            ]);
+        $model->status = '0';
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect('index');
         }
-    }
-    
-    /*
-    public function actionPreenche($id) {
-        $model = $this->findModel($id);
-        $model->status = 1;
 
-        if ($model->save()) {
-            return $this->redirect(['editar-relatorio', 'id' => $model->id]); //$this->redirect(['create', 'id' => $model->id]);       
-        }
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
-     public function actionEnviar($id) {
-        $model = $this->findModel($id);
-        $model->status = 2;
 
-        if ($model->save()) {
-            return $this->redirect(['editar-relatorio', 'id' => $model->id]); //$this->redirect(['create', 'id' => $model->id]);       
-        }
-    }
-    
-    public function actionConfirmar($id) {
-        $model = $this->findModel($id);
-        $model->status = 3;
-
-        if ($model->save()) {
-            return $this->redirect(['editar-relatorio', 'id' => $model->id]); //$this->redirect(['create', 'id' => $model->id]);       
-        }
-    }*/
     /**
      * Updates an existing Relatorios model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -117,15 +113,25 @@ class RelatoriosController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $modelRelatorios = $model->relatoriosProjetos;
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
+    
+    public function actionArquivar($id) {
+        if (Yii::$app->user->can('coordenador')) {
+            $model = $this->findModel($id);
+            $model->status = '1'; //ARQUIVADO
+            $model->save(false);
+            $this->redirect(array("relatorios/index"));
+            //$this->redirect(array("projetos/reprovados"));
         } else {
-            return $this->render('update', [
-                        'model' => $model,
-                        'modelRelatorios' => (empty($modelRelatorios)) ? [new RelatoriosProjetos] : $modelRelatorios,
-                        
-            ]);
+            throw new NotFoundHttpException('Você não tem permissão para acessar esta página.');
         }
     }
 
@@ -157,21 +163,5 @@ class RelatoriosController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
-    }
-    
-    public function actionEditarRelatorio($id) {
-        $relatorio = Relatorios::findOne($id);
-        $query = RelatoriosProjetos::find()->where(['id_relatorios' => $id]);
-        
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            
-        ]);
-
-        return $this->render('create0', [
-                    'relatorio' => $relatorio,
-                    'dataProvider' => $dataProvider,
-                   
-        ]);
     }
 }

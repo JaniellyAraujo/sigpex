@@ -82,14 +82,13 @@ $config = [
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            'useFileTransport' => false,
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
-                'host' => 'smtp.gmail.com',
-                'username' => 'sigpex.ifnmg@gmail.com',
-                'password' => 'sigpexifnmg',
-                'port' => '587',
-                'encryption' => 'tsl',
+                'host' => 'mail.cleiane.com.br',
+                //'username' => 'sigpex@cleiane.com.br',
+                'password' => "sigpexjanu2018",
+                'port' => 465,
+                'encryption' => 'ssl',
             ],
         ],
         'log' => [
@@ -108,7 +107,7 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 '' => 'site/index',
-                '<action:(index|login|logout)>' => 'site/<action>',
+                '<action:(index|login|logout|request-password-reset)>' => 'site/<action>',
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>'

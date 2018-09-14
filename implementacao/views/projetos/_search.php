@@ -76,11 +76,11 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'multicampi') ?>
 
-    <?php // echo $form->field($model, 'financiamento') ?>
+    <?php // echo $form->field($model, 'publico') ?>
 
-    <?php // echo $form->field($model, 'tipoFinanciamento') ?>
+    <?php // echo $form->field($model, 'contPublico') ?>
 
-    <?php // echo $form->field($model, 'citarFinanciamento') ?>
+    <?php // echo $form->field($model, 'isUsuario') ?>
 
     <?php // echo $form->field($model, 'valorFinanciamento') ?>
 

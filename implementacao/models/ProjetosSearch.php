@@ -30,7 +30,7 @@ class ProjetosSearch extends Projetos {
     public function rules() {
         return [
                 [['id', 'pesAtendidas', 'cargHorariaSemanal', 'cargHorariaTotal', 'isAtivo'], 'integer'],
-                [['titulo', 'coordenador', 'justificativa', 'tipoProjeto', 'modalidade', 'objetivo', 'isTipo', 'isStatus', 'resumo', 'municipio', 'descricaoPopulacao', 'publicoAlvo', 'localExecucao', 'dataInicio', 'datafim', 'parceiros', 'vinculo', 'citarVinculo', 'convenio', 'citarConvenio', 'gerFundacao', 'citarFundacao', 'multicampi', 'financiamento', 'tipoFinanciamento', 'citarFinanciamento', 'areaConhecimento', 'campusDesenvolvido', 'participante', 'tipoUsuario'], 'safe'],
+                [['titulo', 'coordenador', 'justificativa', 'tipoProjeto', 'modalidade', 'objetivo', 'isTipo', 'isStatus', 'resumo', 'municipio', 'descricaoPopulacao', 'publicoAlvo', 'localExecucao', 'dataInicio', 'datafim', 'parceiros', 'vinculo', 'citarVinculo', 'convenio', 'citarConvenio', 'gerFundacao', 'citarFundacao', 'multicampi', 'publico', 'contPublico', 'isUsuario', 'areaConhecimento', 'campusDesenvolvido', 'participante', 'tipoUsuario'], 'safe'],
                 [['valorFinanciamento'], 'number'],
         ];
     }
@@ -121,9 +121,9 @@ class ProjetosSearch extends Projetos {
                 ->andFilterWhere(['like', 'gerFundacao', $this->gerFundacao])
                 ->andFilterWhere(['like', 'citarFundacao', $this->citarFundacao])
                 ->andFilterWhere(['like', 'multicampi', $this->multicampi])
-                ->andFilterWhere(['like', 'financiamento', $this->financiamento])
-                ->andFilterWhere(['like', 'tipoFinanciamento', $this->tipoFinanciamento])
-                ->andFilterWhere(['like', 'citarFinanciamento', $this->citarFinanciamento])
+                ->andFilterWhere(['like', 'publico', $this->publico])
+                ->andFilterWhere(['like', 'contPublico', $this->contPublico])
+                ->andFilterWhere(['like', 'isUsuario', $this->isUsuario])
                 ->andFilterWhere(['like', 'areaConhecimento', $this->areaConhecimento])
                 ->andFilterWhere(['like', 'participante', $this->participante])
                 ->andFilterWhere(['like', 'tipoUsuario', $this->tipoUsuario])

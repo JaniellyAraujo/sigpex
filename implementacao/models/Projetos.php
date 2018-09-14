@@ -57,9 +57,9 @@ use Yii;
  * 
  * 
  * @property string $coordenador
- * @property string $financiamento
- * @property string $tipoFinanciamento
- * @property string $citarFinanciamento
+ * @property int $publico
+ * @property int $contPublico
+ * @property int $isUsuario
  * @property double $valorFinanciamento
  *  
  * @property User $idUser
@@ -84,16 +84,16 @@ class Projetos extends \yii\db\ActiveRecord {
         return [
                 [['titulo', 'tipoProjeto', 'modalidade', 'dataInicio', 'datafim', 'cargHorariaSemanal', 'cargHorariaTotal'], 'required'],
                 [['objetivo', 'resumo', 'descricaoPopulacao', 'justificativa', 'isTipo', 'isStatus', 'tipoUsuario', 'participante'], 'string'],
-                [['id', 'pesAtendidas', 'cargHorariaSemanal', 'cargHorariaTotal', 'isControle'], 'integer'],
+                [['id', 'pesAtendidas', 'cargHorariaSemanal', 'cargHorariaTotal', 'isControle', 'isUsuario','publico'], 'integer'],
             //['pesAtendidas','max'=> 6],
             [['dataInicio', 'datafim', 'dataSolicitacao', 'dataAnalise'], 'safe'],
             //[['dataInicio', 'datafim'], 'date'],
             [['valorFinanciamento'], 'number'],
                 [['titulo'], 'string', 'max' => 500],
-                [['coordenador', 'citarConvenio', 'citarFundacao', 'citarFinanciamento', 'areaConhecimento', 'campusDesenvolvido'], 'string', 'max' => 50],
+                [['coordenador', 'citarConvenio', 'citarFundacao', 'areaConhecimento', 'campusDesenvolvido'], 'string', 'max' => 50],
                 [['tipoProjeto', 'modalidade'], 'string', 'max' => 40],
                 [['municipio', 'publicoAlvo', 'localExecucao', 'parceiros'], 'string', 'max' => 30],
-                [['vinculo', 'financiamento',], 'string', 'max' => 5],
+                [['vinculo',], 'string', 'max' => 5],
                 [['citarVinculo'], 'string', 'max' => 100],
                 [['convenio', 'gerFundacao', 'multicampi', 'dataInicio', 'datafim'], 'string', 'max' => 10],
                 ['titulo', 'unique'],
@@ -137,9 +137,9 @@ class Projetos extends \yii\db\ActiveRecord {
             'gerFundacao' => Yii::t('app', 'O projeto é gerenciado por alguma fundação?'),
             'citarFundacao' => Yii::t('app', 'Citar Fundação'),
             'multicampi' => Yii::t('app', 'O projeto é multicampi?'),
-            'financiamento' => Yii::t('app', 'Há necessidade de Financiamento?'),
-            'tipoFinanciamento' => Yii::t('app', 'Tipo de Financiamento'),
-            'citarFinanciamento' => Yii::t('app', 'Citar a Fonte:'),
+            //'financiamento' => Yii::t('app', 'Há necessidade de Financiamento?'),
+            //'tipoFinanciamento' => Yii::t('app', 'Tipo de Financiamento'),
+            //'isUsuario' => Yii::t('app', 'Citar a Fonte:'),
             'valorFinanciamento' => Yii::t('app', ' Financiamento'),
             'areaConhecimento' => Yii::t('app', 'Área de Conhecimento'),
             'campusDesenvolvido' => Yii::t('app', 'Campus onde o projeto será desenvolvido:'),

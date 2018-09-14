@@ -17,11 +17,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\ProjetoEquipe */
+/* @var $model app\models\ProjetoUsuario */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="projeto-equipe-form">
+<div class="projeto-usuario-form">
 
     <?php $form = ActiveForm::begin(); ?>
 

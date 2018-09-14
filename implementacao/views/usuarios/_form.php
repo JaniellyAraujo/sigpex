@@ -75,7 +75,7 @@ use yii\widgets\MaskedInput;
                 
 
                  <div class="col-lg-4">
-                                <?php if (Yii::$app->user->identity->role == 1) {?>
+                                <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->role == 1) {?>
 
                                 <?=$form->field($model, 'role')->dropDownList(array('1' => 'Administrador',
                                 '2' => 'Coordenador de Projetos',
@@ -96,11 +96,11 @@ use yii\widgets\MaskedInput;
             </div>
 
             <div class="box-footer">
-                <?php if (Yii::$app->user->identity->role == 1) { ?>
+                <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->role == 1) { ?>
                     <?= Html::a('Cancelar', ['usuarios/index'], ['class' => 'btn btn-default']) ?>
                 <?php } ?>
-                <?php if (Yii::$app->user->identity->role != 1) { ?>
-                    <?= Html::a('Cancelar', ['usuarios/index0'], ['class' => 'btn btn-default']) ?>
+                <?php if (Yii::$app->user->isGuest) { ?>
+                    <?= Html::a('Cancelar', ['site/index'], ['class' => 'btn btn-default']) ?>
                 <?php } ?>
                 <button type="submit" class="btn btn-info pull-right"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Salvar</font></font></button>
             </div>

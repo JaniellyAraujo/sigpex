@@ -13,18 +13,18 @@ use app\models\Relatorios;
 class RelatoriosSearch extends Relatorios
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['versao', 'descricao', 'status'], 'safe'],
+            [['id', 'mes','projeto_id','status'], 'integer'],
+            [[ 'discente', 'tipo', 'dataEntrega'], 'safe'],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function scenarios()
     {
@@ -46,9 +46,7 @@ class RelatoriosSearch extends Relatorios
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
-            'query' => $query
-            ->orderBy("versao"),           
-            'pagination' => ['pageSize' => 10]
+            'query' => $query,
         ]);
 
         $this->load($params);
@@ -62,11 +60,14 @@ class RelatoriosSearch extends Relatorios
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'dataEntrega' => $this->dataEntrega,
+            'mes' => $this->mes,
+            'status' => $this->status,
+            'projeto_id'=> $this->projeto_id,
         ]);
 
-        $query->andFilterWhere(['like', 'versao', $this->versao])
-            ->andFilterWhere(['like', 'descricao', $this->descricao])
-            ->andFilterWhere(['like', 'status', $this->status]);
+           $query->andFilterWhere(['like', 'discente', $this->discente])
+            ->andFilterWhere(['like', 'tipo', $this->tipo]);
 
         return $dataProvider;
     }

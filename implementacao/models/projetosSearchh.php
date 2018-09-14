@@ -30,7 +30,7 @@ class ProjetosSearch extends Projetos {
     public function rules() {
         return [
                 [['id', 'idUser', 'pesAtendidas', 'cargHorariaSemanal', 'cargHorariaTotal', 'isAtivo'], 'integer'],
-                [['titulo', 'coordenador', 'justificativa', 'tipoProjeto', 'modalidade', 'objetivo', 'isTipo', 'isStatus', 'resumo', 'municipio', 'descricaoPopulacao', 'publicoAlvo', 'localExecucao', 'dataInicio', 'datafim', 'parceiros', 'vinculo', 'citarVinculo', 'convenio', 'citarConvenio', 'gerFundacao', 'citarFundacao', 'multicampi', 'financiamento', 'tipoFinanciamento', 'citarFinanciamento', 'areaConhecimento', 'campusDesenvolvido'], 'safe'],
+                [['titulo', 'coordenador', 'justificativa', 'tipoProjeto', 'modalidade', 'objetivo', 'isTipo', 'isStatus', 'resumo', 'municipio', 'descricaoPopulacao', 'publicoAlvo', 'localExecucao', 'dataInicio', 'datafim', 'parceiros', 'vinculo', 'citarVinculo', 'convenio', 'citarConvenio', 'gerFundacao', 'citarFundacao', 'multicampi', 'publico', 'contPublico', 'isUsuario', 'areaConhecimento', 'campusDesenvolvido'], 'safe'],
                 [['valorFinanciamento'], 'number'],
         ];
     }

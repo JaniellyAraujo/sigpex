@@ -123,7 +123,7 @@ use yii\grid\GridView;
                     ],
                         ['class' => 'yii\grid\ActionColumn',
                         'header' => "Ações",
-                        'headerOptions' => [ 'class' => 'CustomHeadClass ',],
+                        'headerOptions' => [ 'class' => 'CustomHeadClass '],
                         'contentOptions' => ['class' => 'text-center'],
                         'template' => '{view}{visualizar} {update} {modificar} {teste}',
                         'buttons' => [

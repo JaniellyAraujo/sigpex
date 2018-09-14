@@ -33,7 +33,7 @@ use kartik\grid\GridView;
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 //'filterModel' => $searchModel,
-                //'summary' => '',
+                'summary' => '',
                 //'layout'=> "{summary}\n{items}\n{pager}",
                 //'responsive'=>true,
                 //'summary' => false,
@@ -67,6 +67,18 @@ use kartik\grid\GridView;
 
 
     </div>
+    
+    <div class="media">
+
+                                <div class="pull-right">
+                                    <div class="clearfix">
+                                        <div class="g__c6 g__c12--md" >
+                                            <div class="sp__2 sp__0--md"></div>
+                                            <img src="<?= yii\helpers\Url::to('@web/img/art.png') ?>" width="200" height="250" class="img-responsive"/><hr>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 </div>
 <style>
      .CustomHeadClass {

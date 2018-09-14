@@ -46,6 +46,7 @@ use app\models\User;
 
 </style>
 <div class="box-primary box view-item col-xs-12 col-lg-12">
+    <p class="note">Registrado em <?= Html::encode(Yii::$app->formatter->asDate($model->dataSolicitacao)) ?></p>
     <div class="box-body">
         <div class="pull-right">
             <?php
@@ -80,9 +81,14 @@ use app\models\User;
                     <table class="table table-striped">
                         <tr>
                             <td><div class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                                    <div class="col-md-7"><b>TÍTULO: </b><?= Html::encode($model->titulo) ?></div>
-                                    <div class="col-md-2"><b>TIPO: </b><?= Html::encode($model->tipoProjeto) ?></div>
-                                    <div class="col-md-3"><b>MODALIDADE: </b><?= Html::encode($model->modalidade) ?></div><br><br>
+                                    <div class="col-md-9"><b>TÍTULO: </b><?= Html::encode($model->titulo) ?></div>
+                                    <div class="col-md-3"><b>TIPO: </b><?= Html::encode($model->tipoProjeto) ?></div>
+                                    </div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
+                                    <div class="col-md-6"><b>MODALIDADE: </b><?= Html::encode($model->modalidade) ?></div>
+                                    <div class="col-md-6"><P><b>VALOR DO FINANCIAMENTO: </b><?= Html::encode($model->valorFinanciamento)?> R$</P></div><br><br>
                                 </div></td>
                         </tr>
                         <tr>
@@ -93,11 +99,15 @@ use app\models\User;
                         </tr>
                         <tr>
                             <td><div class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                                    <div class="col-md-3"><b>ÁREA DE CONHECIMENTO: </b><?= Html::encode($model->areaConhecimento) ?></div>
-                                    <div class="col-md-3"><b>CAMPUS ONDE O PROJETO SERÁ DESENVOLVIDO: </b><?= Html::encode($model->campusDesenvolvido) ?></div>
-                                    <div class="col-md-3"><b>Nº DE PESSOAS ATENDIDAS: </b><?= Html::encode($model->pesAtendidas) ?></div>
-                                    <div class="col-md-3"><b>O PROJETO É MULTICAMPI? </b><?= Html::encode($model->multicampi) ?></div><br><br><br>
+                                   <div class="col-md-6"><b>Nº DE PESSOAS ATENDIDAS: </b><?= Html::encode($model->pesAtendidas) ?></div>
+                                    <div class="col-md-6"><b>O PROJETO É MULTICAMPI? </b><?= Html::encode($model->multicampi) ?></div><br><br><br>
                                 </div></td>
+                        </tr>
+                         <tr>
+                            <td><div class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
+                                    <div class="col-md-6"><b>ÁREA DE CONHECIMENTO: </b><?= Html::encode($model->areaConhecimento) ?></div>
+                                    <div class="col-md-6"><b>CAMPUS ONDE O PROJETO SERÁ DESENVOLVIDO: </b><?= Html::encode($model->campusDesenvolvido) ?></div>
+                                    </div></td>
                         </tr>
 
                         <tr>
@@ -168,16 +178,7 @@ use app\models\User;
                                     <div class="col-md-6"><b>O PROJETO PREVÊ CONVÊNIO COM OUTRA INSTITUIÇÃO OU EMPRESA? </b><?= Html::encode($model->convenio) ?></div>
                                     <div class="col-md-6"><b>CITAR CONVÊNIO: </b><?= Html::encode($model->citarConvenio) ?></div><br><br>
                                 </div></td></tr>
-                        <tr>
-                            <td><div class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                                    <div class="col-md-6"><b>HÁ NECESSIDADE DE FINANCIAMENTO? </b><?= Html::encode($model->financiamento) ?></div>
-                                    <div class="col-md-6"><b>TIPO DE FINANCIAMENTO: </b><?= Html::encode($model->tipoFinanciamento) ?></div><br><br>
-                                </div></td></tr>
-                        <tr>
-                            <td><div class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                                    <div class="col-md-6"><b>CITAR A FONTE DO FINANCIAMENTO: </b><?= Html::encode($model->citarFinanciamento) ?></div>
-                                    <div class="col-md-6"><P><b>VALOR DO FINANCIAMENTO: </b><?= Html::encode($model->valorFinanciamento) ?> R$</P></div><br><br>
-                                </div></td></tr>
+                              
                     </table>
                 </div>
 
@@ -227,3 +228,8 @@ use app\models\User;
     </div>
 </div>
 <?php $this->registerJs("(function($) {fakewaffle.responsiveTabs(['xs', 'sm']);})(jQuery);", yii\web\View::POS_END, 'responsive-tab'); ?>
+<style media="print">
+.btn {
+display: none;
+}
+</style>

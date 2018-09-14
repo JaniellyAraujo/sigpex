@@ -22,7 +22,7 @@ use app\models\Projetos;
 use app\models\User;
 use app\models\ProjetosSearch;
 use yii\web\Controller;
-use app\models\ProjetoEquipe;
+//use app\models\ProjetoEquipe;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
@@ -71,6 +71,7 @@ class ProjetosController extends Controller {
                 'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
                 'cssInline' => '.kv-heading-1{font-size:18px}',
                 'options' => ['title' => 'Relatório'],
+                
                // 'content' => 'Printed @ {DATE j-m-Y}',
                 'methods' => [
                     //'SetHeader' => ['SigPex'],
@@ -144,7 +145,7 @@ class ProjetosController extends Controller {
 
 
             $model = $this->findModel($id);
-            $participanteModel = new ProjetoEquipe();
+            $participanteModel = new ProjetoUsuario();
             $participanteModel->projeto_id = $model->id;
 
             return $this->render('view', [
@@ -166,7 +167,7 @@ class ProjetosController extends Controller {
 
 
             $model = $this->findModel($id);
-            $participanteModel = new ProjetoEquipe();
+            $participanteModel = new ProjetoUsuario();
             $participanteModel->projeto_id = $model->id;
 
             return $this->render('viewinfo', [
@@ -183,7 +184,7 @@ class ProjetosController extends Controller {
 
 
             $model = $this->findModel($id);
-            $participanteModel = new ProjetoEquipe();
+            $participanteModel = new ProjetoUsuario();
             $participanteModel->projeto_id = $model->id;
 
             return $this->render('viewinfotipo', [
@@ -200,7 +201,7 @@ class ProjetosController extends Controller {
 
 
             $model = $this->findModel($id);
-            $participanteModel = new ProjetoEquipe();
+            $participanteModel = new ProjetoUsuario();
             $participanteModel->projeto_id = $model->id;
 
             return $this->render('viewinfouser', [
@@ -250,10 +251,14 @@ class ProjetosController extends Controller {
     public function actionCreate() {
         if ((Yii::$app->user->can('coordenador')) || (Yii::$app->user->can('servidor'))) {
             $model = new Projetos();
+            $model->isUsuario = '0';
+            //$model->publico = ['sum(pesAtendidas)'];
+            //$model->contPublico = publico + contPublico;
             $model->isControle = '0';
             $model->isTipo = '0';
             $model->justificativa = null;
             $model->isAtivo = '0'; //SALVA COMO RASCUNHO
+            $model->dataSolicitacao= new \yii\db\Expression('NOW()');
             // $model::participanteSession ();
             //$model->isStatus = '0';
             //$model->justificativa = 'Nenhum';
@@ -268,6 +273,26 @@ class ProjetosController extends Controller {
                     $user->usuario = $usuario['usuario'];
                     $user->tipo = $usuario['tipo'];
                     $user->projeto = $model->primaryKey;
+                    
+                    if ($user->tipo === 'Discente Voluntário') {
+                  $model->isUsuario = '1';
+                  $model->save(false);
+                  } else if($user->tipo === 'Discente Bolsista'){
+                  $model->isUsuario = '2';
+                  $model->save(false);
+                  } else if($user->tipo === 'Docente - Colaborador'){
+                  $model->isUsuario = '3';
+                  $model->save(false);
+                  } else if($user->tipo === 'Docente - Coordenador'){
+                  $model->isUsuario = '4';
+                  $model->save(false);
+                  } else if($user->tipo === 'Técnico Administrativo - Colaborador'){
+                  $model->isUsuario = '5';
+                  $model->save(false);
+                  } else if($user->tipo === 'Técnico Administrativo - Coordenador'){
+                  $model->isUsuario = '6';
+                  $model->save(false);
+                  }
 
                     $user->create();
                 }
@@ -292,13 +317,13 @@ class ProjetosController extends Controller {
                 } else if ($model->tipoProjeto === 'Social') {
                     $model->isTipo = '3';
                     $model->save(false);
-                } else if ($model->tipoProjeto === 'Cultural') {
+                } else if ($model->tipoProjeto === ('Cultural'||'Artístico')) {
                     $model->isTipo = '4';
                     $model->save(false);
-                } else if ($model->tipoProjeto === 'Artístico') {
+                } /*else if ($model->tipoProjeto === 'Artístico') {
                     $model->isTipo = '5';
                     $model->save(false);
-                } else if ($model->tipoProjeto === 'Esportivo') {
+                }*/ else if ($model->tipoProjeto === 'Esportivo') {
                     $model->isTipo = '6';
                     $model->save(false);
                 }

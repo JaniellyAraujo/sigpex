@@ -49,7 +49,7 @@ use yii\grid\GridView;
                         'buttons' => [
                             'viewinfo' => function ($url, $data) {
                                 
-                                    return Html::a('<span class="btn btn-info " role="button" title = "Visualizar"><i class="fa fa-eye fa fa-white" /n ></i></span> ', ['projetos/viewinfo', 'id' => $data->id], ['class' => 'profile-link']);
+                                    return Html::a('<span class="btn btn-info " role="button" title = "Detalhes"><i class="fa fa-search fa fa-white" /n ></i></span> ', ['projetos/viewinfo', 'id' => $data->id], ['class' => 'profile-link']);
                                
                             },
                             'update' => function ($url, $model) {

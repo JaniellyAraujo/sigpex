@@ -76,9 +76,13 @@ use yii\widgets\MaskedInput;
                         'Santa Catarina' => 'Santa Catarina', 'São Paulo' => 'São Paulo', 'Sergipe' => 'Sergipe', 'Tocantins' => 'Tocantins'), ['prompt' => 'Selecione'], array('selected' => true))
                     ?></div>
             </div>
+            <div class="row">
+             <div class="col-md-4"><?= $form->field($model, 'password_hash')->passwordInput(['maxlength' => true]) ?></div>
+                <div class="col-md-4"><?= $form->field($model, 'password_hash_repeat')->passwordInput(['maxlength' => true]) ?></div>
+            </div>
 
-            <div class="box-footer">
-                <?= Html::a('Cancelar', ['usuarios/index'], ['class' => 'btn btn-default']) ?>
+            <div class="box-footer" >
+                <?= Html::a('Cancelar', ['usuarios/index'], ['class' => 'btn btn-default' , 'style => margin-left:10px']) ?>
                 <button type="submit" class="btn btn-info pull-right"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Salvar</font></font></button>
             </div>
 

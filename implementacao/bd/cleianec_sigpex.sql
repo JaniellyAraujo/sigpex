@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: 08-Set-2018 às 14:09
+-- Generation Time: 14-Set-2018 às 18:06
 -- Versão do servidor: 10.1.35-MariaDB
 -- PHP Version: 5.6.30
 
@@ -265,10 +265,10 @@ CREATE TABLE `projetos` (
   `gerFundacao` varchar(10) DEFAULT NULL,
   `citarFundacao` varchar(50) DEFAULT NULL,
   `multicampi` varchar(100) DEFAULT NULL,
-  `financiamento` varchar(10) DEFAULT NULL,
-  `tipoFinanciamento` varchar(5) DEFAULT NULL,
-  `citarFinanciamento` varchar(50) DEFAULT NULL,
-  `valorFinanciamento` float DEFAULT NULL,
+  `publico` int(11) DEFAULT NULL,
+  `valorFinanciamento` double DEFAULT NULL,
+  `contPublico` int(50) DEFAULT NULL,
+  `isUsuario` int(11) DEFAULT NULL,
   `areaConhecimento` varchar(50) DEFAULT NULL,
   `campusDesenvolvido` varchar(50) DEFAULT NULL,
   `isStatus` varchar(45) DEFAULT NULL,
@@ -300,10 +300,10 @@ CREATE TABLE `projetos` (
 -- Extraindo dados da tabela `projetos`
 --
 
-INSERT INTO `projetos` (`id`, `titulo`, `coordenador`, `tipoProjeto`, `objetivo`, `resumo`, `municipio`, `descricaoPopulacao`, `publicoAlvo`, `pesAtendidas`, `localExecucao`, `dataInicio`, `datafim`, `cargHorariaSemanal`, `cargHorariaTotal`, `parceiros`, `vinculo`, `citarVinculo`, `convenio`, `citarConvenio`, `gerFundacao`, `citarFundacao`, `multicampi`, `financiamento`, `tipoFinanciamento`, `citarFinanciamento`, `valorFinanciamento`, `areaConhecimento`, `campusDesenvolvido`, `isStatus`, `isControle`, `modalidade`, `isTipo`, `isAtivo`, `justificativa`, `mes`, `atividesenvolvidas`, `avaliacao`, `observacoes`, `objetalcancados`, `etapas`, `materiasutiliz`, `metodosutiliz`, `caracfacilitadora`, `caractdificultadora`, `contribuicao`, `avaliacao2`, `isAndamento`, `participante`, `tipoUsuario`, `dataSolicitacao`, `dataAnalise`) VALUES
-(40, 'Projeto Exemplo I', NULL, 'Tecnológico', 'O Sistema de Gerenciamento de Projetos de Extensão visa proporcionar benefícios como: maior velocidade de aquisição de dados, maior rapidez na geração de documentos, maior segurança de informações, menor probabilidade de erros, controle em tempo real, otimização do tempo de tomada de decisões e redução das dificuldades de produção. Esse gerenciamento envolve o cadastro do projeto, cadastro de servidores e discentes envolvidos, acompanhamento dos relatórios periódicos e finais, acompanhamento da realização das atividades propostas, emissão de certificados para participantes das ações de extensão, emissão de declarações para os responsáveis pelas ações, geração de relatórios periódicos e anuais para acompanhamento da ação da instituição na comunidade.', 'O Sistema de Gerenciamento de Projetos de Extensão visa proporcionar benefícios como: maior velocidade de aquisição de dados, maior rapidez na geração de documentos, maior segurança de informações, menor probabilidade de erros, controle em tempo real, otimização do tempo de tomada de decisões e redução das dificuldades de produção. Esse gerenciamento envolve o cadastro do projeto, cadastro de servidores e discentes envolvidos, acompanhamento dos relatórios periódicos e finais, acompanhamento da realização das atividades propostas, emissão de certificados para participantes das ações de extensão, emissão de declarações para os responsáveis pelas ações, geração de relatórios periódicos e anuais para acompanhamento da ação da instituição na comunidade.', 'Januária', 'O Sistema de Gerenciamento de Projetos de Extensão visa proporcionar benefícios como: maior velocidade de aquisição de dados, maior rapidez na geração de documentos, maior segurança de informações, menor probabilidade de erros, controle em tempo real, otimização do tempo de tomada de decisões e redução das dificuldades de produção. Esse gerenciamento envolve o cadastro do projeto, cadastro de servidores e discentes envolvidos, acompanhamento dos relatórios periódicos e finais, acompanhamento da realização das atividades propostas, emissão de certificados para participantes das ações de extensão, emissão de declarações para os responsáveis pelas ações, geração de relatórios periódicos e anuais para acompanhamento da ação da instituição na comunidade.', 'Acadêmicos ', 33, 'IFNMG', '2018-08-01', '2018-10-31', 30, 400, '', 'Não', '---', 'Não', '', 'Não', '', 'Não', 'Não', NULL, '', NULL, 'Tecnologia', 'IFNMG - Januária', NULL, 1, 'Fomento Interno', '1', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(41, 'Projeto Exemplo II', '', 'Esportivo', 'O acompanhamento dos projetos de extensão no DEX é realizado com o auxílio de editores de texto e planilhas eletrônicas. Assim, as informações não estão relacionadas e várias conferências, inclusive, em papéis impressos precisam ser realizadas para a geração de documentos. Há também o tempo gasto em copiar todos os dados preenchidos no formulário de cadastro dos projetos para a planilha eletrônica que é utilizada.', 'O acompanhamento dos projetos de extensão no DEX é realizado com o auxílio de editores de texto e planilhas eletrônicas. Assim, as informações não estão relacionadas e várias conferências, inclusive, em papéis impressos precisam ser realizadas para a geração de documentos. Há também o tempo gasto em copiar todos os dados preenchidos no formulário de cadastro dos projetos para a planilha eletrônica que é utilizada.', 'Januária', 'O acompanhamento dos projetos de extensão no DEX é realizado com o auxílio de editores de texto e planilhas eletrônicas. Assim, as informações não estão relacionadas e várias conferências, inclusive, em papéis impressos precisam ser realizadas para a geração de documentos.', 'Crianças e adolescentes', 35, 'IFNMG', '2018-08-01', '2018-12-31', 30, 60, 'Bruna', 'Não', '---', 'Não', '--', 'Não', '--', 'Não', '', NULL, '', 0, 'Administração', 'IFNMG - Januária', NULL, 3, 'Voluntário', '6', 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(42, 'Projeto Exemplo III', '', 'Artístico', '', '', '', '', '', NULL, '', '2018-08-01', '2018-08-30', 30, 80, '', '', '', '', '', '', '', '', '', NULL, '', NULL, '', '', NULL, 1, 'Fomento Interno', '5', 4, 'Há também o tempo gasto em copiar todos os dados preenchidos no formulário de cadastro dos projetos para a planilha eletrônica que é utilizada.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+INSERT INTO `projetos` (`id`, `titulo`, `coordenador`, `tipoProjeto`, `objetivo`, `resumo`, `municipio`, `descricaoPopulacao`, `publicoAlvo`, `pesAtendidas`, `localExecucao`, `dataInicio`, `datafim`, `cargHorariaSemanal`, `cargHorariaTotal`, `parceiros`, `vinculo`, `citarVinculo`, `convenio`, `citarConvenio`, `gerFundacao`, `citarFundacao`, `multicampi`, `publico`, `valorFinanciamento`, `contPublico`, `isUsuario`, `areaConhecimento`, `campusDesenvolvido`, `isStatus`, `isControle`, `modalidade`, `isTipo`, `isAtivo`, `justificativa`, `mes`, `atividesenvolvidas`, `avaliacao`, `observacoes`, `objetalcancados`, `etapas`, `materiasutiliz`, `metodosutiliz`, `caracfacilitadora`, `caractdificultadora`, `contribuicao`, `avaliacao2`, `isAndamento`, `participante`, `tipoUsuario`, `dataSolicitacao`, `dataAnalise`) VALUES
+(40, 'Projeto Exemplo I', NULL, 'Tecnológico', 'O Sistema de Gerenciamento de Projetos de Extensão visa proporcionar benefícios como: maior velocidade de aquisição de dados, maior rapidez na geração de documentos, maior segurança de informações, menor probabilidade de erros, controle em tempo real, otimização do tempo de tomada de decisões e redução das dificuldades de produção. Esse gerenciamento envolve o cadastro do projeto, cadastro de servidores e discentes envolvidos, acompanhamento dos relatórios periódicos e finais, acompanhamento da realização das atividades propostas, emissão de certificados para participantes das ações de extensão, emissão de declarações para os responsáveis pelas ações, geração de relatórios periódicos e anuais para acompanhamento da ação da instituição na comunidade.', 'O Sistema de Gerenciamento de Projetos de Extensão visa proporcionar benefícios como: maior velocidade de aquisição de dados, maior rapidez na geração de documentos, maior segurança de informações, menor probabilidade de erros, controle em tempo real, otimização do tempo de tomada de decisões e redução das dificuldades de produção. Esse gerenciamento envolve o cadastro do projeto, cadastro de servidores e discentes envolvidos, acompanhamento dos relatórios periódicos e finais, acompanhamento da realização das atividades propostas, emissão de certificados para participantes das ações de extensão, emissão de declarações para os responsáveis pelas ações, geração de relatórios periódicos e anuais para acompanhamento da ação da instituição na comunidade.', 'Januária', 'O Sistema de Gerenciamento de Projetos de Extensão visa proporcionar benefícios como: maior velocidade de aquisição de dados, maior rapidez na geração de documentos, maior segurança de informações, menor probabilidade de erros, controle em tempo real, otimização do tempo de tomada de decisões e redução das dificuldades de produção. Esse gerenciamento envolve o cadastro do projeto, cadastro de servidores e discentes envolvidos, acompanhamento dos relatórios periódicos e finais, acompanhamento da realização das atividades propostas, emissão de certificados para participantes das ações de extensão, emissão de declarações para os responsáveis pelas ações, geração de relatórios periódicos e anuais para acompanhamento da ação da instituição na comunidade.', 'Acadêmicos ', 33, 'IFNMG', '2018-08-01', '2018-10-31', 30, 400, '', 'Não', '---', 'Não', '', 'Não', '', 'Não', 0, NULL, 0, NULL, 'Tecnologia', 'IFNMG - Januária', NULL, 1, 'Fomento Interno', '1', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(41, 'Projeto Exemplo II', '', 'Esportivo', 'O acompanhamento dos projetos de extensão no DEX é realizado com o auxílio de editores de texto e planilhas eletrônicas. Assim, as informações não estão relacionadas e várias conferências, inclusive, em papéis impressos precisam ser realizadas para a geração de documentos. Há também o tempo gasto em copiar todos os dados preenchidos no formulário de cadastro dos projetos para a planilha eletrônica que é utilizada.', 'O acompanhamento dos projetos de extensão no DEX é realizado com o auxílio de editores de texto e planilhas eletrônicas. Assim, as informações não estão relacionadas e várias conferências, inclusive, em papéis impressos precisam ser realizadas para a geração de documentos. Há também o tempo gasto em copiar todos os dados preenchidos no formulário de cadastro dos projetos para a planilha eletrônica que é utilizada.', 'Januária', 'O acompanhamento dos projetos de extensão no DEX é realizado com o auxílio de editores de texto e planilhas eletrônicas. Assim, as informações não estão relacionadas e várias conferências, inclusive, em papéis impressos precisam ser realizadas para a geração de documentos.', 'Crianças e adolescentes', 35, 'IFNMG', '2018-08-01', '2018-12-31', 30, 60, 'Bruna', 'Não', '---', 'Não', '--', 'Não', '--', 'Não', 0, NULL, 0, 0, 'Administração', 'IFNMG - Januária', NULL, 3, 'Voluntário', '6', 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(42, 'Projeto Exemplo III', '', 'Artístico', '', '', '', '', '', NULL, '', '2018-08-01', '2018-08-30', 30, 80, '', '', '', '', '', '', '', '', 0, NULL, 0, NULL, '', '', NULL, 1, 'Fomento Interno', '5', 4, 'Há também o tempo gasto em copiar todos os dados preenchidos no formulário de cadastro dos projetos para a planilha eletrônica que é utilizada.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (43, 'Projeto Exemplo IV', NULL, 'Empreendedor', '', '', '', '', '', NULL, '', '2018-08-01', '2018-08-31', 40, 80, '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, '', '', NULL, 1, 'Fomento Interno', '2', 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (44, 'Projeto Exemplo V ', NULL, 'Social', '', '', '', '', '', NULL, '', '2018-08-01', '2018-08-31', 30, 80, '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, '', '', NULL, 2, 'Fomento Externo', '3', 3, 'Preencha os formulários', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (45, 'Projeto Exemplo VI', NULL, 'Artístico', '', '', '', '', '', NULL, '', '2018-08-01', '2018-08-31', 30, 80, '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, '', '', NULL, 3, 'Voluntário', '5', 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -356,6 +356,30 @@ INSERT INTO `projeto_usuario` (`id`, `projeto_id`, `usuario_id`, `tipo`) VALUES
 (27, 42, 28, 'Discente Bolsista'),
 (28, 50, 7, 'Docente - Coordenador'),
 (29, 51, 7, 'Docente - Coordenador');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `relatorios`
+--
+
+CREATE TABLE `relatorios` (
+  `id` int(11) NOT NULL,
+  `projeto_id` int(11) NOT NULL,
+  `discente` varchar(50) NOT NULL,
+  `tipo` varchar(50) NOT NULL,
+  `dataEntrega` date DEFAULT NULL,
+  `mes` int(11) NOT NULL,
+  `status` int(5) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `relatorios`
+--
+
+INSERT INTO `relatorios` (`id`, `projeto_id`, `discente`, `tipo`, `dataEntrega`, `mes`, `status`) VALUES
+(9, 53, 'jany', '2', '2020-10-18', 2, 0),
+(11, 51, 'jany', '2', '2018-09-14', 5, 1);
 
 -- --------------------------------------------------------
 
@@ -548,6 +572,13 @@ ALTER TABLE `projeto_usuario`
   ADD KEY `usuario_id` (`usuario_id`);
 
 --
+-- Indexes for table `relatorios`
+--
+ALTER TABLE `relatorios`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `projeto_id` (`projeto_id`);
+
+--
 -- Indexes for table `status`
 --
 ALTER TABLE `status`
@@ -616,6 +647,12 @@ ALTER TABLE `projetos`
 --
 ALTER TABLE `projeto_usuario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+--
+-- AUTO_INCREMENT for table `relatorios`
+--
+ALTER TABLE `relatorios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `status`

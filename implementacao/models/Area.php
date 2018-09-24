@@ -1,18 +1,5 @@
 <?php
 
-/*****************************************************************
- * SIGPEX - SISTEMA  DE GERENCIAMENTO DE PROJETOS DE EXTENSÃO
-
- * O SigPex foi desenvolvido como Trabalho de Conclusão de Curso
- * e apresentado ao IFNMG – Campus Januária como parte das
- *  exigências do Programa de Graduação em Tecnologia em Análise
- *  e Desenvolvimento de Sistemas.
- *
- * Desenvolvido pela acadêmica: Janielly Araújo Lopes.
- * Orientadora: Cleiane Gonçalves Oliveira.
- *
- /******************************************************************/
-
 namespace app\models;
 
 use Yii;
@@ -23,33 +10,35 @@ use Yii;
  * @property int $id
  * @property string $nome
  */
-class Area extends \yii\db\ActiveRecord {
-
+class Area extends \yii\db\ActiveRecord
+{
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-    public static function tableName() {
+    public static function tableName()
+    {
         return 'areaconhecimento';
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-    public function rules() {
+    public function rules()
+    {
         return [
-                [['nome'], 'required'],
-                [['nome'], 'string', 'max' => 500],
+            [['nome'], 'required'],
+            [['nome'], 'string', 'max' => 500],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'id' => Yii::t('app', 'ID'),
             'nome' => Yii::t('app', 'Nome'),
         ];
     }
-
 }

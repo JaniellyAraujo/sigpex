@@ -86,7 +86,7 @@ class Projetos extends \yii\db\ActiveRecord {
                 [['objetivo', 'resumo', 'descricaoPopulacao', 'justificativa', 'isTipo', 'isStatus', 'tipoUsuario', 'participante'], 'string'],
                 [['id', 'pesAtendidas', 'cargHorariaSemanal', 'cargHorariaTotal', 'isControle', 'isUsuario','publico'], 'integer'],
             //['pesAtendidas','max'=> 6],
-            [['dataInicio', 'datafim', 'dataSolicitacao', 'dataAnalise'], 'safe'],
+            [['dataInicio', 'datafim', 'dataSolicitacao', 'dataAnalise','modalidade'], 'safe'],
             //[['dataInicio', 'datafim'], 'date'],
             [['valorFinanciamento'], 'number'],
                 [['titulo'], 'string', 'max' => 500],
@@ -176,6 +176,14 @@ class Projetos extends \yii\db\ActiveRecord {
     public function getRelatoriosProjetos()
     {
         return $this->hasMany(RelatoriosProjetos::className(), ['id_projeto' => 'id']);
+    }
+ 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCoordenador()
+    {
+        return $this->hasOne(\User::className(), ['idUser' => 'coordenador']);
     }
     
     /* public function geTipoUsuario()

@@ -13,7 +13,6 @@ use Yii;
  * @property string $tipo
  * @property string $dataEntrega
  * @property int $mes
- * @property int $status
  * 
  * @property Projetos $projeto
  */
@@ -33,10 +32,10 @@ class Relatorios extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['projeto_id'], 'unique'],
+            //[['projeto_id'], 'unique'],
             [['projeto_id', 'discente', 'tipo', 'mes'], 'required'],
             [['dataEntrega'], 'safe'],
-            [['mes','projeto_id','status'], 'integer'],
+            [['mes','projeto_id'], 'integer'],
             [['discente', 'tipo'], 'string', 'max' => 50],
             [['projeto_id'], 'exist', 'skipOnError' => true, 'targetClass' => Projetos::className(), 'targetAttribute' => ['projeto_id' => 'id']],
         
@@ -65,6 +64,13 @@ class Relatorios extends \yii\db\ActiveRecord
     public function getProjetos()
     {
         return $this->hasOne(Projetos::className(), ['id' => 'projeto_id']);
+    }
+            /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRelatorios()
+    {
+        return $this->hasOne(Relatorios::className(), ['id' => 'id']);
     }
     
 }

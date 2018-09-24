@@ -38,7 +38,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'tipoProjeto') ?>
 
-    <?= $form->field($model, 'objetivo') ?>
+    <?= $form->field($model, 'modalidade') ?>
 
     <?php // echo $form->field($model, 'resumo') ?>
 
@@ -52,9 +52,9 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'localExecucao') ?>
 
-    <?php // echo $form->field($model, 'dataInicio') ?>
+    <?php  echo $form->field($model, 'dataInicio') ?>
 
-    <?php // echo $form->field($model, 'datafim') ?>
+    <?php  echo $form->field($model, 'datafim') ?>
 
     <?php // echo $form->field($model, 'cargHorariaSemanal') ?>
 
@@ -88,7 +88,7 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'campusDesenvolvido') ?>
 
-        <?php // echo $form->field($model, 'isAtivo')  ?>
+        <?php $form->field($model, 'isAtivo')  ?>
 
     <div class="form-group">
     <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>

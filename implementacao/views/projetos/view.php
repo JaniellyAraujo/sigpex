@@ -46,15 +46,23 @@ use app\models\User;
 
 </style>
 <div class="box-primary box view-item col-xs-12 col-lg-12">
-    <p class="note">Registrado em <?= Html::encode(Yii::$app->formatter->asDate($model->dataSolicitacao)) ?></p>
+    <?php if (((($model->dataSolicitacao) != null)&&($model->isAtivo) == 0)) { ?>
+    <p class="note">Criado em <?= Html::encode(Yii::$app->formatter->asDate($model->dataSolicitacao)) ?>  <?php } ?>
+    <?php if (((($model->dataSolicitacao) != null)&&(($model->isAtivo) == 1)||($model->isAtivo) == 5)) { ?>
+    <p class="note">Registrado em <?= Html::encode(Yii::$app->formatter->asDate($model->dataSolicitacao)) ?> -- <?php } ?>
+        
+    <?php if (($model->dataAnalise) != null) { ?>
+    Analisado em <?= Html::encode(Yii::$app->formatter->asDate($model->dataAnalise)) ?> pelo Departamento de Extensão</p>
+    <?php } ?>
+    
     <div class="box-body">
         <div class="pull-right">
-            <?php
+            <!--?php
             echo Html::a('<b class="fa fa-building-o fa fa-white"></b> Relatório Mensal', ['/relatorios-projetos/create', "id" => $model->id], ['class' => 'btn btn-social btn-primary', 'style' => 'margin-left:10px']);
-            echo Html::a('<b class="fa fa-building fa fa-white"></b> Relatório Final', ['/relatorios-projetos/create', "id" => $model->id], ['class' => 'btn btn-social btn-primary', 'style' => 'margin-left:10px']);?>
+            echo Html::a('<b class="fa fa-building fa fa-white"></b> Relatório Final', ['/relatorios-projetos/create', "id" => $model->id], ['class' => 'btn btn-social btn-primary', 'style' => 'margin-left:10px']);?-->
             
             <?php
-            if ($model->isAtivo == 0) {
+            if (($model->isAtivo == 0)&&(Yii::$app->user->identity->nome == $model->coordenador)) {
                 echo Html::a(Yii::t('app', '<b class="fa fa-eyedropper fa fa-white"></b> Atualizar'), ['update', 'id' => $model->id], ['class' => 'btn btn-social btn-primary', 'style' => 'margin-left:10px']);
                 echo Html::a(Yii::t('app', '<b class="fa fa-trash fa fa-white"></b> Excluir'), ['delete', 'id' => $model->id], [
                     'class' => 'btn btn-social btn-danger', 'style' => 'margin-left:10px',
@@ -65,9 +73,9 @@ use app\models\User;
                 ]);
             }
             ?>
-
-            <?= Html::a('<b class="fa fa-download"></b>', [''], ['target' => '_blank', 'class' => 'btn btn-default', 'title' => 'Exportar', 'id' => 'modal-btn-pdf']) ?>
-
+            <?php if ($model->isAtivo == 7) {
+                echo Html::a('<b class="fa fa-file-text-o fa fa-white"></b> Declaração', ['/projetos/declaracao', "id" => $model->id], ['class' => 'btn btn-social btn-primary', 'style' => 'margin-left:10px']);
+            }?>
 
         </div> <br><br>
 
@@ -87,8 +95,9 @@ use app\models\User;
                         </tr>
                         <tr>
                             <td><div class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                                    <div class="col-md-6"><b>MODALIDADE: </b><?= Html::encode($model->modalidade) ?></div>
-                                    <div class="col-md-6"><P><b>VALOR DO FINANCIAMENTO: </b><?= Html::encode($model->valorFinanciamento)?> R$</P></div><br><br>
+                                    <div class="col-md-5"><b>COORDENADOR: </b> <?= Html::encode($model->coordenador) ?></div>
+                                    <div class="col-md-3"><b>MODALIDADE: </b><?= Html::encode($model->modalidade) ?></div>
+                                    <div class="col-md-4"><P><b>VALOR DO FINANCIAMENTO: </b><?= Html::encode($model->valorFinanciamento)?> R$</P></div><br><br>
                                 </div></td>
                         </tr>
                         <tr>
@@ -112,8 +121,8 @@ use app\models\User;
 
                         <tr>
                             <td><div class="sigpex-link-box-text" class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                                    <div class="col-md-3"><b>DATA DE INÍCIO: </b><?= Html::encode($model->dataInicio) ?></div>
-                                    <div class="col-md-3"><b>DATA DE TÉRMINO: </b><?= Html::encode($model->datafim) ?></div>
+                                    <div class="col-md-3"><b>DATA DE INÍCIO: </b><?= Html::encode(Yii::$app->formatter->asDate($model->dataInicio)) ?></div>
+                                    <div class="col-md-3"><b>DATA DE TÉRMINO: </b><?= Html::encode(Yii::$app->formatter->asDate($model->datafim)) ?></div>
                                     <div class="col-md-3"><b>CARGA HORÁRIA SEMANAL: </b><?= Html::encode($model->cargHorariaSemanal) ?></div>
                                     <div class="col-md-3"><b>CARGA HORÁRIA TOTAL: </b><?= Html::encode($model->cargHorariaTotal) ?></div><br><br>
                                 </div></td>
@@ -196,7 +205,7 @@ use app\models\User;
                         <tr><td>
                                 <div class="col-xs-12 col-sm-12 col-lg-12 no-padding">
                                     <div class="sigpex-link-box-text" class="col-md-7"><b>NOME: </b><?= Html::encode($model->participante) ?></div>
-                                    <div class="sigpex-link-box-text" class="col-md-2"><b>TIPO: </b><?= Html::encode($model->tipoUsuario) ?></div>
+                                    <div class="sigpex-link-box-text" class="col-md-2"><b>TIPO: </b><?= Html::encode($model->participante) ?></div>
                                 </div>
                             </td></tr>
                     </table>
@@ -208,14 +217,12 @@ use app\models\User;
             <button onClick="history.go(-1)" class="btn btn-social btn-default" ><b class="fa fa-arrow-left"></b> Voltar</button>                  
             <?php
             //if (($model->isAtivo == 5 && (($model->tipoUsuario == 'Técnico Administrativo - Coordenador')||($model->tipoUsuario == 'Docente - Coordenador')))) {
-            if (($model->isAtivo == 5) && (Yii::$app->user->identity->role == 3)) {
+            if (($model->isAtivo == 5) && (Yii::$app->user->identity->nome == $model->coordenador)) {
                 echo Html::a('<b class="fa fa-unlock-alt fa fa-white"></b> Encerrar', ['/projetos/encerrar', "id" => $model->id], ['class' => 'btn btn-social btn-bitbucket', 'style' => 'margin-left:10px']);
-            } else if ($model->isAtivo == 0) {
+            } else if (($model->isAtivo == 0)&&(Yii::$app->user->identity->nome == $model->coordenador)) {
                 echo Html::a('<b class="fa fa-send"></b> Enviar', ['/projetos/submeter', "id" => $model->id], ['class' => 'btn btn-social btn-success', 'style' => 'margin-left:10px']);
-            }
-            ?>
-            <?php
-            if ((($model->isAtivo == 1) || ($model->isAtivo == 4)) && ((Yii::$app->user->identity->role == 2))) {
+            }?>
+            <?php if ((($model->isAtivo == 1) || ($model->isAtivo == 4)) && ((Yii::$app->user->identity->role == 2))) {
                 echo Html::a('<b class="fa fa-pencil-square-o"></b> Solicitar Modificação', ['/projetos/update1', "id" => $model->id], ['class' => 'btn btn-social btn-danger', 'style' => 'margin-left:10px']);
                 echo Html::a('<b class="fa fa-check-square-o"></b> Confirmar', ['/projetos/aprovar', "id" => $model->id], ['class' => 'btn btn-social btn-success', 'style' => 'margin-left:10px']);
             }
@@ -223,6 +230,7 @@ use app\models\User;
             <?php if (($model->isAtivo == 6) && ((Yii::$app->user->identity->role == 2))) {
                 echo Html::a('<b class="fa fa-folder-open fa fa-white"></b> Arquivar', ['/projetos/arquivar', "id" => $model->id], ['class' => 'btn btn-social btn-bitbucket', 'style' => 'margin-left:10px']);
             }?>
+            
         </div>
 
     </div>

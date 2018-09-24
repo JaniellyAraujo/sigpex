@@ -61,20 +61,28 @@ class UsuariosController extends Controller {
         }
     }
     
-    public function actionIndex0() {
+    public function actionIndex0($id) {
         if (Yii::$app->user->identity->role == 2 || Yii::$app->user->identity->role == 3 || Yii::$app->user->identity->role == 4) {
             $searchModel = new UsuariosSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
              
-             if (Yii::$app->user->identity->role != 1) {
+            
                 $dataProvider->query
                     ->andWhere(['USUARIOS.id' => \Yii::$app->user->identity->getId()]);
-            }
-
-            return $this->render('index0', [
-                        'searchModel' => $searchModel,
+            
+            $model = $this->findModel($id);
+        $permissao = $model->id;
+        
+            if (($permissao == Yii::$app->user->id)||(Yii::$app->user->can('admin'))){
+                return $this->render('index0', [
+                        'model' => $this->findModel($id),
                         'dataProvider' => $dataProvider,
-            ]);
+                    
+                ]);
+           
+        }
+
+            
         } else {
             throw new NotFoundHttpException('Você não tem permissão para acessar esta página.');
         }

@@ -22,6 +22,11 @@ use kartik\select2\Select2;
 use yii\web\JsExpression;
 use kartik\dialog\Dialog;
 
+if ($model->isAtivo == 5) {
+    $permission = true;
+} else {
+    $permission = false;
+}
 echo Dialog::widget(['overrideYiiConfirm' => true]);
 
 /* @var $this yii\web\View */
@@ -67,9 +72,9 @@ echo Dialog::widget(['overrideYiiConfirm' => true]);
 
                     <div class="col-xs-12 col-sm-12 col-lg-12 no-padding">
 
-                        <div class="col-md-5"><?= $form->field($model, 'titulo')->textInput(['maxlength' => true, 'autofocus' => true/* , 'style' => 'text-transform:uppercase' */]) ?></div>
-                        <div class="col-md-2"><?= $form->field($model, 'tipoProjeto')->dropDownList(ArrayHelper::map(\app\models\Project::find()->asArray()->all(), 'nome', 'nome'), ['prompt' => 'Selecione'], array('selected' => true)) ?></div>
-                        <div class="col-md-3"><?= $form->field($model, 'modalidade')->dropDownList(ArrayHelper::map(\app\models\Modalidade::find()->asArray()->all(), 'nome', 'nome'), ['prompt' => 'Selecione'], array('selected' => true)) ?></div>
+                        <div class="col-md-5"><?= $form->field($model, 'titulo')->textInput(['maxlength' => true, 'autofocus' => true, 'disabled' => $permission/* , 'style' => 'text-transform:uppercase' */]) ?></div>
+                        <div class="col-md-2"><?= $form->field($model, 'tipoProjeto')->dropDownList(ArrayHelper::map(\app\models\Project::find()->asArray()->all(), 'nome', 'nome'), ['prompt' => 'Selecione', 'disabled' => $permission], array('selected' => true)) ?></div>
+                        <div class="col-md-3"><?= $form->field($model, 'modalidade')->dropDownList(ArrayHelper::map(\app\models\Modalidade::find()->asArray()->all(), 'nome', 'nome'), ['prompt' => 'Selecione', 'disabled' => $permission], array('selected' => true)) ?></div>
                         <div class="col-md-2"><?=
                             $form->field($model, 'valorFinanciamento', [
                                 'template' =>
@@ -83,6 +88,7 @@ echo Dialog::widget(['overrideYiiConfirm' => true]);
                                 'inputOptions' => [
                                     // 'placeholder' => 'Username ...',
                                     'class' => 'form-control',
+                                    'disabled' => $permission,
                         ]])
                             ?>
                         </div>
@@ -90,25 +96,29 @@ echo Dialog::widget(['overrideYiiConfirm' => true]);
                     </div>
 
                     <div class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                        <div class="col-md-6"> <?= $form->field($model, 'municipio')->textInput(['maxlength' => true]) ?></div>
-                        <div class="col-md-6"><?= $form->field($model, 'publicoAlvo')->textInput(['maxlength' => true]) ?></div>
+                        <div class="col-md-4">
+                        <?php if (Yii::$app->user->identity->role == 2) {
+                        echo $form->field($model, 'coordenador')->dropDownList(ArrayHelper::map(\app\models\User::find()->where(['isAtivo' => 1])->where(['OR', ['role' => 2], ['role' => 3]])->asArray()->all(), 'nome', 'nome'), ['prompt' => 'Selecione', 'disabled' => $permission], array('selected' => true));
+                        }?></div>
+                        <div class="col-md-4"> <?= $form->field($model, 'municipio')->textInput(['maxlength' => true, 'disabled' => $permission]) ?></div>
+                        <div class="col-md-4"><?= $form->field($model, 'publicoAlvo')->textInput(['maxlength' => true, 'disabled' => $permission]) ?></div>
 
                     </div>
 
                     <div class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                        <div class="col-md-2"><?= $form->field($model, 'areaConhecimento')->dropDownList(ArrayHelper::map(\app\models\Area::find()->asArray()->all(), 'nome', 'nome'), ['prompt' => 'Selecione'], array('selected' => true)) ?></div>
-                        <div class="col-md-4"><?= $form->field($model, 'campusDesenvolvido')->dropDownList(ArrayHelper::map(\app\models\Campus::find()->asArray()->all(), 'nome', 'nome'), ['prompt' => 'Selecione'], array('selected' => true)) ?></div>
-                        <div class="col-md-3"><?= $form->field($model, 'pesAtendidas')->textInput() ?></div>
-                        <div class="col-md-3"> <?= $form->field($model, 'multicampi')->radioList(array('Sim' => 'Sim', 'Não' => 'Não')); ?></div>
+                        <div class="col-md-2"><?= $form->field($model, 'areaConhecimento')->dropDownList(ArrayHelper::map(\app\models\Area::find()->asArray()->all(), 'nome', 'nome'), ['prompt' => 'Selecione', 'disabled' => $permission], array('selected' => true)) ?></div>
+                        <div class="col-md-4"><?= $form->field($model, 'campusDesenvolvido')->dropDownList(ArrayHelper::map(\app\models\Campus::find()->asArray()->all(), 'nome', 'nome'), ['prompt' => 'Selecione', 'disabled' => $permission], array('selected' => true)) ?></div>
+                        <div class="col-md-3"><?= $form->field($model, 'pesAtendidas')->textInput(['disabled' => $permission]) ?></div>
+                        <div class="col-md-3"> <?= $form->field($model, 'multicampi')->radioList(array('Sim' => 'Sim', 'Não' => 'Não'),['disabled' => $permission ]); ?></div>
                     </div>
 
 
 
                     <div class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                        <div class="col-md-3"> <?= $form->field($model, 'dataInicio')->Input('date') ?></div>   
-                        <div class="col-md-3"><?= $form->field($model, 'datafim')->Input('date') ?></div>
-                        <div class="col-md-3"><?= $form->field($model, 'cargHorariaSemanal')->textInput() ?></div>
-                        <div class="col-md-3"><?= $form->field($model, 'cargHorariaTotal')->textInput() ?> </div>
+                        <div class="col-md-3"> <?= $form->field($model, 'dataInicio')->Input('date', ['disabled' => $permission]) ?></div>   
+                        <div class="col-md-3"><?= $form->field($model, 'datafim')->Input('date',['disabled' => $permission ]) ?></div>
+                        <div class="col-md-3"><?= $form->field($model, 'cargHorariaSemanal')->textInput(['disabled' => $permission ]) ?></div>
+                        <div class="col-md-3"><?= $form->field($model, 'cargHorariaTotal')->textInput(['disabled' => $permission ]) ?> </div>
                     </div>
 
 
@@ -122,11 +132,11 @@ echo Dialog::widget(['overrideYiiConfirm' => true]);
                 <div class="box-body">
 
                     <div class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                        <div class="col-md-12"><?= $form->field($model, 'objetivo')->textarea(['rows' => 3]) ?></div>
+                        <div class="col-md-12"><?= $form->field($model, 'objetivo')->textarea(['rows' => 3,'disabled' => $permission ]) ?></div>
                     </div>
 
                     <div class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                        <div class="col-md-12"><?= $form->field($model, 'resumo')->textarea(['rows' => 3]) ?></div>
+                        <div class="col-md-12"><?= $form->field($model, 'resumo')->textarea(['rows' => 3,'disabled' => $permission ]) ?></div>
                     </div>
                 </div>
 
@@ -140,18 +150,18 @@ echo Dialog::widget(['overrideYiiConfirm' => true]);
 
                     <div class="col-xs-12 col-sm-12 col-lg-12 no-padding">
                         <div class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                            <div class="col-md-6"><?= $form->field($model, 'descricaoPopulacao')->textarea(['rows' => 1]) ?></div>
-                            <div class="col-md-6"><?= $form->field($model, 'localExecucao')->textInput(['maxlength' => true]) ?></div>
+                            <div class="col-md-6"><?= $form->field($model, 'descricaoPopulacao')->textarea(['rows' => 1,'disabled' => $permission ]) ?></div>
+                            <div class="col-md-6"><?= $form->field($model, 'localExecucao')->textInput(['maxlength' => true,'disabled' => $permission ]) ?></div>
                         </div>
                         <div class="col-md-3"><?= $form->field($model, 'vinculo')->radioList(array('Sim' => 'Sim', 'Não' => 'Não')); ?></div>
-                        <div class="col-md-3"><?= $form->field($model, 'citarVinculo')->textInput(['maxlength' => true]) ?></div>
+                        <div class="col-md-3"><?= $form->field($model, 'citarVinculo')->textInput(['maxlength' => true,'disabled' => $permission ]) ?></div>
                         <div class="col-md-4"><?= $form->field($model, 'parceiros')
-                                ->dropDownList(ArrayHelper::map(\app\models\Parceiros::find()->asArray()->all(), 'nome', 'nome'), ['prompt' => 'Selecione'], array('selected' => true))
+                                ->dropDownList(ArrayHelper::map(\app\models\Parceiros::find()->asArray()->all(), 'nome', 'nome'), ['prompt' => 'Selecione','disabled' => $permission ], array('selected' => true))
                             ?>
                         </div>
                         <div class="col-md-2" style="padding-top: 15px;" >
                             
-                                <div  class="btn btn-default" data-toggle="popover" data-trigger="hover" title="Adicionar Parceiro" data-placement="top" data-content="Clique aqui caso deseja adicionar um novo parceiro!">
+                                <div  class="btn btn-default" data-toggle="popover" data-trigger="hover" title="Adicionar Parceiro" data-placement="top" data-content="Clique aqui caso deseja adicionar um novo parceiro na lista!">
                                     <?=
                                     Html::beginTag('a ', [
                                         'href' => '../parceiros/create',
@@ -185,9 +195,9 @@ echo Dialog::widget(['overrideYiiConfirm' => true]);
 
                     <div class="col-xs-12 col-sm-12 col-lg-12 no-padding">
                         <div class="col-md-3"><?= $form->field($model, 'gerFundacao')->radioList(array('Sim' => 'Sim', 'Não' => 'Não')); ?></div>
-                        <div class="col-md-3"><?= $form->field($model, 'citarFundacao')->textInput(['maxlength' => true]) ?></div>
+                        <div class="col-md-3"><?= $form->field($model, 'citarFundacao')->textInput(['maxlength' => true,'disabled' => $permission]) ?></div>
                         <div class="col-md-3"><?= $form->field($model, 'convenio')->radioList(array('Sim' => 'Sim', 'Não' => 'Não')); ?></div>
-                        <div class="col-md-3"><?= $form->field($model, 'citarConvenio')->textInput(['maxlength' => true]) ?></div> 
+                        <div class="col-md-3"><?= $form->field($model, 'citarConvenio')->textInput(['maxlength' => true,'disabled' => $permission]) ?></div> 
                     </div>
 
                 </div>
@@ -205,7 +215,8 @@ echo Dialog::widget(['overrideYiiConfirm' => true]);
                                 <li id="subitem-usr" class="row mb-20 usr">
                                     <div class="col-md-8">
                                         <div class="form-group">
-                                            <?php $usuarios = User::find()->asArray()->all(); ?>
+                                            <!--?php $usuarios = User::find()->asArray()->all()?-->
+                                            <?php $usuarios = User::find()->where(['isAtivo' => 1])->where(['OR', ['role' => 2], ['role' => 3], ['role' => 4]])->asArray()->all(); ?>
                                             <label class="control-label" for="projetos-participante">Participante:</label>
                                             <select id="projetos-participante" class="form-control" name="ProjetosUsuariosForm[<?= $modelUsuario->idForm ?>][usuario]" aria-invalid="false">
                                                 <option value="">Selecione</option>
@@ -308,7 +319,7 @@ echo Dialog::widget(['overrideYiiConfirm' => true]);
          
                     <div class="col-md-8">
                         <div class="form-group">
-                            <?php $usuarios = User::find()->asArray()->all(); ?>
+                            <?php $usuarios = User::find()->where(['isAtivo' => 1])->where(['OR', ['role' => 2], ['role' => 3], ['role' => 4]])->asArray()->all(); ?>
                             <label class="control-label" for="projetos-participante">Participante:</label>
                             <select id="projetos-participante" class="form-control" name="ProjetosUsuariosForm[${id}][usuario]" aria-invalid="false">
                                 <option value="">Selecione</option>

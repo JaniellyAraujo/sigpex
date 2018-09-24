@@ -32,7 +32,6 @@ use kartik\grid\GridView;
                         'header' => 'Tipo',
                         'format' => 'raw',
                         'headerOptions' => [ 'class' => 'CustomHeadClass'],
-                         'contentOptions' => ['class' => 'text-center'],
                         'value' => function($data) {
                             if ($data->tipo == 1) {
                                 return 'Mensal';
@@ -61,7 +60,6 @@ use kartik\grid\GridView;
             [
                         'header' => 'Mês',
                         'format' => 'raw',
-                        'contentOptions' => ['class' => 'text-center'],
                         'headerOptions' => [ 'class' => 'CustomHeadClass'],
                         'value' => function($data) {
                             if ($data->mes == 1) {
@@ -105,7 +103,6 @@ use kartik\grid\GridView;
             
 
             //['class' => 'yii\grid\ActionColumn'],
-                                
         ],
     ]); ?>
 </div></div>

@@ -20,6 +20,7 @@ use yii\widgets\MaskedInput;
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
 /* @var $form yii\widgets\ActiveForm */
+$this->title = Yii::t('app', 'SigPex');
 ?> 
 
 <div class="panel panel-info">

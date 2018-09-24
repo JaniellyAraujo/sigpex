@@ -20,7 +20,7 @@ AppAsset::register($this);
 
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<title>SigPex | Início</title>
+<title>SigPex</title>
 <link rel="shortcut icon" href="<?= yii\helpers\Url::to('@web/images/favicon.ico') ?>" type="image/x-icon">
 <link rel="icon" href="<?= yii\helpers\Url::to('@web/img/favicon.ico') ?>" type="image/x-icon">
 <html lang="<?= Yii::$app->language ?>">
@@ -96,8 +96,7 @@ AppAsset::register($this);
                         </div>
                         <div class="pull-left info">
                             <p>
-                            <?php
-                            $info[] = Yii::t('app', '');
+                            <?php $info[] = Yii::t('app', '');
 
                             if (isset(Yii::$app->user->identity->nome)) {
                                 $info[] = ucfirst(\Yii::$app->user->identity->nome);
@@ -110,17 +109,30 @@ AppAsset::register($this);
                         </div>
 
                     </div>
-                   
-
-
-<?=
-Menu::widget([
+                    
+                        <ul class="sidebar-menu" data-widget="tree">
+                            <li class="header">MENU</li>
+                            <!----------------------- MENU VISITANTE------------------------------>
+                                <?php if (Yii::$app->user->isGuest) { ?>
+                                    <li>
+                                        <a href="https://www.ifnmg.edu.br/extensao">
+                                            <i class="fa fa-link"></i> <span>Portal - Extensão</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.ifnmg.edu.br/coordenacao-de-programas-projetos-e-registro-das-atividades-de-extensao/formularios">
+                                            <i class="fa fa-file-text-o"></i> <span>Formulários</span>
+                                        </a>
+                                    </li>
+                                <?php } ?>
+                            <!------------------------------------------------------------------------>
+                       </ul>
+                    
+<?=Menu::widget([
     //'encodeLabels' => FALSE,
     'options' => ['class' => 'sidebar-menu', 'data-widget' => "tree"],
     'items' => [
-            ['label' => 'MENU', 'options' => ['class' => 'header']],
-            ['label' => 'Cadastre-se', 'icon' => 'fa fa-user-plus', 'url' => ['usuarios/create'], 'visible' => Yii::$app->user->isGuest],
-            ['label' => 'Regulamentos', 'icon' => 'fa fa fa-folder', 'url' => ['#'], 'visible' => Yii::$app->user->isGuest],
+        ['label' => 'Cadastre-se', 'icon' => 'fa fa-user-plus', 'url' => ['usuarios/create'], 'visible' => Yii::$app->user->isGuest],
         //Menu Administrador
         ['label' => 'Usuários',
             'icon' => 'fa fa-users',
@@ -144,12 +156,22 @@ Menu::widget([
             'url' => '@web/projetos/aprovados/',
             'options' => ['class' => 'pull-right-container', "treeview-menu"],
             'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 2],
+        ['label' => 'Meus Projetos',
+            'icon' => 'fa fa-paperclip',
+            'url' => '@web/projetos/index/',
+            'options' => ['class' => 'pull-right-container', "treeview-menu"],
+            'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 2],
+        ['label' => 'Declaração',
+            'icon' => 'fa fa-sitemap',
+            'url' => '@web/declaracao/index/',
+            'options' => ['class' => 'pull-right-container', "treeview-menu"],
+            'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 2],
         ['label' => 'Relatórios',
             'icon' => 'fa fa-file-text (alias)',
             'url' => '@web/relatorios/index/',
             'options' => ['class' => 'pull-right-container', "treeview-menu"],
             'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 2],
-        ['label' => 'Relatório Anual',
+        ['label' => 'Relatório de Gestão',
             'icon' => 'fa fa-bar-chart',
             'url' => '#',
             'options' => ['class' => 'pull-right-container', "treeview-menu"], 
@@ -183,7 +205,7 @@ Menu::widget([
                     'url' => '@web/parceiros',
                     'active' => $this->context->route == '#',
                 ],
-                    [
+                    /*[
                     'label' => 'Status do Projeto',
                     'icon' => 'fa fa-gear (alias)',
                     'url' => '@web/status',
@@ -200,7 +222,7 @@ Menu::widget([
                     'icon' => 'fa fa-gear (alias)',
                     'url' => '@web/users',
                     'active' => $this->context->route == '#',
-                ],
+                ],*/
             ],
             'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 2],
             ['label' => 'Perfil',

@@ -5,6 +5,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Relatorios */
+/* @var $modelsRelatorio app\models\Relatorios */
 
 
 ?>
@@ -12,6 +13,7 @@ use yii\helpers\Html;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'models' => $models,
     ]) ?>
 
 </div>

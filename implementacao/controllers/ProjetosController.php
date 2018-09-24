@@ -39,6 +39,7 @@ class ProjetosController extends Controller {
      */
     public function behaviors() {
         return [
+            
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -76,8 +77,8 @@ class ProjetosController extends Controller {
                 'methods' => [
                     //'SetHeader' => ['SigPex'],
                     'SetFooter' => ['{PAGENO}'],
-                    'SetFooter' => ['<p style="text-align: center;font-size: 8px;">'
-                        . 'Documento emitido pelo SigPex. '
+                    'SetFooter' => ['<p style="text-align:center;font-size: 8px;">'
+                        . 'SigPex. '
                         . 'Todos os Direitos Reservados © {DATE j-m-Y}</p>'],
                     
                 ]
@@ -157,6 +158,30 @@ class ProjetosController extends Controller {
         }
     }
     
+        /**
+     * Displays a single Projetos model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionDeclaracao($id)
+    {
+        if ((Yii::$app->user->can('coordenador')) || (Yii::$app->user->can('servidor')|| (Yii::$app->user->can('discente')))) {
+
+
+            $model = $this->findModel($id);
+            $participanteModel = new ProjetoUsuario();
+            $participanteModel->projeto_id = $model->id;
+
+            return $this->render('declaracao', [
+                'model' => $this->findModel($id),
+                'participanteModel' => $participanteModel,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Você não tem permissão para acessar esta página.');
+        }
+    }
+    
         public function actionViewm($id) {
         return $this->render('viewm', [
                     'model' => $this->findModel($id),
@@ -212,10 +237,12 @@ class ProjetosController extends Controller {
             //throw new ForbiddenHttpException('Você não tem permissão para acessar esta página.');
         //}
     }
+    
+    
 
     public function actionVisualizar($id) {
         $model = $this->findModel($id);
-        if (($model->id == Yii::$app->user->identity->id) || (Yii::$app->user->can('coordenador')) || (Yii::$app->user->can('servidor'))) {
+        if (($model->id == Yii::$app->user->identity->id) || (Yii::$app->user->can('coordenador')) || (Yii::$app->user->can('servidor'))|| (Yii::$app->user->can('discente'))) {
             return $this->render('visualizar', [
                         'model' => $this->findModel($id),
             ]);
@@ -258,7 +285,9 @@ class ProjetosController extends Controller {
             $model->isTipo = '0';
             $model->justificativa = null;
             $model->isAtivo = '0'; //SALVA COMO RASCUNHO
-            $model->dataSolicitacao= new \yii\db\Expression('NOW()');
+            $model->dataSolicitacao = new \yii\db\Expression('NOW()');
+            $model->dataAnalise = null;
+            $model->coordenador = Yii::$app->user->identity->nome;
             // $model::participanteSession ();
             //$model->isStatus = '0';
             //$model->justificativa = 'Nenhum';
@@ -332,6 +361,7 @@ class ProjetosController extends Controller {
 
                 if (Yii::$app->user->identity->role == 2) {
                     $model->isAtivo = '5'; //SALVA AUTOMATICAMENTE
+                    $model->dataAnalise = new \yii\db\Expression('NOW()');
                     $model->save(false);
                     Yii::$app->getSession()->setFlash('success', [
                         'type' => 'success',
@@ -387,7 +417,7 @@ class ProjetosController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
-
+       // $model->coordenador = Yii::$app->user->identity->nome;
         //$model->carregaParticipantes();
         $usuarios = ProjetoUsuario::findAll(['projeto_id' => $id]);
         if ($usuarios) {
@@ -474,7 +504,6 @@ class ProjetosController extends Controller {
     
         public function actionUpdate2($id) {
         $model = $this->findModel($id);
-        
         $usuarios = ProjetoUsuario::findAll(['projeto_id' => $id]);
         if ($usuarios) {
             foreach ($usuarios as $usuario) {
@@ -549,6 +578,7 @@ class ProjetosController extends Controller {
         if (Yii::$app->user->can('coordenador')) {
             $model = $this->findModel($id);
             $model->justificativa = null;
+            $model->dataAnalise = new \yii\db\Expression('NOW()');
             $model->isAtivo = '5'; //APROVADO
             $model->save(false);
             Yii::$app->getSession()->setFlash('success', [
@@ -597,6 +627,8 @@ class ProjetosController extends Controller {
             $model = $this->findModel($id);
             $model->isAtivo = '7'; //ARQUIVADO
             $model->save(false);
+                      
+            
             $this->redirect(array("projetos/aprovados"));
             //$this->redirect(array("projetos/reprovados"));
         } else {
@@ -621,6 +653,7 @@ class ProjetosController extends Controller {
         if ((Yii::$app->user->can('coordenador')) || (Yii::$app->user->can('servidor'))) {
             $model = $this->findModel($id);
             $model->isAtivo = '1'; //EM ANÁLISE
+            $model->dataSolicitacao = new \yii\db\Expression('NOW()');
             $model->save(false);
             Yii::$app->getSession()->setFlash('success', [
                 'type' => 'success',
@@ -639,7 +672,7 @@ class ProjetosController extends Controller {
     // * @param integer $id
     public function actionIndex()
     {
-        if (Yii::$app->user->identity->role == 3 || Yii::$app->user->identity->role == 4) {
+        if (!Yii::$app->user->isGuest &&(Yii::$app->user->identity->role == 2 || Yii::$app->user->identity->role == 3 || Yii::$app->user->identity->role == 4)) {
             $searchModel = new ProjetosSearch();
 
             $dataProvider = new ActiveDataProvider([
@@ -652,7 +685,7 @@ class ProjetosController extends Controller {
                 ],
             ]);
 
-            if (Yii::$app->user->identity->role == 3 || Yii::$app->user->identity->role == 4) {
+            if (Yii::$app->user->identity->role == 2 ||Yii::$app->user->identity->role == 3 || Yii::$app->user->identity->role == 4) {
                 $dataProvider->query
                     ->andWhere(['PROJETO_USUARIO.usuario_id' => \Yii::$app->user->identity->getId()]);
             }
@@ -669,7 +702,7 @@ class ProjetosController extends Controller {
         // * @param integer $id
     public function actionIndexm()
     {
-        if (Yii::$app->user->identity->role == 2 || Yii::$app->user->identity->role == 4) {
+        if (!Yii::$app->user->isGuest &&(Yii::$app->user->identity->role == 2 || Yii::$app->user->identity->role == 4)) {
         $searchModel = new ProjetosSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -870,13 +903,13 @@ class ProjetosController extends Controller {
         if (Yii::$app->user->can('coordenador')) {
             $searchModel = new ProjetosSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-            $dataProvider = new ActiveDataProvider([
+            $dataProvider->query->andWhere(['isAtivo' => 7]);
+            /*$dataProvider = new ActiveDataProvider([
                 'query' => Projetos::find()->where(['isAtivo' => 7]), // ARQUIVADOS
                 'pagination' => [
                     'pageSize' => 10,
                 ],
-            ]);
+            ]);*/
 
             return $this->render('arquivados', [
                         'dataProvider' => $dataProvider,

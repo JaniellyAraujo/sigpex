@@ -46,7 +46,7 @@ use yii\grid\GridView;
 
             <?=
             GridView::widget([
-                //'filterModel' => $searchModel,
+                'filterModel' => $searchModel,
                 'dataProvider' => $dataProvider,
                 //'responsive'=>true,
                 'summary' => "Exibindo <strong> {begin}</strong> - <strong>{end}</strong> de <strong>{totalCount}</strong> itens",
@@ -65,7 +65,8 @@ use yii\grid\GridView;
                         },
                     ],
                         [
-                        'attribute' => 'datafim',
+                        'attribute' => 'datafim', 
+                        //'format' => 'raw',
                         'format' => 'raw',
                         'value' => function ($model) {
                             if ($model->datafim != null) {
@@ -74,6 +75,7 @@ use yii\grid\GridView;
                                 return 'Não informado';
                             }
                         },
+                        
                     ],
                     'modalidade',
                         ['class' => 'yii\grid\ActionColumn',
@@ -82,7 +84,7 @@ use yii\grid\GridView;
                                 'class' => 'CustomHeadClass ',
                             ],
                         'contentOptions' => ['class' => 'text-center'],
-                        'template' => '{view}',
+                        'template' => '{view} {delete}',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return Html::a('<i class="fa fa-eye fa fa-white"></i>', $url, ['title' => 'Visualisar Projeto',
@@ -96,7 +98,7 @@ use yii\grid\GridView;
                             },
                             'delete' => function ($url, $model) {
                                 return Html::a('<i class="fa fa-trash fa fa-white"></i>', $url, ['title' => 'Excluir Status do Projeto',
-                                            'class' => 'btn btn-danger disabled',
+                                            'class' => 'btn btn-danger',
                                             'data-confirm' => 'Tem certeza de que deseja excluir este item?', // altera a mensagem de confirmação
                                             'data-method' => 'post',
                                 ]);
@@ -117,6 +119,168 @@ use yii\grid\GridView;
         text-align:center;
     }
 </style>
+
+ <div><div class="container-fluid">
+            <div class="row docs-premium-template">
+
+                <div class="col-sm-12 col-md-6">
+                    <div class="box box-info">
+                        <div class="card-body p-2">
+                           <?php
+
+/*$datas = app\models\Projetos::findAll(array('select'=>'modalidade',
+'order'=>'modalidade', 'condition'=>'modalidade!=:x', 'params'=>array(':x'=>0)));*/
+
+
+
+	
+		echo \miloschuman\highcharts\Highcharts::widget([
+			'scripts' => [
+				'highcharts-3d',   
+			],
+			'options' => [	
+				'exporting'=>[
+				 	'enabled'=>true 
+				],
+				'legend'=>[
+				    'align'=>'center',
+				    'verticalAlign'=>'bottom',
+				    'layout'=>'vertical',
+				    'x'=>0,
+				    'y'=>0,
+				],
+				'credits'=>[
+	    				'enabled'=>false
+	  			 ],
+				'chart'=> [
+					'type'=>'pie',
+					'options3d'=>[
+						'enabled'=>true,
+						'alpha'=>45,
+						'beta'=>0
+					],
+				],
+				'title'=>[
+					'text'=>'',
+					'margin'=>0,
+				],
+				'plotOptions'=>[
+					'pie'=>[
+						'allowPointSelect'=>true,
+		        			'cursor'=>'pointer',
+		       				'depth'=>35,
+						'dataLabels'=>[
+							'enabled'=>false
+					    	 ],
+						 'showInLegend'=>true,
+					],	
+					'series'=>[
+						'pointPadding'=>0,
+						'groupPadding'=>0,      
+					 ],
+				],
+                                        'title' => ['text' => 'Tipo - Projeto'],
+                                       'xAxis' => [
+                                           'categories' => ['Tecnológico', 'Empreendedor', 'Social','Cultural e Artísticov','Esportivo']
+                                       ],
+                                       'yAxis' => [
+                                           'title' => ['text' => 'Tipo Projeto']
+                                       ],
+                                   'series'=> [
+					[
+						'name'=>'Tipo',
+						'data'=>[1,5,6,2,9],
+					]
+				]
+			],
+		]);
+	 
+	?>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="box box-info">
+                           <div class="card-body p-2">
+                            <?php
+
+/*$datas = app\models\Projetos::findAll(array('select'=>'modalidade',
+'order'=>'modalidade', 'condition'=>'modalidade!=:x', 'params'=>array(':x'=>0)));*/
+
+
+
+	
+		echo \miloschuman\highcharts\Highcharts::widget([
+			'scripts' => [
+				'highcharts-3d',   
+			],
+			'options' => [	
+				'exporting'=>[
+				 	'enabled'=>true 
+				],
+				'legend'=>[
+				    'align'=>'center',
+				    'verticalAlign'=>'bottom',
+				    'layout'=>'vertical',
+				    'x'=>0,
+				    'y'=>0,
+				],
+				'credits'=>[
+	    				'enabled'=>false
+	  			 ],
+				'chart'=> [
+					'type'=>'pie',
+					'options3d'=>[
+						'enabled'=>true,
+						'alpha'=>45,
+						'beta'=>0
+					],
+				],
+				'title'=>[
+					'text'=>'',
+					'margin'=>0,
+				],
+				'plotOptions'=>[
+					'pie'=>[
+						'allowPointSelect'=>true,
+		        			'cursor'=>'pointer',
+		       				'depth'=>35,
+						'dataLabels'=>[
+							'enabled'=>false
+					    	 ],
+						 'showInLegend'=>true,
+					],	
+					'series'=>[
+						'pointPadding'=>0,
+						'groupPadding'=>0,      
+					 ],
+				],
+                                        'title' => ['text' => 'Modalidade - Projetos'],
+                                       'xAxis' => [
+                                           'categories' => ['Fomento Interno', 'Fomento Externo', 'Voluntário']
+                                       ],
+                                       'yAxis' => [
+                                           'title' => ['text' => 'Modalidade']
+                                       ],
+                                   'series'=> [
+					[
+						'name'=>'Modalidade',
+						'data'=>[1,5,6],
+					]
+				]
+			],
+		]);
+	 
+	?>
+                            
+                            
+                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 

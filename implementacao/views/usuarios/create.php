@@ -15,7 +15,7 @@
 
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
-
+$this->title = Yii::t('app', 'SigPex');
 ?>
 <div class="usuarios-create">
 

@@ -1,3 +1,4 @@
+
 <?php
 
 /******************************************************************
@@ -22,7 +23,7 @@ use yii\helpers\Url;
 
 //$titulo = \app\models\Projetos::getnome($dataProvider->models, 'titulo');
 //$nome = \app\models\User::getnome($dataProvider->models, 'nome');
-$participante = Yii::$app->user->identity->nome;
+//$participante = Yii::$app->declaracao->participante;
 //$data = new \yii\db\Expression('NOW()');
 
 ?>
@@ -72,11 +73,11 @@ $participante = Yii::$app->user->identity->nome;
             <div class="row">
                 <div class="col-lg-12"> 
                     <b><h5 class="text-justify" style="font-size:16px;line-height:25px;">
-                        Declaramos para os fins que se fizerem necessários que <strong><?=$participante?></strong>
-                        participou do projeto <strong> <?= Html::encode($model->titulo) ?> </strong>realizado no Instituto Federal de Educação 
-                        Ciência e Tecnologia do Norte de Minas Gerais - Campus Januária, <strong><?= Html::encode($model->municipio) ?></strong> no período de 
-                        <strong><?= Html::encode(Yii::$app->formatter->asDate($model->dataInicio)) ?></strong> a <strong><?= Html::encode(Yii::$app->formatter->asDate($model->datafim)) ?></strong>, 
-                        perfazendo uma carga horária total de <strong><?= Html::encode($model->cargHorariaTotal) ?></strong> horas.
+                        Declaramos para os fins que se fizerem necessários que <strong><?= Html::encode($model->participante) ?></strong>
+                        participou do projeto <strong> <?= Html::encode($model->projetos->titulo) ?> </strong>realizado no Instituto Federal de Educação 
+                        Ciência e Tecnologia do Norte de Minas Gerais - Campus Januária, <strong><?= Html::encode($model->projetos->municipio) ?></strong> no período de 
+                        <strong><?= Html::encode(Yii::$app->formatter->asDate($model->projetos->dataInicio)) ?></strong> à <strong><?= Html::encode(Yii::$app->formatter->asDate($model->projetos->datafim)) ?></strong>, 
+                        perfazendo uma carga horária total de <strong><?= Html::encode($model->projetos->cargHorariaTotal) ?></strong> horas.
                      
                     </h5></b>
                 </div>
@@ -98,7 +99,7 @@ $participante = Yii::$app->user->identity->nome;
         
        
                    <b><h5 class="text-center">________________________________________</h5></b>
-                   <b><h5 class="text-center"> Januária <?php echo date('d-m-Y'); ?></h5></b>
+                   <b><h5 class="text-center"> Januária, <?php echo Html::encode(Yii::$app->formatter->asDate($model->dataEmissao));?></h5></b>
     </div>
     </div>
     

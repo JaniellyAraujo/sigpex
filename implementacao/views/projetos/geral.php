@@ -15,6 +15,8 @@
 use yii\grid\GridView;
 use app\models\Projetos;
 use yii\helpers\Url;
+use dosamigos\chartjs\ChartJs;
+use miloschuman\highcharts\Highcharts;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ProjetosSearch */
@@ -646,7 +648,132 @@ GridView::widget([
             <b>Quantidade total de Projeto Cultural:</b>< ?= $totalCultural ?><br>
             <b>Quantidade total de Projeto Artistico:</b>< ?= $totalArtistico ?><br>
             <b>Quantidade total de Projeto Esportivo:</b>< ?= $totalArtistico ?><br>
-        </div-->
+        </div>
+        < ?php echo ChartJs::widget([
+                    'type' => 'pie',
+                    'options' => [
+                        'height' => 300,
+                        'width' => 400
+                    ],
+                    'data' => [
+                        'labels' => ["Camiseta preta", "Calça Jeans", "Vestido", "Sapato", "Blusa"],
+                        'datasets' => [
+                            [
+                                'data' => [$totalTecnologico , $totalEmpreendedor , $totalSocial , $totalAC , $totalEsportivo ],
+                                'backgroundColor' => [
+                                    'rgba(255, 99, 132, 0.7)',
+                                    'rgba(54, 162, 235, 0.7)',
+                                    'rgba(255, 206, 86, 0.7)',
+                                    'rgba(75, 192, 192, 0.7)',
+                                    'rgba(153, 102, 255, 0.7)',
+                                    'rgba(0, 255, 250, 0.7)'
+                                ],
+                                'borderColor' => [
+                                    'rgba(255, 99, 132, 0.7)',
+                                    'rgba(54, 162, 235, 0.7)',
+                                    'rgba(255, 206, 86, 0.7)',
+                                    'rgba(75, 192, 192, 0.7)',
+                                    'rgba(153, 102, 255, 0.7)',
+                                    'rgba(0, 255, 250, 0.7)'
+                                ],
+                            ],
+                        ]
+                    ]
+                ]);?-->
+        
+        <?php
+        /**
+    	* @Start Designation wise employee display
+    	
+    	$empDesignWise = (new \yii\db\Query())
+    		    ->select(["CONCAT(ds.emp_designation_name, ' (', COUNT( emp_master_id ), ')') AS '0'", 'COUNT(emp_master_id) AS "1"'])
+    		    ->from('emp_master em')
+    		    ->join('JOIN', 'emp_designation ds', 'ds.emp_designation_id = em.emp_master_designation_id')
+    		    ->where(['em.is_status' => '0'])
+    		    ->groupBy('emp_master_designation_id')
+    		    ->all();
+    	$empDesignWiseNull = EmpMaster::find()->where(['is_status'=>0, 'emp_master_designation_id'=>NULL])->count();
+    	if(!empty($empDesignWiseNull)) {
+    		$empDesignWise[] = ['name'=>'Not Set ('.($empDesignWiseNull).')', 'y'=>$empDesignWiseNull, 'sliced'=>true, 'selected'=>true, 'color'=>'#F45B5B'];
+    	}
+
+        return $this->render('index', ['empDepWise'=>$empDepWise, 'empRecent'=>$empRecent, 'empDesignWise'=>$empDesignWise]);
+    */
+        
+	if(!empty($totalTecnologico)) {
+		echo Highcharts::widget([
+			'scripts' => [
+				'highcharts-3d',   
+			],
+			'options' => [	
+				'exporting'=>[
+				 	'enabled'=>true 
+				],
+				'legend'=>[
+				    'align'=>'center',
+				    'verticalAlign'=>'bottom',
+				    'layout'=>'vertical',
+				    'x'=>0,
+				    'y'=>0,
+				],
+				'credits'=>[
+	    				'enabled'=>false
+	  			 ],
+				'chart'=> [
+					'type'=>'pie',
+					'options3d'=>[
+						'enabled'=>true,
+						'alpha'=>45,
+						'beta'=>0
+					],
+				],
+				'title'=>[
+					'text'=>'',
+					'margin'=>0,
+				],
+				'plotOptions'=>[
+					'pie'=>[
+						'allowPointSelect'=>true,
+		        			'cursor'=>'pointer',
+		       				'depth'=>35,
+						'dataLabels'=>[
+							'enabled'=>false
+					    	 ],
+						 'showInLegend'=>true,
+					],	
+					'series'=>[
+						'pointPadding'=>0,
+						'groupPadding'=>0,      
+					 ],
+				],
+				'series'=> [
+					[
+						'name'=>'Total Employee',
+						'data'=>[$totalTecnologico],
+					]
+				]
+			],
+		]);
+	} else {
+		echo '<div class="alert alert-danger">Resultado não encontrado.</div>';
+	}
+	?>
+        
+        <?php echo Highcharts::widget([
+   'options' => [
+      'title' => ['text' => 'Fruit Consumption'],
+      'xAxis' => [
+         'categories' => ['Apples', 'Bananas', 'Oranges']
+      ],
+      'yAxis' => [
+         'title' => ['text' => 'Fruit eaten']
+      ],
+      'series' => [
+         ['name' => 'Jane', 'data' => [1, 0, 4]],
+         ['name' => 'John', 'data' => [5, 7, 3]]
+      ]
+   ]
+]);?>
         <div class="box-footer"></div>
 
 

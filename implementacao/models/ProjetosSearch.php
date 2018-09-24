@@ -1,44 +1,34 @@
 <?php
 
-/*****************************************************************
- * SIGPEX - SISTEMA  DE GERENCIAMENTO DE PROJETOS DE EXTENSÃO
-
- * O SigPex foi desenvolvido como Trabalho de Conclusão de Curso
- * e apresentado ao IFNMG – Campus Januária como parte das
- *  exigências do Programa de Graduação em Tecnologia em Análise
- *  e Desenvolvimento de Sistemas.
- *
- * Desenvolvido pela acadêmica: Janielly Araújo Lopes.
- * Orientadora: Cleiane Gonçalves Oliveira.
- *
- /******************************************************************/
-
 namespace app\models;
 
-use app\assets\AppAsset;
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use app\models\Projetos;
 
 /**
  * ProjetosSearch represents the model behind the search form of `app\models\Projetos`.
  */
-class ProjetosSearch extends Projetos {
-
+class ProjetosSearch extends Projetos
+{
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-    public function rules() {
+    public function rules()
+    {
         return [
-                [['id', 'pesAtendidas', 'cargHorariaSemanal', 'cargHorariaTotal', 'isAtivo'], 'integer'],
-                [['titulo', 'coordenador', 'justificativa', 'tipoProjeto', 'modalidade', 'objetivo', 'isTipo', 'isStatus', 'resumo', 'municipio', 'descricaoPopulacao', 'publicoAlvo', 'localExecucao', 'dataInicio', 'datafim', 'parceiros', 'vinculo', 'citarVinculo', 'convenio', 'citarConvenio', 'gerFundacao', 'citarFundacao', 'multicampi', 'publico', 'contPublico', 'isUsuario', 'areaConhecimento', 'campusDesenvolvido', 'participante', 'tipoUsuario'], 'safe'],
-                [['valorFinanciamento'], 'number'],
+            [['id', 'pesAtendidas', 'cargHorariaSemanal', 'cargHorariaTotal', 'contPublico', 'isControle', 'isAtivo', 'idUser', 'isUsuario', 'publico'], 'integer'],
+            [['titulo', 'coordenador', 'tipoProjeto', 'objetivo', 'resumo', 'municipio', 'descricaoPopulacao', 'publicoAlvo', 'localExecucao', 'dataInicio', 'datafim', 'parceiros', 'vinculo', 'citarVinculo', 'convenio', 'citarConvenio', 'gerFundacao', 'citarFundacao', 'multicampi', 'areaConhecimento', 'campusDesenvolvido', 'isStatus', 'modalidade', 'isTipo', 'justificativa', 'mes', 'atividesenvolvidas', 'avaliacao', 'observacoes', 'objetalcancados', 'etapas', 'materiasutiliz', 'metodosutiliz', 'caracfacilitadora', 'caractdificultadora', 'contribuicao', 'avaliacao2', 'isAndamento', 'editaAluno', 'editaCoordenador', 'dataSolicitacao', 'dataAnalise', 'participante', 'tipoUsuario'], 'safe'],
+            [['valorFinanciamento'], 'number'],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-    public function scenarios() {
+    public function scenarios()
+    {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -50,38 +40,15 @@ class ProjetosSearch extends Projetos {
      *
      * @return ActiveDataProvider
      */
-    public function search($params) {
+    public function search($params)
+    {
         $query = Projetos::find();
+
+        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-             
-           
-            
-        ]);
-        $dataProvider->setSort([
-            'attributes' => [
-                'titulo',
-                'dataInicio' => [
-                    'asc' => ['dataInicio' => SORT_ASC],
-                    'desc' => ['dataInicio' => SORT_DESC],
-                    'default' => SORT_ASC
-                ],
-                'datafim' => [
-                    'asc' => ['datafim' => SORT_ASC],
-                    'desc' => ['datafim' => SORT_DESC],
-                    'default' => SORT_ASC,
-                ],
-                'isAtivo' => [
-                    'asc' => ['isAtivo' == 0 => SORT_ASC, 'isAtivo' == 1 => SORT_ASC, 'isAtivo' == 2 => SORT_ASC, 'isAtivo' == 3 => SORT_ASC, 'isAtivo' == 4 => SORT_ASC, 'isAtivo' == 5 => SORT_ASC, 'isAtivo' == 6 => SORT_ASC],
-                    'desc' => ['isAtivo' == 0 => SORT_DESC, 'isAtivo' == 1 => SORT_DESC, 'isAtivo' == 2 => SORT_DESC, 'isAtivo' == 3 => SORT_DESC, 'isAtivo' == 4 => SORT_DESC, 'isAtivo' == 5 => SORT_DESC, 'isAtivo' == 6 => SORT_DESC],
-                    'default' => SORT_ASC,
-                ],
-                'defaultOrder' => [
-                    'isAtivo' => SORT_ASC,
-                ]
-            ],
-            
+            'pagination' => ['pageSize' => 10]
         ]);
 
         $this->load($params);
@@ -91,7 +58,7 @@ class ProjetosSearch extends Projetos {
             // $query->where('0=1');
             return $dataProvider;
         }
-       
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
@@ -101,35 +68,57 @@ class ProjetosSearch extends Projetos {
             'cargHorariaSemanal' => $this->cargHorariaSemanal,
             'cargHorariaTotal' => $this->cargHorariaTotal,
             'valorFinanciamento' => $this->valorFinanciamento,
+            'contPublico' => $this->contPublico,
+            'isControle' => $this->isControle,
             'isAtivo' => $this->isAtivo,
+            'dataSolicitacao' => $this->dataSolicitacao,
+            'dataAnalise' => $this->dataAnalise,
+            'idUser' => $this->idUser,
+            'isUsuario' => $this->isUsuario,
+            'publico' => $this->publico,
         ]);
 
         $query->andFilterWhere(['like', 'titulo', $this->titulo])
-                ->andFilterWhere(['like', 'coordenador', $this->coordenador])
-                ->andFilterWhere(['like', 'tipoProjeto', $this->tipoProjeto])
-                ->andFilterWhere(['like', 'objetivo', $this->objetivo])
-                ->andFilterWhere(['like', 'resumo', $this->resumo])
-                ->andFilterWhere(['like', 'municipio', $this->municipio])
-                ->andFilterWhere(['like', 'descricaoPopulacao', $this->descricaoPopulacao])
-                ->andFilterWhere(['like', 'publicoAlvo', $this->publicoAlvo])
-                ->andFilterWhere(['like', 'localExecucao', $this->localExecucao])
-                ->andFilterWhere(['like', 'parceiros', $this->parceiros])
-                ->andFilterWhere(['like', 'vinculo', $this->vinculo])
-                ->andFilterWhere(['like', 'citarVinculo', $this->citarVinculo])
-                ->andFilterWhere(['like', 'convenio', $this->convenio])
-                ->andFilterWhere(['like', 'citarConvenio', $this->citarConvenio])
-                ->andFilterWhere(['like', 'gerFundacao', $this->gerFundacao])
-                ->andFilterWhere(['like', 'citarFundacao', $this->citarFundacao])
-                ->andFilterWhere(['like', 'multicampi', $this->multicampi])
-                ->andFilterWhere(['like', 'publico', $this->publico])
-                ->andFilterWhere(['like', 'contPublico', $this->contPublico])
-                ->andFilterWhere(['like', 'isUsuario', $this->isUsuario])
-                ->andFilterWhere(['like', 'areaConhecimento', $this->areaConhecimento])
-                ->andFilterWhere(['like', 'participante', $this->participante])
-                ->andFilterWhere(['like', 'tipoUsuario', $this->tipoUsuario])
-                ->andFilterWhere(['like', 'campusDesenvolvido', $this->campusDesenvolvido]);
+            ->andFilterWhere(['like', 'coordenador', $this->coordenador])
+            ->andFilterWhere(['like', 'tipoProjeto', $this->tipoProjeto])
+            ->andFilterWhere(['like', 'objetivo', $this->objetivo])
+            ->andFilterWhere(['like', 'resumo', $this->resumo])
+            ->andFilterWhere(['like', 'municipio', $this->municipio])
+            ->andFilterWhere(['like', 'descricaoPopulacao', $this->descricaoPopulacao])
+            ->andFilterWhere(['like', 'publicoAlvo', $this->publicoAlvo])
+            ->andFilterWhere(['like', 'localExecucao', $this->localExecucao])
+            ->andFilterWhere(['like', 'parceiros', $this->parceiros])
+            ->andFilterWhere(['like', 'vinculo', $this->vinculo])
+            ->andFilterWhere(['like', 'citarVinculo', $this->citarVinculo])
+            ->andFilterWhere(['like', 'convenio', $this->convenio])
+            ->andFilterWhere(['like', 'citarConvenio', $this->citarConvenio])
+            ->andFilterWhere(['like', 'gerFundacao', $this->gerFundacao])
+            ->andFilterWhere(['like', 'citarFundacao', $this->citarFundacao])
+            ->andFilterWhere(['like', 'multicampi', $this->multicampi])
+            ->andFilterWhere(['like', 'areaConhecimento', $this->areaConhecimento])
+            ->andFilterWhere(['like', 'campusDesenvolvido', $this->campusDesenvolvido])
+            ->andFilterWhere(['like', 'isStatus', $this->isStatus])
+            ->andFilterWhere(['like', 'modalidade', $this->modalidade])
+            ->andFilterWhere(['like', 'isTipo', $this->isTipo])
+            ->andFilterWhere(['like', 'justificativa', $this->justificativa])
+            ->andFilterWhere(['like', 'mes', $this->mes])
+            ->andFilterWhere(['like', 'atividesenvolvidas', $this->atividesenvolvidas])
+            ->andFilterWhere(['like', 'avaliacao', $this->avaliacao])
+            ->andFilterWhere(['like', 'observacoes', $this->observacoes])
+            ->andFilterWhere(['like', 'objetalcancados', $this->objetalcancados])
+            ->andFilterWhere(['like', 'etapas', $this->etapas])
+            ->andFilterWhere(['like', 'materiasutiliz', $this->materiasutiliz])
+            ->andFilterWhere(['like', 'metodosutiliz', $this->metodosutiliz])
+            ->andFilterWhere(['like', 'caracfacilitadora', $this->caracfacilitadora])
+            ->andFilterWhere(['like', 'caractdificultadora', $this->caractdificultadora])
+            ->andFilterWhere(['like', 'contribuicao', $this->contribuicao])
+            ->andFilterWhere(['like', 'avaliacao2', $this->avaliacao2])
+            ->andFilterWhere(['like', 'isAndamento', $this->isAndamento])
+            ->andFilterWhere(['like', 'editaAluno', $this->editaAluno])
+            ->andFilterWhere(['like', 'editaCoordenador', $this->editaCoordenador])
+            ->andFilterWhere(['like', 'participante', $this->participante])
+            ->andFilterWhere(['like', 'tipoUsuario', $this->tipoUsuario]);
 
         return $dataProvider;
     }
-
 }

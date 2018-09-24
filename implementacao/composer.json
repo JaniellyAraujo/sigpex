@@ -33,7 +33,10 @@
         "nineinchnick/yii2-usr": "dev-master",
         "dchaofei/yii2-ajaxmodal": "dev-master",
         "conquer/gii-modal": "^1.1",
-        "mdscomp/yii2-bootstrap-dialog": "~1.0"
+        "mdscomp/yii2-bootstrap-dialog": "~1.0",
+        "unclead/yii2-multiple-input": "^2.15",
+        "miloschuman/yii2-highcharts-widget": "*",
+        "wbraganca/yii2-dynamicform": "^2.0"
         
                
         

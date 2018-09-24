@@ -3,16 +3,16 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Area */
+/* @var $model app\models\Declaracao */
 
-$this->title = Yii::t('app', 'Update Area: ' . $model->id, [
+$this->title = Yii::t('app', 'Update Declaracao: ' . $model->id, [
     'nameAttribute' => '' . $model->id,
 ]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Areas'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Declaracaos'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
-<div class="area-update">
+<div class="declaracao-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

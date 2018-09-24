@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Area;
+use app\models\Declaracao;
 
 /**
- * AreaSearch represents the model behind the search form of `app\models\Area`.
+ * DeclaracaoSearch represents the model behind the search form of `app\models\Declaracao`.
  */
-class AreaSearch extends Area
+class DeclaracaoSearch extends Declaracao
 {
     /**
      * {@inheritdoc}
@@ -18,8 +18,8 @@ class AreaSearch extends Area
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['nome'], 'safe'],
+            [['id', 'projeto_id', 'cargaHoraria', 'status'], 'integer'],
+            [['participante', 'dataInicio', 'dataFim', 'dataEmissao'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class AreaSearch extends Area
      */
     public function search($params)
     {
-        $query = Area::find();
+        $query = Declaracao::find();
 
         // add conditions that should always apply here
 
@@ -60,9 +60,15 @@ class AreaSearch extends Area
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'projeto_id' => $this->projeto_id,
+            'dataInicio' => $this->dataInicio,
+            'dataFim' => $this->dataFim,
+            'dataEmissao' => $this->dataEmissao,
+            'cargaHoraria' => $this->cargaHoraria,
+            'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'nome', $this->nome]);
+        $query->andFilterWhere(['like', 'participante', $this->participante]);
 
         return $dataProvider;
     }

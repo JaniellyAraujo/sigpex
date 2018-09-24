@@ -20,6 +20,12 @@ use app\models\User;
 use app\models\Users;
 use kartik\dialog\Dialog;
 
+if ($model->isAtivo == 5) {
+    $permission = true;
+} else {
+    $permission = false;
+} 
+
 echo Dialog::widget(['overrideYiiConfirm' => true]);
 
 /* @var $this yii\web\View */
@@ -57,7 +63,7 @@ echo Dialog::widget(['overrideYiiConfirm' => true]);
                     </div> 
                 </div>
             <?php } ?>
-            <div class="box box-solid box-success col-xs-12 col-lg-12 no-padding">
+                        <div class="box box-solid box-primary col-xs-12 col-lg-12 no-padding">
                 <div class="box-header with-border">
                     <h4 class="box-title"><i class="fa fa-info-circle"></i> IDENTIFICAÇÃO DO PROJETO DE EXTENSÃO</h4>
                 </div>
@@ -65,11 +71,25 @@ echo Dialog::widget(['overrideYiiConfirm' => true]);
 
                     <div class="col-xs-12 col-sm-12 col-lg-12 no-padding">
 
-                        <div class="col-md-5"><?= $form->field($model, 'titulo')->textInput(['maxlength' => true, 'autofocus' => true/* , 'style' => 'text-transform:uppercase' */]) ?></div>
-                        <div class="col-md-2"><?= $form->field($model, 'coordenador')->dropDownList(ArrayHelper::map(User::find()->where(['role' => 3])->asArray()->all(), 'nome', 'nome'), ['prompt' => 'Selecione'], array('selected' => true)) ?></div>
+                        <div class="col-md-5"><?= $form->field($model, 'titulo')->textInput(['maxlength' => true, 'autofocus' => true, 'disabled' => $permission/* , 'style' => 'text-transform:uppercase' */]) ?></div>
                         <div class="col-md-2"><?= $form->field($model, 'tipoProjeto')->dropDownList(ArrayHelper::map(\app\models\Project::find()->asArray()->all(), 'nome', 'nome'), ['prompt' => 'Selecione'], array('selected' => true)) ?></div>
                         <div class="col-md-3"><?= $form->field($model, 'modalidade')->dropDownList(ArrayHelper::map(\app\models\Modalidade::find()->asArray()->all(), 'nome', 'nome'), ['prompt' => 'Selecione'], array('selected' => true)) ?></div>
-
+                        <div class="col-md-2"><?=
+                            $form->field($model, 'valorFinanciamento', [
+                                'template' =>
+                                '<label class="control-label">Valor</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">$</span>
+                                        {input}
+                                        <span class="input-group-addon">.00</span>
+                                    </div>
+                                {error}',
+                                'inputOptions' => [
+                                    // 'placeholder' => 'Username ...',
+                                    'class' => 'form-control',
+                        ]])
+                            ?>
+                        </div>
 
                     </div>
 
@@ -99,16 +119,11 @@ echo Dialog::widget(['overrideYiiConfirm' => true]);
                 </div> 
             </div>
 
-            <div class="box box-solid box-info col-xs-12 col-lg-12 no-padding">
+            <div class="box box-solid box-primary col-xs-12 col-lg-12 no-padding">
                 <div class="box-header with-border">
                     <h4 class="box-title"><i class="fa fa-info-circle"></i> DETALHAMENTO DO PROJETO DE EXTENSÃO</h4>
                 </div>
                 <div class="box-body">
-
-                    <div class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                        <div class="col-md-6"><?= $form->field($model, 'descricaoPopulacao')->textarea(['rows' => 3]) ?></div>
-                        <div class="col-md-6"><?= $form->field($model, 'localExecucao')->textInput(['maxlength' => true]) ?></div>
-                    </div>
 
                     <div class="col-xs-12 col-sm-12 col-lg-12 no-padding">
                         <div class="col-md-12"><?= $form->field($model, 'objetivo')->textarea(['rows' => 3]) ?></div>
@@ -117,29 +132,56 @@ echo Dialog::widget(['overrideYiiConfirm' => true]);
                     <div class="col-xs-12 col-sm-12 col-lg-12 no-padding">
                         <div class="col-md-12"><?= $form->field($model, 'resumo')->textarea(['rows' => 3]) ?></div>
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                        <div class="col-md-4"><?= $form->field($model, 'vinculo')->radioList(array('Sim' => 'Sim', 'Não' => 'Não')); ?></div>
-                        <div class="col-md-3"><?= $form->field($model, 'citarVinculo')->textInput(['maxlength' => true]) ?></div>
-                        <div class="col-md-3">
-                            <?= $form->field($model, 'parceiros')->dropDownList(ArrayHelper::map(\app\models\Parceiros::find()->asArray()->all(), 'nome', 'nome'), ['prompt' => 'Selecione'], array('selected' => true)) ?>
-                        </div>
-                        <div class="col-md-1">
-                            <?= Html::beginTag('a', [
-                                'href' => '/parceiros/create',
-                                'target' => '_blank'
-                            ]) . Html::tag('i', '', [
-                                'class' => 'glyphicon glyphicon-plus-sign',
-                                'style' => 'font-size:29px;padding-top: 29px;'
-                            ]) . Html::endTag('a'); ?>
+                </div>
 
-                            <?= Html::beginTag('a', [
-                                'href' => '#',
-                                'target' => '_blank',
-                                'class' => 'reload'
-                            ]) . Html::tag('i', '', [
-                                'class' => 'glyphicon glyphicon-refresh',
-                                'style' => 'font-size:29px;padding-top: 29px;float:left;'
-                            ]) . Html::endTag('a'); ?>
+            </div>
+
+            <div class="box box-solid box-primary col-xs-12 col-lg-12 no-padding">
+                <div class="box-header with-border">
+                    <h4 class="box-title"><i class="fa fa-info-circle"></i> OUTRAS ESPECIFICAÇÕES</h4>
+                </div>
+                <div class="box-body">
+
+                    <div class="col-xs-12 col-sm-12 col-lg-12 no-padding">
+                        <div class="col-xs-12 col-sm-12 col-lg-12 no-padding">
+                            <div class="col-md-6"><?= $form->field($model, 'descricaoPopulacao')->textarea(['rows' => 1]) ?></div>
+                            <div class="col-md-6"><?= $form->field($model, 'localExecucao')->textInput(['maxlength' => true]) ?></div>
+                        </div>
+                        <div class="col-md-3"><?= $form->field($model, 'vinculo')->radioList(array('Sim' => 'Sim', 'Não' => 'Não')); ?></div>
+                        <div class="col-md-3"><?= $form->field($model, 'citarVinculo')->textInput(['maxlength' => true]) ?></div>
+                        <div class="col-md-4"><?= $form->field($model, 'parceiros')
+                                ->dropDownList(ArrayHelper::map(\app\models\Parceiros::find()->asArray()->all(), 'nome', 'nome'), ['prompt' => 'Selecione'], array('selected' => true))
+                            ?>
+                        </div>
+                        <div class="col-md-2" style="padding-top: 15px;" >
+                            
+                                <div  class="btn btn-default" data-toggle="popover" data-trigger="hover" title="Adicionar Parceiro" data-placement="top" data-content="Clique aqui caso deseja adicionar um novo parceiro!">
+                                    <?=
+                                    Html::beginTag('a ', [
+                                        'href' => '../parceiros/create',
+                                        'target' => '_blank'
+                                    ]) . Html::tag('i ', '', [
+                                        'class' => 'fa fa-plus',
+                                              
+                                            //'class' => 'fa fa-plus fa-white',
+                                             'color'=>"#737373;"
+                                    ]) . Html::endTag('a ');
+                                    ?>
+                                </div>
+                                <div class="btn btn-default" data-toggle="popover" data-trigger="hover" title="Atualizar Parceiros" data-placement="bottom" data-content="Clique aqui caso tenha adicionado um novo parceiro!">
+
+                                    <?=
+                                    Html::beginTag('a', [
+                                        'href' => '#',
+                                        'target' => '_blank',
+                                        'class' => 'reload'
+                                    ]) . Html::tag('i', '', [
+                                            'class' => 'fa fa-rotate-left',
+                                            //'style' => 'font-size:29px;padding-top: 29px;float:left;'
+                                    ]) . Html::endTag('a ');
+                                    ?>
+                                </div>
+                            
                         </div>
 
                     </div>
@@ -150,30 +192,6 @@ echo Dialog::widget(['overrideYiiConfirm' => true]);
                         <div class="col-md-3"><?= $form->field($model, 'citarFundacao')->textInput(['maxlength' => true]) ?></div>
                         <div class="col-md-3"><?= $form->field($model, 'convenio')->radioList(array('Sim' => 'Sim', 'Não' => 'Não')); ?></div>
                         <div class="col-md-3"><?= $form->field($model, 'citarConvenio')->textInput(['maxlength' => true]) ?></div> 
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                        <!--div class="col-md-3">< ?= $form->field($model, 'financiamento')->radioList(array('Sim' => 'Sim', 'Não' => 'Não')); ?></div-->
-                        <!--div class="col-md-3">< ?=$form->field($model, 'tipoFinanciamento')->dropDownList(array('Interno' => 'Interno',
-        'Próprio' => 'Próprio',), ['prompt' => 'Selecione'], array('selected' => true))
-    ?></div-->
-                        <!--div class="col-md-3">< ?= $form->field($model, 'citarFinanciamento')->textInput(['maxlength' => true]) ? ></div -->
-
-                        <div class="col-md-3"><?=
-                        $form->field($model, 'valorFinanciamento', [
-                            'template' =>
-                            '<label class="control-label">Citar Financiamento</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon">$</span>
-                                        {input}
-                                        <span class="input-group-addon">.00</span>
-                                    </div>
-                                {error}',
-                            'inputOptions' => [
-                                // 'placeholder' => 'Username ...',
-                                'class' => 'form-control',
-                    ]])
-    ?>
-                        </div>
                     </div>
 
                 </div>
@@ -191,7 +209,7 @@ echo Dialog::widget(['overrideYiiConfirm' => true]);
                                 <li id="subitem-usr" class="row mb-20 usr">
                                     <div class="col-md-8">
                                         <div class="form-group">
-                                            <?php $usuarios = User::find()->asArray()->all(); ?>
+                                             <?php $usuarios = User::find()->where(['isAtivo' => 1])->where(['OR', ['role' => 2], ['role' => 3], ['role' => 4]])->asArray()->all(); ?>
                                             <label class="control-label" for="projetos-participante">Participante:</label>
                                             <select id="projetos-participante" class="form-control" name="ProjetosUsuariosForm[<?= $modelUsuario->idForm ?>][usuario]" aria-invalid="false">
                                                 <option value="">Selecione</option>
@@ -284,7 +302,7 @@ echo Dialog::widget(['overrideYiiConfirm' => true]);
                 <li>
                     <div class="col-md-8">
                         <div class="form-group">
-                            <?php $usuarios = User::find()->asArray()->all(); ?>
+                             <?php $usuarios = User::find()->where(['isAtivo' => 1])->where(['OR', ['role' => 2], ['role' => 3], ['role' => 4]])->asArray()->all(); ?>
                             <label class="control-label" for="projetos-participante">Participante:</label>
                             <select id="projetos-participante" class="form-control" name="ProjetosUsuariosForm[${id}][usuario]" aria-invalid="false">
                                 <option value="">Selecione</option>

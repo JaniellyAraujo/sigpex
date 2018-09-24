@@ -44,20 +44,22 @@ use yii\helpers\Html;
 </style>
 
 <div class="box-primary box view-item col-xs-12 col-lg-12">
-    <p class="note">Criado em <?= Html::encode($model->dataSolicitacao) ?></p>
+    <?php if (((($model->dataSolicitacao) != null)&&($model->isAtivo) == 0)) { ?>
+    <p class="note">Criado em <?= Html::encode(Yii::$app->formatter->asDate($model->dataSolicitacao)) ?>  <?php } ?>
+    <?php if (((($model->dataSolicitacao) != null)&&(($model->isAtivo) == 1)||($model->isAtivo) == 5)) { ?>
+    <p class="note">Registrado em <?= Html::encode(Yii::$app->formatter->asDate($model->dataSolicitacao)) ?>  <?php } ?>
+        
+    <?php if (($model->dataAnalise) != null) { ?>
+    Analisado em <?= Html::encode(Yii::$app->formatter->asDate($model->dataAnalise)) ?> pelo Departamento de Extensão</p>
+    <?php } ?>
     <div class="box-body">
 
         <div class="pull-right">
 
             <div class="form-group" align='right'>
-                
-                <?php if (Yii::$app->user->can('servidor')) { ?>
-                    <?php if (($model->isAtivo) == 3) { ?>
+                    <?php if (($model->isAtivo == 3)&&(Yii::$app->user->identity->nome == $model->coordenador)) { ?>
                         <?= Html::a(Yii::t('app', '<b class="fa  fa-eyedropper"></b> Atualizar'), ['update2', 'id' => $model->id], ['class' => 'btn btn-social btn-primary', 'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 3]) ?>
                     <?php } ?>
-                <?php } ?>
-                <?= Html::a('<b class="fa fa-download"></b>', [''], ['target' => '_blank', 'class' => 'btn btn-default', 'title' => 'Exportar', 'id' => 'modal-btn-pdf']) ?>
-
             </div>
 
         </div><br><br> <!--?= Html::a('<b class="fa fa-user-plus"></b> Equipe', ['/equipe/create/'], ['class' => 'btn btn-default']) ?-->
@@ -90,30 +92,40 @@ use yii\helpers\Html;
                     <table class="table table-striped">
                         <tr>
                             <td><div class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                                    <div class="col-md-7"><b>TÍTULO: </b><?= Html::encode($model->titulo) ?></div>
-                                    <div class="col-md-2"><b>TIPO: </b><?= Html::encode($model->tipoProjeto) ?></div>
-                                    <div class="col-md-3"><b>MODALIDADE: </b><?= Html::encode($model->modalidade) ?></div><br><br>
+                                    <div class="col-md-9"><b>TÍTULO: </b><?= Html::encode($model->titulo) ?></div>
+                                    <div class="col-md-3"><b>TIPO: </b><?= Html::encode($model->tipoProjeto) ?></div>
+                                    </div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
+                                    <div class="col-md-5"><b>COORDENADOR: </b> <?= Html::encode($model->coordenador) ?></div>
+                                    <div class="col-md-3"><b>MODALIDADE: </b><?= Html::encode($model->modalidade) ?></div>
+                                    <div class="col-md-4"><P><b>VALOR DO FINANCIAMENTO: </b><?= Html::encode($model->valorFinanciamento)?> R$</P></div><br><br>
                                 </div></td>
                         </tr>
                         <tr>
-                            <td><div class="sigpex-link-box-text"  class="col-xs-12 col-sm-12 col-lg-12 no-padding">
+                            <td><div class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
                                     <div class="col-md-6"><b>MUNICÍPIO BENEFICIADO: </b><?= Html::encode($model->municipio) ?></div>
                                     <div class="col-md-6"><b>PÚBLICO ALVO: </b><?= Html::encode($model->publicoAlvo) ?></div><br><br>
                                 </div></td>
                         </tr>
                         <tr>
-                            <td><div class="sigpex-link-box-text"  class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                                    <div class="col-md-3"><b>ÁREA DE CONHECIMENTO: </b><?= Html::encode($model->areaConhecimento) ?></div>
-                                    <div class="col-md-3"><b>CAMPUS ONDE O PROJETO SERÁ DESENVOLVIDO: </b><?= Html::encode($model->campusDesenvolvido) ?></div>
-                                    <div class="col-md-3"><b>Nº DE PESSOAS ATENDIDAS: </b><?= Html::encode($model->pesAtendidas) ?></div>
-                                    <div class="col-md-3"><b>O PROJETO É MULTICAMPI? </b><?= Html::encode($model->multicampi) ?></div><br><br><br>
+                            <td><div class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
+                                   <div class="col-md-6"><b>Nº DE PESSOAS ATENDIDAS: </b><?= Html::encode($model->pesAtendidas) ?></div>
+                                    <div class="col-md-6"><b>O PROJETO É MULTICAMPI? </b><?= Html::encode($model->multicampi) ?></div><br><br><br>
                                 </div></td>
+                        </tr>
+                         <tr>
+                            <td><div class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
+                                    <div class="col-md-6"><b>ÁREA DE CONHECIMENTO: </b><?= Html::encode($model->areaConhecimento) ?></div>
+                                    <div class="col-md-6"><b>CAMPUS ONDE O PROJETO SERÁ DESENVOLVIDO: </b><?= Html::encode($model->campusDesenvolvido) ?></div>
+                                    </div></td>
                         </tr>
 
                         <tr>
-                            <td><div class="sigpex-link-box-text"  class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                                    <div class="col-md-3"><b>DATA DE INÍCIO: </b><?= Html::encode($model->dataInicio) ?></div>
-                                    <div class="col-md-3"><b>DATA DE TÉRMINO: </b><?= Html::encode($model->datafim) ?></div>
+                            <td><div class="sigpex-link-box-text" class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
+                                    <div class="col-md-3"><b>DATA DE INÍCIO: </b><?= Html::encode(Yii::$app->formatter->asDate($model->dataInicio)) ?></div>
+                                    <div class="col-md-3"><b>DATA DE TÉRMINO: </b><?= Html::encode(Yii::$app->formatter->asDate($model->datafim)) ?></div>
                                     <div class="col-md-3"><b>CARGA HORÁRIA SEMANAL: </b><?= Html::encode($model->cargHorariaSemanal) ?></div>
                                     <div class="col-md-3"><b>CARGA HORÁRIA TOTAL: </b><?= Html::encode($model->cargHorariaTotal) ?></div><br><br>
                                 </div></td>
@@ -181,16 +193,8 @@ use yii\helpers\Html;
                                     <div class="col-md-6"><b>O PROJETO PREVÊ CONVÊNIO COM OUTRA INSTITUIÇÃO OU EMPRESA? </b><?= Html::encode($model->convenio) ?></div>
                                     <div class="col-md-6"><b>CITAR CONVÊNIO: </b><?= Html::encode($model->citarConvenio) ?></div><br><br>
                                 </div></td></tr>
-                        <tr>
-                            <td><div class="sigpex-link-box-text"  class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                                    <!--div class="col-md-6"><b>HÁ NECESSIDADE DE FINANCIAMENTO? </b>< ?= Html::encode($model->financiamento) ?></div-->
-                                    <!--div class="col-md-6"><b>TIPO DE FINANCIAMENTO: </b>< ?= Html::encode($model->tipoFinanciamento) ?></div><br><br-->
-                                </div></td></tr>
-                        <tr>
-                            <td><div class="sigpex-link-box-text"  class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                                    <!--div class="col-md-6"><b>CITAR A FONTE DO FINANCIAMENTO: </b>< ?= Html::encode($model->citarFinanciamento) ?></div-->
-                                    <div class="col-md-6"><P><b>VALOR DO FINANCIAMENTO: </b>< ?= Html::encode($model->valorFinanciamento) ?> R$</P></div><br><br>
-                                </div></td></tr>
+                       
+                        
                     </table>
                 </div>
 

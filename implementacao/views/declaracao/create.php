@@ -2,17 +2,15 @@
 
 use yii\helpers\Html;
 
+
 /* @var $this yii\web\View */
-/* @var $model app\models\Relatorios */
-/* @var $models app\models\Relatorios */
+/* @var $model app\models\Declaracao */
 
 ?>
-<div class="relatorios-update">
-
+<div class="declaracao-create">
 
     <?= $this->render('_form', [
         'model' => $model,
-        'models' => $models,
     ]) ?>
 
 </div>

@@ -374,7 +374,7 @@
         var data = wrapper.data('multipleInput'),
             attributeOptions = {};
 
-        // try to find options for embedded attribute at first.
+        // try to find options for embedded attribute at s.
         // For example the id of new input is example-1-field-0.
         // We remove last index and check whether attribute with such id exists or not.
         var bareId = id.replace(/-\d+-([^\d]+)$/, '-$1');

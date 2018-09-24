@@ -15,7 +15,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use app\models\Projetos;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ProjetosSearchh */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -41,6 +41,8 @@ use yii\grid\GridView;
             <?=
             GridView::widget([
                 'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
+           
                 'summary' => "Exibindo <strong> {begin}</strong> - <strong>{end}</strong> de <strong>{totalCount}</strong> itens",
                 'rowOptions' => function($model) {
                     if ($model->isAtivo == '5') { //EM ANDAMENTO
@@ -84,7 +86,7 @@ use yii\grid\GridView;
                         'attribute' => 'isAtivo',
                         'value' => 'Status',
                         'format' => 'raw',
-                    
+                         
                         // 'filter' => ['0' => 'Rascunhos', '1' => 'Em Análise', '2' => 'Em Andamento', '3 '=> 'Solicitado Modificação', '4' => 'Modificado ', '5' => 'Encerrado', '6' => 'Arquivado'],
                         'contentOptions' => ['class' => 'text-center'],
                         'headerOptions' => ['style' => 'width: 10%;'],
@@ -135,7 +137,7 @@ use yii\grid\GridView;
                                 ]);
                             },
                             'teste' => function ($url, $data) {
-                                if ($data->isAtivo == 0) {
+                                if (($data->isAtivo == 0)&&(Yii::$app->user->identity->nome == $data->coordenador)) {
                                     return Html::a('<i class="fa fa-trash fa fa-white"></i>', $url, ['title' => 'Excluir',
                                                 'class' => 'btn btn-danger',
                                                 'data-confirm' => 'Tem certeza de que deseja excluir este item?', // altera a mensagem de confirmação
@@ -145,7 +147,7 @@ use yii\grid\GridView;
                             },
                            
                             'modificar' => function ($url, $data) {
-                                if ($data->isAtivo == 3) {
+                                if (($data->isAtivo == 3)&&(Yii::$app->user->identity->nome == $data->coordenador)) {
                                     return Html::a('<span class="btn btn-primary " role="button" title = "Modificar"><i class="fa fa-eyedropper fa fa-white" /n ></i></span> ', ['projetos/update2', 'id' => $data->id], ['class' => 'profile-link']);
                                 }
                             },
@@ -162,7 +164,7 @@ use yii\grid\GridView;
                                 }
                             },
                             'update' => function ($url, $data) {
-                                if ($data->isAtivo == 0) {
+                                if ((($data->isAtivo == 0)||($data->isAtivo == 5))&&(Yii::$app->user->identity->nome == $data->coordenador))  {
                                     return Html::a('<i class="fa  fa-eyedropper fa fa-white"></i>', $url, ['title' => 'Editar',
                                                 'class' => 'btn btn-primary',
                                     ]);
@@ -185,3 +187,5 @@ use yii\grid\GridView;
   text-align:center;
 }
 </style>
+
+

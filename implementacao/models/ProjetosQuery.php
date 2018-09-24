@@ -1,4 +1,4 @@
-<?php
+<!--?php
 
 /*****************************************************************
  * SIGPEX - SISTEMA  DE GERENCIAMENTO DE PROJETOS DE EXTENSÃO
@@ -43,3 +43,4 @@ class ProjetosQuery extends \yii\db\ActiveQuery {
     }
 
 }
+-->

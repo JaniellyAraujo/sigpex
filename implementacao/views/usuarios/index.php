@@ -189,7 +189,7 @@ use kartik\grid\GridView;
                       'template' => '{view} {update}',
                       'buttons' => [
                       'view' => function ($url, $model, $key) {
-                      return Html::a('', $url, ['title' => 'Visualisar Usuário', 'class' => 'glyphicon glyphicon-eye-open']);
+                      return Html::a('', $url, ['title' => 'Visualizar Usuário', 'class' => 'glyphicon glyphicon-eye-open']);
                       },
                       'update' => function ($url, $model, $key) {
                       return Html::a('', $url, ['title' => 'Editar Usuário', 'class' => 'glyphicon glyphicon-user']);
@@ -212,10 +212,10 @@ use kartik\grid\GridView;
                             'class' => 'CustomHeadClass ',
                             ],
                         'contentOptions' => ['class' => 'text-center'],
-                        'template' => "{view} {update}  {delete}", // altera a forma de exibição dos botões
+                        'template' => "{view} {update}", // altera a forma de exibição dos botões
                         'buttons' => [
                             'view' => function ($url, $model) {
-                                return Html::a('<i class="fa fa-eye fa fa-white"></i>', $url, ['title' => 'Visualisar Usuário',
+                                return Html::a('<i class="fa fa-eye fa fa-white"></i>', $url, ['title' => 'Visualizar Usuário',
                                             'class' => 'btn btn-info',
                                 ]);
                             },
@@ -229,7 +229,7 @@ use kartik\grid\GridView;
                             'delete' => function ($url, $model) {
                                  if (Yii::$app->user->identity->role == 1) {
                                 return Html::a('<i class="fa fa-trash fa fa-white"></i>', $url, ['title' => 'Não Permitido',
-                                            'class' => 'btn btn-danger disabled ',
+                                            'class' => 'btn btn-danger',
                                             'data-confirm' => 'Tem certeza de que deseja excluir este item?', // altera a mensagem de confirmação
                                             'data-method' => 'post',
                                 ]);

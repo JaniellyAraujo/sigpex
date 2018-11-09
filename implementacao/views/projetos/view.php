@@ -40,9 +40,9 @@ use app\models\User;
     tr:nth-child(even) {
         background-color: #ffffff;
     }
-    .sigpex-link-box-text {
-        text-transform: uppercase;
-    }
+    //.sigpex-link-box-text {
+     //   text-transform: uppercase;
+    //}
 
 </style>
 <div class="box-primary box view-item col-xs-12 col-lg-12">
@@ -50,20 +50,20 @@ use app\models\User;
     <p class="note">Criado em <?= Html::encode(Yii::$app->formatter->asDate($model->dataSolicitacao)) ?>  <?php } ?>
     <?php if (((($model->dataSolicitacao) != null)&&(($model->isAtivo) == 1)||($model->isAtivo) == 5)) { ?>
     <p class="note">Registrado em <?= Html::encode(Yii::$app->formatter->asDate($model->dataSolicitacao)) ?> -- <?php } ?>
-        
+
     <?php if (($model->dataAnalise) != null) { ?>
     Analisado em <?= Html::encode(Yii::$app->formatter->asDate($model->dataAnalise)) ?> pelo Departamento de Extensão</p>
     <?php } ?>
-    
+
     <div class="box-body">
         <div class="pull-right">
             <!--?php
             echo Html::a('<b class="fa fa-building-o fa fa-white"></b> Relatório Mensal', ['/relatorios-projetos/create', "id" => $model->id], ['class' => 'btn btn-social btn-primary', 'style' => 'margin-left:10px']);
             echo Html::a('<b class="fa fa-building fa fa-white"></b> Relatório Final', ['/relatorios-projetos/create', "id" => $model->id], ['class' => 'btn btn-social btn-primary', 'style' => 'margin-left:10px']);?-->
-            
+
             <?php
             if (($model->isAtivo == 0)&&(Yii::$app->user->identity->nome == $model->coordenador)) {
-                echo Html::a(Yii::t('app', '<b class="fa fa-eyedropper fa fa-white"></b> Atualizar'), ['update', 'id' => $model->id], ['class' => 'btn btn-social btn-primary', 'style' => 'margin-left:10px']);
+                echo Html::a(Yii::t('app', '<b class="fa fa-eyedropper fa fa-white"></b> Atualizar'), ['projetos/salvar?id=' . $model->id], ['class' => 'btn btn-social btn-primary', 'style' => 'margin-left:10px']);
                 echo Html::a(Yii::t('app', '<b class="fa fa-trash fa fa-white"></b> Excluir'), ['delete', 'id' => $model->id], [
                     'class' => 'btn btn-social btn-danger', 'style' => 'margin-left:10px',
                     'data' => [
@@ -81,7 +81,7 @@ use app\models\User;
 
         <div class="box box-solid box-primary col-xs-12 col-lg-12 no-padding"> <!--Exemmlo botão voltar -->
             <div class="box-header with-border">
-                <h4 class="box-title"><i class="fa fa-info-circle"></i> IDENTIFICAÇÃO DO PROJETO DE EXTENSÃO</h4>
+                <h4 class="box-title"><i class="glyphicon glyphicon-th-large"></i> IDENTIFICAÇÃO DO PROJETO DE EXTENSÃO</h4>
             </div>
             <div class="box-body">
                 <div class="col-lg-12 table-responsive  no-padding " style="margin-bottom:15px">
@@ -89,55 +89,104 @@ use app\models\User;
                     <table class="table table-striped">
                         <tr>
                             <td><div class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                                    <div class="col-md-9"><b>TÍTULO: </b><?= Html::encode($model->titulo) ?></div>
-                                    <div class="col-md-3"><b>TIPO: </b><?= Html::encode($model->tipoProjeto) ?></div>
-                                    </div></td>
+                                    <div class="col-md-12"><b>TÍTULO: </b><?= Html::encode($model->titulo) ?></div>
+                                </div></td>
                         </tr>
                         <tr>
                             <td><div class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                                    <div class="col-md-5"><b>COORDENADOR: </b> <?= Html::encode($model->coordenador) ?></div>
-                                    <div class="col-md-3"><b>MODALIDADE: </b><?= Html::encode($model->modalidade) ?></div>
-                                    <div class="col-md-4"><P><b>VALOR DO FINANCIAMENTO: </b><?= Html::encode($model->valorFinanciamento)?> R$</P></div><br><br>
+                                    <div class="col-md-6"><b>TIPO: </b><?= Html::encode($model->tipoProjeto) ?></div>
+                                    <div class="col-md-6"><b>MODALIDADE: </b><?= Html::encode($model->modalidade) ?></div>
                                 </div></td>
                         </tr>
                         <tr>
                             <td><div class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
                                     <div class="col-md-6"><b>MUNICÍPIO BENEFICIADO: </b><?= Html::encode($model->municipio) ?></div>
-                                    <div class="col-md-6"><b>PÚBLICO ALVO: </b><?= Html::encode($model->publicoAlvo) ?></div><br><br>
+                                    <div class="col-md-6"><b>PÚBLICO ALVO: </b><?= Html::encode($model->publicoAlvo) ?></div>
                                 </div></td>
                         </tr>
                         <tr>
                             <td><div class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                                   <div class="col-md-6"><b>Nº DE PESSOAS ATENDIDAS: </b><?= Html::encode($model->pesAtendidas) ?></div>
-                                    <div class="col-md-6"><b>O PROJETO É MULTICAMPI? </b><?= Html::encode($model->multicampi) ?></div><br><br><br>
+                                    <div class="col-md-6"><b>Nº DE PESSOAS ATENDIDAS: </b><?= Html::encode($model->pesAtendidas) ?></div>
+                                    <div class="col-md-6"><b>O PROJETO É MULTICAMPI? </b><?= Html::encode($model->multicampi) ?></div>
                                 </div></td>
                         </tr>
-                         <tr>
+                        <tr>
                             <td><div class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
                                     <div class="col-md-6"><b>ÁREA DE CONHECIMENTO: </b><?= Html::encode($model->areaConhecimento) ?></div>
                                     <div class="col-md-6"><b>CAMPUS ONDE O PROJETO SERÁ DESENVOLVIDO: </b><?= Html::encode($model->campusDesenvolvido) ?></div>
-                                    </div></td>
+                                </div></td>
                         </tr>
 
                         <tr>
                             <td><div class="sigpex-link-box-text" class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                                    <div class="col-md-3"><b>DATA DE INÍCIO: </b><?= Html::encode(Yii::$app->formatter->asDate($model->dataInicio)) ?></div>
-                                    <div class="col-md-3"><b>DATA DE TÉRMINO: </b><?= Html::encode(Yii::$app->formatter->asDate($model->datafim)) ?></div>
-                                    <div class="col-md-3"><b>CARGA HORÁRIA SEMANAL: </b><?= Html::encode($model->cargHorariaSemanal) ?></div>
-                                    <div class="col-md-3"><b>CARGA HORÁRIA TOTAL: </b><?= Html::encode($model->cargHorariaTotal) ?></div><br><br>
+                                    <div class="col-md-6"><b>DATA DE INÍCIO: </b><?= Html::encode(Yii::$app->formatter->asDate($model->dataInicio)) ?></div>
+                                    <div class="col-md-6"><b>CARGA HORÁRIA SEMANAL: </b><?= Html::encode($model->cargHorariaSemanal) ?></div>
                                 </div></td>
                         </tr>
+                        <tr>
+                            <td><div class="sigpex-link-box-text" class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
+                                    <div class="col-md-6"><b>DATA DE TÉRMINO: </b><?= Html::encode(Yii::$app->formatter->asDate($model->datafim)) ?></div>
+                                    <div class="col-md-6"><b>CARGA HORÁRIA TOTAL: </b><?= Html::encode($model->cargHorariaTotal) ?></div><br><br>
+                                </div></td>
+                        </tr>
+                        <?php if (($model->dataAnalise) != null) { ?>
+                            <tr>
+                                <td><div class="sigpex-link-box-text" class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
+                                        <div class="col-md-12"><b>DATA DE ENVIO PARA REITORIA: </b><?= Html::encode(Yii::$app->formatter->asDate($model->dataAnalise)) ?></div>
+                                    </div></td>
+                            </tr>
+                        <?php } ?>
                     </table>
                 </div>
             </div>
         </div>
+                <div class="box box-solid box-primary col-xs-12 col-lg-12 no-padding">
+            <div class="box-header with-border">
+                <h4 class="box-title"><i class="fa fa fa-users"></i> EQUIPE EXECUTORA</h4>
+            </div>
+            <div class="box-body">
+
+                <?php \yii\widgets\Pjax::begin(['id' => 'usuarios']) ?>
+                <?=kartik\grid\GridView::widget([
+                    'dataProvider' => $data2,
+                    'summary' => "<div class='pull-right'><strong>Total </strong><strong>{totalCount}</strong></div><br>",
+                    'columns' => [
+                        'participante.nome',
+                        [
+                        'label' => 'Tipo',
+                        'attribute' => 'funcao.nome',
+                         ],
+                    ],
+                ]);
+                ?>
+                <?php \yii\widgets\Pjax::end(); ?>
+            </div>
+        </div>
+        
         <div class="box box-solid box-primary col-xs-12 col-lg-12 no-padding">
             <div class="box-header with-border">
-                <h4 class="box-title"><i class="fa fa-info-circle"></i> DETALHAMENTO DO PROJETO DE EXTENSÃO</h4>
+                <h4 class="box-title"><i class="fa fa-institution"></i> PARCEIROS</h4>
+            </div>
+            <div class="box-body">
+                <?php \yii\widgets\Pjax::begin(['id' => 'parceiros']) ?>
+                <?=kartik\grid\GridView::widget([
+                    'dataProvider' => $data,
+                    'summary' => "<div class='pull-right'><strong>Total </strong> <strong>{totalCount}</strong></div><br>",
+                    'columns' => [
+                        'parceiro.nome',
+                        ],
+                    ]);
+                ?>
+                <?php \yii\widgets\Pjax::end(); ?>
+            </div>
+        </div>
+        <div class="box box-solid box-primary col-xs-12 col-lg-12 no-padding">
+            <div class="box-header with-border">
+                <h4 class="box-title"><i class="fa fa-building-o"></i> DETALHAMENTO DO PROJETO DE EXTENSÃO</h4>
             </div>
             <div class="box-body">
                 <div class="col-lg-12 table-responsive  no-padding " style="margin-bottom:15px">
-                    <table class="table table-striped">
+                     <table class="table table-striped">
                         <tr>
                             <td><div class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
                                     <div class="col-md-12"><b>DESCRIÇÃO DA POPULAÇÃO: </b><p align="justify"><?= Html::encode($model->descricaoPopulacao) ?></p></div><br><br><br>
@@ -155,7 +204,6 @@ use app\models\User;
                         <tr>
                             <td><div class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
                                     <div class="col-md-4"><b>LOCAL DE EXECUÇÃO: </b><?= Html::encode($model->localExecucao) ?></div>
-                                    <div class="col-md-8"><b>PARCEIROS: </b><?= Html::encode($model->parceiros) ?></div><br><br>
 
                                 </div></td></tr>
 
@@ -166,11 +214,11 @@ use app\models\User;
         </div>
         <div class="box box-solid box-primary col-xs-12 col-lg-12 no-padding">
             <div class="box-header with-border">
-                <h4 class="box-title"><i class="fa fa-info-circle"></i> OUTRAS ESPECIFICAÇÕES</h4>
+                <h4 class="box-title"><i class="glyphicon glyphicon-th-list"></i> OUTRAS ESPECIFICAÇÕES</h4>
             </div>
             <div class="box-body">
                 <div class="col-lg-12 table-responsive  no-padding " style="margin-bottom:15px">
-                    <table class="table table-striped">
+                  <table class="table table-striped">
 
                         <tr>
                             <td><div class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
@@ -180,57 +228,39 @@ use app\models\User;
                         <tr>
                             <td><div class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
                                     <div class="col-md-6"><b>É GERENCIADO POR FUNDAÇÃO? </b><?= Html::encode($model->gerFundacao) ?></div>
-                                    <div class="col-md-6"><b>CITAR FUNDAÇÃO: </b><?= Html::encode($model->citarFundacao) ?></div><br><br>
+                                    <div class="col-md-6"><b>CITAR FUNDAÇÃO: </b><?= Html::encode($model->citarFundacao) ?></div>
                                 </div></td></tr>
                         <tr>
                             <td><div class="sigpex-link-box-text" class="col-xs-12 col-sm-12 col-lg-12 no-padding">
                                     <div class="col-md-6"><b>O PROJETO PREVÊ CONVÊNIO COM OUTRA INSTITUIÇÃO OU EMPRESA? </b><?= Html::encode($model->convenio) ?></div>
                                     <div class="col-md-6"><b>CITAR CONVÊNIO: </b><?= Html::encode($model->citarConvenio) ?></div><br><br>
                                 </div></td></tr>
-                              
+
                     </table>
                 </div>
 
             </div>
         </div>
 
-
-        <div class="box box-solid box-primary col-xs-12 col-lg-12 no-padding"> <!--Exemmlo botão voltar -->
-            <div class="box-header with-border">
-                <h4 class="box-title"><i class="fa fa-info-circle"></i> EQUIPE EXECUTORA</h4>
-            </div>
-            <div class="box-body">
-                <div class="col-lg-12 table-responsive  no-padding " style="margin-bottom:15px">
-                    <table class="table table-striped">
-                        <tr><td>
-                                <div class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                                    <div class="sigpex-link-box-text" class="col-md-7"><b>NOME: </b><?= Html::encode($model->participante) ?></div>
-                                    <div class="sigpex-link-box-text" class="col-md-2"><b>TIPO: </b><?= Html::encode($model->participante) ?></div>
-                                </div>
-                            </td></tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="box-footer text-right" style="margin-top: 20px"> 
-            <button onClick="history.go(-1)" class="btn btn-social btn-default" ><b class="fa fa-arrow-left"></b> Voltar</button>                  
+        <div class="box-footer text-right" style="margin-top: 20px">
+            <button onClick="history.go(-1)" class="btn btn-social btn-default" ><b class="fa fa-arrow-left"></b> Voltar</button>
             <?php
             //if (($model->isAtivo == 5 && (($model->tipoUsuario == 'Técnico Administrativo - Coordenador')||($model->tipoUsuario == 'Docente - Coordenador')))) {
             if (($model->isAtivo == 5) && (Yii::$app->user->identity->nome == $model->coordenador)) {
                 echo Html::a('<b class="fa fa-unlock-alt fa fa-white"></b> Encerrar', ['/projetos/encerrar', "id" => $model->id], ['class' => 'btn btn-social btn-bitbucket', 'style' => 'margin-left:10px']);
             } else if (($model->isAtivo == 0)&&(Yii::$app->user->identity->nome == $model->coordenador)) {
-                echo Html::a('<b class="fa fa-send"></b> Enviar', ['/projetos/submeter', "id" => $model->id], ['class' => 'btn btn-social btn-success', 'style' => 'margin-left:10px']);
+                echo Html::a('<b class="glyphicon glyphicon-open"></b> Enviar', ['/projetos/submeter', "id" => $model->id], ['class' => 'btn btn-social btn-success', 'style' => 'margin-left:10px']);
             }?>
             <?php if ((($model->isAtivo == 1) || ($model->isAtivo == 4)) && ((Yii::$app->user->identity->role == 2))) {
                 echo Html::a('<b class="fa fa-pencil-square-o"></b> Solicitar Modificação', ['/projetos/update1', "id" => $model->id], ['class' => 'btn btn-social btn-danger', 'style' => 'margin-left:10px']);
-                echo Html::a('<b class="fa fa-check-square-o"></b> Confirmar', ['/projetos/aprovar', "id" => $model->id], ['class' => 'btn btn-social btn-success', 'style' => 'margin-left:10px']);
+                echo Html::a('<b class="fa fa-check-square-o"></b> Confirmar', ['/projetos/update3', "id" => $model->id], ['class' => 'btn btn-social btn-success', 'style' => 'margin-left:10px']);
+                 
             }
             ?>
             <?php if (($model->isAtivo == 6) && ((Yii::$app->user->identity->role == 2))) {
                 echo Html::a('<b class="fa fa-folder-open fa fa-white"></b> Arquivar', ['/projetos/arquivar', "id" => $model->id], ['class' => 'btn btn-social btn-bitbucket', 'style' => 'margin-left:10px']);
             }?>
-            
+
         </div>
 
     </div>

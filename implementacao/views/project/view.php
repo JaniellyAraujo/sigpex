@@ -28,22 +28,24 @@ use yii\widgets\DetailView;
     <div class="box-body">
 
         <div class="pull-right">
-    <p>
-        <?= Html::a(Yii::t('app', 'Atualizar'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Excluir'), ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'Deseja excluir este item?'),
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-</div>
+            <p>
+                <?= Html::a(Yii::t('app', 'Atualizar'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+                <?=
+                Html::a(Yii::t('app', 'Excluir'), ['delete', 'id' => $model->id], [
+                    'class' => 'btn btn-danger',
+                    'data' => [
+                        'confirm' => Yii::t('app', 'Deseja excluir este item?'),
+                        'method' => 'post',
+                    ],
+                ])
+                ?>
+            </p>
+        </div>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+            //'id',
             'nome',
         ],
     ]) ?>

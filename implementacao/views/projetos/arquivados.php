@@ -15,6 +15,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ProjetosSearch */
@@ -84,10 +85,10 @@ use yii\grid\GridView;
                                 'class' => 'CustomHeadClass ',
                             ],
                         'contentOptions' => ['class' => 'text-center'],
-                        'template' => '{view} {delete}',
+                        'template' => '{view} ',
                         'buttons' => [
                             'view' => function ($url, $model) {
-                                return Html::a('<i class="fa fa-eye fa fa-white"></i>', $url, ['title' => 'Visualisar Projeto',
+                                return Html::a('<i class="fa fa-eye fa fa-white"></i>', $url, ['title' => 'Visualizar Projeto',
                                             'class' => 'btn btn-info',
                                 ]);
                             },
@@ -119,17 +120,17 @@ use yii\grid\GridView;
         text-align:center;
     }
 </style>
-
+ <!--php
  <div><div class="container-fluid">
             <div class="row docs-premium-template">
 
                 <div class="col-sm-12 col-md-6">
                     <div class="box box-info">
                         <div class="card-body p-2">
-                           <?php
+                           < ?php
 
 /*$datas = app\models\Projetos::findAll(array('select'=>'modalidade',
-'order'=>'modalidade', 'condition'=>'modalidade!=:x', 'params'=>array(':x'=>0)));*/
+'order'=>'modalidade', 'condition'=>'modalidade!=:x', 'params'=>array(':x'=>0)));
 
 
 
@@ -201,11 +202,11 @@ use yii\grid\GridView;
                 </div>
                 <div class="col-sm-12 col-md-6">
                     <div class="box box-info">
-                           <div class="card-body p-2">
-                            <?php
+                           
+                            < ?php
 
 /*$datas = app\models\Projetos::findAll(array('select'=>'modalidade',
-'order'=>'modalidade', 'condition'=>'modalidade!=:x', 'params'=>array(':x'=>0)));*/
+'order'=>'modalidade', 'condition'=>'modalidade!=:x', 'params'=>array(':x'=>0)));
 
 
 
@@ -265,22 +266,22 @@ use yii\grid\GridView;
                                    'series'=> [
 					[
 						'name'=>'Modalidade',
-						'data'=>[1,5,6],
+						'data'=>[/*$voluntario,$externo,$interno1,2,3],
 					]
 				]
 			],
 		]);
 	 
-	?>
+	? > */
                             
                             
                             
-                            </div>
-                        </div>
+                            
+                        < /div>
                     </div>
                 </div>
             </div>
         </div>
 
 
-
+?-->

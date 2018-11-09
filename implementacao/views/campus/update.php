@@ -15,7 +15,6 @@
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Campus */
-
 ?>
 <div class="campus-update">
     <?= $this->render('_form', [

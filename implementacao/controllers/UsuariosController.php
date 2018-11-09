@@ -42,8 +42,33 @@ class UsuariosController extends Controller {
         ];
     }
 
+
+        
+        /*  Get dependent dropdown for  state wise City List.   city\_form.php  */
+	public function actionGetcidade($id){
+		$rows = \app\models\Cidades::find()->where(['estados_id' => $id])->all();	 
+		echo "<option value=''>".Yii::t('app', '--- Selecione a Cidade ---')."</option>";	 
+		if(count($rows)>0){
+		    foreach($rows as $row){
+		        echo "<option value='$row->id'>$row->nome</option>";
+		    }
+		}
+		else{
+		    echo "";
+		}
+ 
+    	}
+    public function actionGetorgcidade($id)
+	{
+		$rows = \app\models\Cidades::find()->where(['estados_id' => $id])->ALL();	 
+		echo Html::tag('option', Html::encode(Yii::t('app', '--- Selecione a Cidade ---')), ['value'=>'']); 	 
+		    foreach($rows as $row)
+			echo Html::tag('option', Html::encode($row->nome), ['value'=>$row->id]); 
+ 
+    	}
     public function actionIndex() {
         if (Yii::$app->user->identity->role == 1 || Yii::$app->user->identity->role == 2 || Yii::$app->user->identity->role == 3 || Yii::$app->user->identity->role == 4) {
+           // $model = new app\models\User();
             $searchModel = new UsuariosSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
            
@@ -55,6 +80,7 @@ class UsuariosController extends Controller {
             return $this->render('index', [
                         'searchModel' => $searchModel,
                         'dataProvider' => $dataProvider,
+                        //'model'=>$model,
             ]);
         } else {
             throw new NotFoundHttpException('Você não tem permissão para acessar esta página.');
@@ -100,7 +126,7 @@ class UsuariosController extends Controller {
         $permissao = $model->id;
         
             if (($permissao == Yii::$app->user->id)||(Yii::$app->user->can('admin'))){
-                return $this->render('view', [
+                return $this->renderAjax('view', [
                     'model' => $this->findModel($id),
                 ]);
         } else {
@@ -138,7 +164,7 @@ class UsuariosController extends Controller {
                     $hash = Yii::$app->security->generatePasswordHash($model->password_hash);
                     $model->password_hash = $hash;
 
-                    if (Yii::$app->user->identity->role == 1) {
+                    if ((!Yii::$app->user->isGuest) && (Yii::$app->user->identity->role == 1)) {
                         $model->isAtivo = '1';
                         Yii::$app->getSession()->setFlash('success', [
                             'type' => 'success',
@@ -185,6 +211,23 @@ class UsuariosController extends Controller {
         }
     }
 
+        /**
+     * Creates a new Usuarios model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreateModal() {
+        $model = new User();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
+        }
+
+        return $this->renderAjax('create', [
+            'model' => $model,
+        ]);
+    }
+    
     /**
      * Updates an existing Usuarios model.
      * If update is successful, the browser will be redirected to the 'view' page.

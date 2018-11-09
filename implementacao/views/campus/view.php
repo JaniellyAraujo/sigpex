@@ -20,27 +20,31 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Campus */
 
 ?>
-<div class="campus-view">
+<div class="area-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+        <h5 class="panel-title">DADOS DO CAMPUS</h5>
+        </div>
+        <div class="panel-body">
+             <p class="pull-right">
+                <?= Html::a(Yii::t('app', 'Atualizar'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a(Yii::t('app', 'Excluir'), ['delete', 'id' => $model->id], [
+                    'class' => 'btn btn-danger',
+                    'data' => [
+                        'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                        'method' => 'post',
+                    ],
+                ]) ?>
+            </p>
+            <?= DetailView::widget([
+                'model' => $model,
+                'attributes' => [
+                    //'id',
+                    'nome',
+                ],
+            ]) ?>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'nome',
-        ],
-    ]) ?>
-
+        </div>
+    </div>
 </div>

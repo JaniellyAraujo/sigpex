@@ -83,7 +83,7 @@ use yii\grid\GridView;
                         'template' => '{view} {update} {delete}',
                         'buttons' => [
                             'view' => function ($url, $model) {
-                                return Html::a('<i class="fa fa-eye fa fa-white"></i>', $url, ['title' => 'Visualisar Projeto',
+                                return Html::a('<i class="fa fa-eye fa fa-white"></i>', $url, ['title' => 'Visualizar Projeto',
                                             'class' => 'btn btn-info',
                                 ]);
                             },

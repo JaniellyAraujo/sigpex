@@ -18,8 +18,7 @@ class RelatoriosSearch extends Relatorios
     public function rules()
     {
         return [
-            [['id', 'mes','projeto_id','status'], 'integer'],
-            [[ 'discente', 'tipo', 'dataEntrega'], 'safe'],
+            [['id', 'projeto_id','status'], 'integer'],
         ];
     }
 
@@ -47,6 +46,15 @@ class RelatoriosSearch extends Relatorios
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            /*'sort' => [
+                'defaultOrder' => [
+                    'projeto_id' => SORT_DESC,
+                    'projeto_id' => SORT_ASC,
+                ]
+            ],*/
+            'pagination' => [
+                'pageSize' => 10,
+            ],
         ]);
 
         $this->load($params);
@@ -60,14 +68,8 @@ class RelatoriosSearch extends Relatorios
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'dataEntrega' => $this->dataEntrega,
-            'mes' => $this->mes,
-            'status' => $this->status,
-            'projeto_id'=> $this->projeto_id,
+            'projeto_id' => $this->projeto_id,
         ]);
-
-           $query->andFilterWhere(['like', 'discente', $this->discente])
-            ->andFilterWhere(['like', 'tipo', $this->tipo]);
 
         return $dataProvider;
     }

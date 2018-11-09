@@ -19,14 +19,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'projeto_id') ?>
 
-    <?= $form->field($model, 'discente') ?>
-
-    <?= $form->field($model, 'tipo') ?>
-
-    <?= $form->field($model, 'dataEntrega') ?>
-
-    <?php  $form->field($model, 'mes') ?>
-
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>

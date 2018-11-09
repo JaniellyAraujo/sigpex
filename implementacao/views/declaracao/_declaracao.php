@@ -23,13 +23,12 @@ use kartik\grid\GridView;
         //'filterModel' => $searchModel,
         'summary' => '',
         'columns' => [
-            
             [
-                'label' => 'Participante',
-                'headerOptions' => ['class' => 'CustomHeadClass'],
-                'contentOptions' => ['class' => 'text-center'],
-                'value' => 'participante',
-            ],
+                        'attribute' => 'participante.nome',
+                        'header' => 'Participante',
+                        'headerOptions' => ['class' => 'CustomHeadClass'],
+                        'contentOptions' => ['class' => 'text-center'],
+                    ],
        
             [
                 'header' => 'Data de Emissão',
@@ -55,11 +54,13 @@ use kartik\grid\GridView;
                             'class' => 'CustomHeadClass ',
                             ],
                         'contentOptions' => ['class' => 'text-center'],
-                        'template' => " {view}", // altera a forma de exibição dos botões
+                        'template' => " {view}", 
                         'buttons' => [
                             'view' => function ($url, $data) {
-                                return Html::a('<i class="fa fa-eye fa fa-white"></i>', $url, ['title' => 'Visualizar',
-                                                'class' => 'btn btn-info',
+                                //return Html::a('<i class="fa fa-eye fa fa-white"></i>', $url, ['title' => 'Visualizar',
+                                               // 'class' => 'btn btn-info',
+                    return Html::a('<i class="fa fa-eye fa fa-white"></i>', ['declaracao-projeto/view?id=' . $data->id], ['title' => 'Editar',
+                                        'class' => 'btn btn-info',
                                     ]);
                                 
                             },

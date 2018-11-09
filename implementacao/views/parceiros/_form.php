@@ -21,7 +21,12 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<h3 class="box-title"><i class="fa fa-plus"></i> Adicionar Parceiros</h3>
+<?php if (($model->isNewRecord) != false) { ?> 
+    <h3 class="box-title"><i class="fa fa-plus"></i> Adicionar Parceiros</h3>
+<?php } ?>
+<?php if (($model->isNewRecord) == false) { ?> 
+    <h3 class="box-title"><i class="fa fa-pencil-square"></i> Atualizar Parceiro</h3>
+<?php } ?>
 <div class="panel panel-info">
     <div class="panel-heading">
         <h5 class="panel-title"><i class="fa fa-gear (alias)"></i> Preencha o Campo</h5>
@@ -30,13 +35,10 @@ use yii\widgets\ActiveForm;
 
 
         <?php
-        if (!isset($id)) {
-            $id = 0;
-            if ($this->context->action->id == 'update')
-                $action = ['update', 'id' => $_REQUEST['id']];
-            else
-                $action = ['create'];
-        }
+        if ($this->context->action->id == 'update')
+            $action = ['update', 'id' => $model['id']];
+        else
+            $action = ['create'];
         ?>
 
         <?php
@@ -58,9 +60,15 @@ use yii\widgets\ActiveForm;
         </div>
         <!--?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?-->
 
-        <div class="form-group pull-right" >
-            <!--?= Html::submitButton(Yii::t('app', 'Salvar'), ['class' => 'btn btn-success']) ?-->
-            <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Salvar') : Yii::t('app', 'Alterar'), ['class' => $model->isNewRecord ? 'btn  btn-success' : 'btn  btn-primary']) ?>
+        <div class="form-group">
+            <div class="pull-left">
+                <?php if (($model->isNewRecord) == false) { ?> 
+                <?= Html::a('Cancelar', ['parceiros/index'], ['class' => 'btn btn-default','style' => 'margin-right:10px']) ?>
+                 <?php } ?>
+            </div>
+            <div class="pull-left">
+                <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Salvar') : Yii::t('app', 'Alterar'), ['class' => $model->isNewRecord ? 'btn btn-block btn-success' : 'btn btn-block btn-primary']) ?>
+            </div>
         </div>
     </div>
     <?php ActiveForm::end(); ?>

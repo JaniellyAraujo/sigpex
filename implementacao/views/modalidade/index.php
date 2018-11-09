@@ -20,7 +20,6 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\ModalidadeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php
 if ($model->isNewRecord)
@@ -28,16 +27,12 @@ if ($model->isNewRecord)
 else
     echo $this->render('update', ['model' => $model]);
 ?>
-<h3 class="box-title"><i class="fa fa-list-ul"></i> Lista de Modalidade de Projeto</h3>
 <div class="panel panel-info">
     <div class="panel-heading">
-        <h5 class="panel-title"><i class="fa fa-gear (alias)"></i> </h5>
+        <h5 class="panel-title"><i class="fa fa-list-ul"></i> Lista de Modalidade de Projeto</h5>
     </div>
     <div class="box-body">
-        <div class="pull-right">
-<?= Html::a('<b class="fa fa-plus"></b> Novo', ['create'], ['class' => 'btn btn-success']) ?>
-        </div>
-
+        
         <?=
         GridView::widget([
             'dataProvider' => $dataProvider,
@@ -50,10 +45,11 @@ else
                     'header' => "Ações",
                     'headerOptions' => ['style' => 'width: 25%;'],
                     'contentOptions' => ['class' => 'text-center'],
+                    'visible'=>!Yii::$app->user->isGuest && Yii::$app->user->identity->role == 2,
                     'template' => "{view} {update} {delete}  ", // altera a forma de exibição dos botões
                     'buttons' => [
                         'view' => function ($url, $model) {
-                            return Html::a('<i class="fa fa-eye fa fa-white"></i>', $url, ['title' => 'Visualisar Modalidade de Projeto',
+                            return Html::a('<i class="fa fa-eye fa fa-white"></i>', $url, ['title' => 'Visualizar Modalidade de Projeto',
                                         'class' => 'btn btn-info',
                             ]);
                         },
@@ -75,3 +71,4 @@ else
         ]);
         ?>
     </div>
+</div>

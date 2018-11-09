@@ -8,15 +8,13 @@ use Yii;
  * This is the model class for table "declaracao".
  *
  * @property int $id
- * @property int $projeto_id
- * @property string $participante
- * @property string $dataInicio
- * @property string $dataFim
+ * @property int $id_projeto
  * @property string $dataEmissao
- * @property int $cargaHoraria
  * @property int $status
+ * @property int $participante_id
  *
  * @property Projetos $projeto
+ * @property Usuarios $participante
  */
 class Declaracao extends \yii\db\ActiveRecord
 {
@@ -34,11 +32,11 @@ class Declaracao extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['projeto_id', 'participante'], 'required'],
-            [['projeto_id', 'cargaHoraria', 'status'], 'integer'],
-            [['dataInicio', 'dataFim', 'dataEmissao','cargaHoraria'], 'safe'],
-            [['participante'], 'string', 'max' => 50],
-            [['projeto_id'], 'exist', 'skipOnError' => true, 'targetClass' => Projetos::className(), 'targetAttribute' => ['projeto_id' => 'id']],
+            [['id_projeto'], 'required'],
+            [['id_projeto', 'status', 'participante_id'], 'integer'],
+            [['dataEmissao'], 'safe'],
+            [['id_projeto'], 'exist', 'skipOnError' => true, 'targetClass' => Projetos::className(), 'targetAttribute' => ['id_projeto' => 'id']],
+            [['participante_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['participante_id' => 'id']],
         ];
     }
 
@@ -49,22 +47,34 @@ class Declaracao extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'projeto_id' => Yii::t('app', 'Projeto'),
-            'participante' => Yii::t('app', 'Participante'),
-            'dataInicio' => Yii::t('app', 'Data Inicio'),
-            'dataFim' => Yii::t('app', 'Data Fim'),
+            'id_projeto' => Yii::t('app', 'Projeto ID'),
             'dataEmissao' => Yii::t('app', 'Data Emissao'),
-            'cargaHoraria' => Yii::t('app', 'Carga Horaria'),
             'status' => Yii::t('app', 'Status'),
+            'participante_id' => Yii::t('app', 'Participante ID'),
         ];
     }
 
-   
-        /**
+    /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProjetos()
+    public function getProjeto()
     {
-        return $this->hasOne(Projetos::className(), ['id' => 'projeto_id']);
+        return $this->hasOne(Projetos::className(), ['id' => 'id_projeto']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getParticipante()
+    {
+        return $this->hasOne(User::className(), ['id' => 'participante_id']);
+    }
+    
+     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDeclaracaoprojetos()
+    {
+        return $this->hasMany(Declaracaoprojeto::className(), ['id_declaracao' => 'id']);
     }
 }

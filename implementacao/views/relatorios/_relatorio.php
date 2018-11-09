@@ -17,33 +17,15 @@ use kartik\grid\GridView;
         </div>
 
         <div class="box-body">
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        //'filterModel' => $searchModel,
-        'summary'=>'',
-        'columns' => [
-            
-            [
-                'label' => 'Discente',
-                'attribute' => 'discente',
-            ],
-            [
-                        'header' => 'Tipo',
-                        'format' => 'raw',
-                        'headerOptions' => [ 'class' => 'CustomHeadClass'],
-                        'value' => function($data) {
-                            if ($data->tipo == 1) {
-                                return 'Mensal';
-                            }
-                            if ($data->tipo == 2) {
-                                return 'Final';
-                            }
-                            
-                        }
-                        ],
-            
-            [
+  
+        <?=GridView::widget([
+            'dataProvider' => $dataProvider,
+            'summary' => "<strong>Total </strong><strong>{totalCount}</strong>",
+            'columns' => [
+                'discente',
+                'tipo',
+                //'dataEntrega',
+                [
                         'header' => 'Data de Entrega',
                         'headerOptions' => ['class' => 'CustomHeadClass'],
                         'contentOptions' => ['class' => 'text-center'],
@@ -57,10 +39,11 @@ use kartik\grid\GridView;
                             }
                         },
                     ],
-            [
+                [
                         'header' => 'Mês',
                         'format' => 'raw',
                         'headerOptions' => [ 'class' => 'CustomHeadClass'],
+                        'contentOptions' => ['class' => 'text-center'],
                         'value' => function($data) {
                             if ($data->mes == 1) {
                                 return 'Janeiro';
@@ -100,11 +83,10 @@ use kartik\grid\GridView;
                             }
                         }
                         ],
-            
-
-            //['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+           
+          ],
+        ]);
+    ?>
 </div></div>
 
 <style>

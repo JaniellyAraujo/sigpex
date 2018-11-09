@@ -74,16 +74,20 @@ class CampusController extends Controller {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate() {
-        $model = new Campus();
+   public function actionCreate()
+    {
+        
+            $model = new Campus();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
-        }
-
-        return $this->render('create', [
-                    'model' => $model,
-        ]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                                
+                return $this->redirect(['index']);
+            }else{
+                return $this->render('create', [
+                   'model' => $model,
+                ]);
+            } 
+        
     }
 
     /**
@@ -93,16 +97,20 @@ class CampusController extends Controller {
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id) {
-        $model = $this->findModel($id);
+        public function actionUpdate($id)
+    {
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index',]);
-        }
+            $model = $this->findModel($id);
 
-        return $this->render('update', [
-                    'model' => $model,
-        ]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                
+                return $this->redirect(['index']);
+            }
+
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        
     }
 
     /**

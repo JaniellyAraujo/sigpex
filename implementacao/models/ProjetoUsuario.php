@@ -1,18 +1,5 @@
 <?php
 
-/*****************************************************************
- * SIGPEX - SISTEMA  DE GERENCIAMENTO DE PROJETOS DE EXTENSÃO
-
- * O SigPex foi desenvolvido como Trabalho de Conclusão de Curso
- * e apresentado ao IFNMG – Campus Januária como parte das
- *  exigências do Programa de Graduação em Tecnologia em Análise
- *  e Desenvolvimento de Sistemas.
- *
- * Desenvolvido pela acadêmica: Janielly Araújo Lopes.
- * Orientadora: Cleiane Gonçalves Oliveira.
- *
- /******************************************************************/
-
 namespace app\models;
 
 use Yii;
@@ -26,67 +13,58 @@ use Yii;
  * @property string $tipo
  *
  * @property Projetos $projeto
- * @property User $idUser
- * * 
+ * @property Usuarios $usuario
  */
-class ProjetoUsuario extends \yii\db\ActiveRecord {
-
-    //use \mootensai\relation\RelationTrait;
+class ProjetoUsuario extends \yii\db\ActiveRecord
+{
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-    public static function tableName() {
+    public static function tableName()
+    {
         return 'projeto_usuario';
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-    public function rules() {
+    public function rules()
+    {
         return [
-                [['projeto_id', 'usuario_id'], 'required'],
-                [['projeto_id', 'usuario_id'], 'integer'],
-                ['tipo', 'string'],
-                [['projeto_id'], 'exist', 'skipOnError' => true, 'targetClass' => Projetos::className(), 'targetAttribute' => ['projeto_id' => 'id']],
-//                [['participante_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['usuario_id' => 'idUser']],
-                //[['tipoUsuario'], 'exist', 'skipOnError' => true, 'targetClass' => Equipe::className(), 'targetAttribute' => ['tipoUsuario' => 'tipoUsuario']],
+            [['projeto_id', 'usuario_id'], 'required'],
+            [['projeto_id', 'usuario_id'], 'integer'],
+            [['tipo'], 'string', 'max' => 255],
+            [['projeto_id'], 'exist', 'skipOnError' => true, 'targetClass' => Projetos::className(), 'targetAttribute' => ['projeto_id' => 'id']],
+            [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['usuario_id' => 'id']],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'id' => Yii::t('app', 'ID'),
             'projeto_id' => Yii::t('app', 'Projeto ID'),
-            'usuario_id' => Yii::t('app', 'Participante ID'),
+            'usuario_id' => Yii::t('app', 'Usuario ID'),
+            'tipo' => Yii::t('app', 'Tipo'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProjeto() {
+    public function getProjeto()
+    {
         return $this->hasOne(Projetos::className(), ['id' => 'projeto_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUsuario() {
-        return $this->hasMany(\User::className(), ['id' => 'usuario_id']);
+    public function getUsuario()
+    {
+        return $this->hasOne(Usuarios::className(), ['id' => 'usuario_id']);
     }
-    
-    public function getProjetoUsuario()
-{
-    return $this->hasMany(ProjetoUsuario::className(), ['user_id' => 'id']);
-}
-    /**
-     * @return \yii\db\ActiveQuery
-     
-    public function getTipoUsuario() {
-        return $this->hasMany(Equipe::className(), ['id' => 'tipoUsuario']);
-    }*/
-
 }

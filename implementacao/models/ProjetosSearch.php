@@ -18,8 +18,8 @@ class ProjetosSearch extends Projetos
     public function rules()
     {
         return [
-            [['id', 'pesAtendidas', 'cargHorariaSemanal', 'cargHorariaTotal', 'contPublico', 'isControle', 'isAtivo', 'idUser', 'isUsuario', 'publico'], 'integer'],
-            [['titulo', 'coordenador', 'tipoProjeto', 'objetivo', 'resumo', 'municipio', 'descricaoPopulacao', 'publicoAlvo', 'localExecucao', 'dataInicio', 'datafim', 'parceiros', 'vinculo', 'citarVinculo', 'convenio', 'citarConvenio', 'gerFundacao', 'citarFundacao', 'multicampi', 'areaConhecimento', 'campusDesenvolvido', 'isStatus', 'modalidade', 'isTipo', 'justificativa', 'mes', 'atividesenvolvidas', 'avaliacao', 'observacoes', 'objetalcancados', 'etapas', 'materiasutiliz', 'metodosutiliz', 'caracfacilitadora', 'caractdificultadora', 'contribuicao', 'avaliacao2', 'isAndamento', 'editaAluno', 'editaCoordenador', 'dataSolicitacao', 'dataAnalise', 'participante', 'tipoUsuario'], 'safe'],
+            [['id', 'coordenador_id','pesAtendidas', 'cargHorariaSemanal', 'cargHorariaTotal', 'contPublico', 'isControle', 'isAtivo', 'idUser', 'isUsuario', 'publico','parceiros'], 'integer'],
+            [['titulo', 'tipoProjeto', 'objetivo', 'resumo', 'municipio', 'descricaoPopulacao', 'publicoAlvo', 'localExecucao', 'dataInicio', 'datafim', 'vinculo', 'citarVinculo', 'convenio', 'citarConvenio', 'gerFundacao', 'citarFundacao', 'multicampi', 'areaConhecimento', 'campusDesenvolvido', 'isStatus', 'modalidade', 'isTipo', 'justificativa', 'mes', 'atividesenvolvidas', 'avaliacao', 'observacoes', 'objetalcancados', 'etapas', 'materiasutiliz', 'metodosutiliz', 'caracfacilitadora', 'caractdificultadora', 'contribuicao', 'avaliacao2', 'isAndamento', 'editaAluno', 'editaCoordenador', 'dataSolicitacao', 'dataAnalise', 'participante', 'tipoUsuario'], 'safe'],
             [['valorFinanciamento'], 'number'],
         ];
     }
@@ -76,10 +76,11 @@ class ProjetosSearch extends Projetos
             'idUser' => $this->idUser,
             'isUsuario' => $this->isUsuario,
             'publico' => $this->publico,
+            'parceiros' => $this->parceiros,
         ]);
 
         $query->andFilterWhere(['like', 'titulo', $this->titulo])
-            ->andFilterWhere(['like', 'coordenador', $this->coordenador])
+            ->andFilterWhere(['like', 'coordenador_id', $this->coordenador_id])
             ->andFilterWhere(['like', 'tipoProjeto', $this->tipoProjeto])
             ->andFilterWhere(['like', 'objetivo', $this->objetivo])
             ->andFilterWhere(['like', 'resumo', $this->resumo])
@@ -87,7 +88,7 @@ class ProjetosSearch extends Projetos
             ->andFilterWhere(['like', 'descricaoPopulacao', $this->descricaoPopulacao])
             ->andFilterWhere(['like', 'publicoAlvo', $this->publicoAlvo])
             ->andFilterWhere(['like', 'localExecucao', $this->localExecucao])
-            ->andFilterWhere(['like', 'parceiros', $this->parceiros])
+           // ->andFilterWhere(['like', 'parceiros', $this->parceiros])
             ->andFilterWhere(['like', 'vinculo', $this->vinculo])
             ->andFilterWhere(['like', 'citarVinculo', $this->citarVinculo])
             ->andFilterWhere(['like', 'convenio', $this->convenio])
@@ -114,8 +115,8 @@ class ProjetosSearch extends Projetos
             ->andFilterWhere(['like', 'contribuicao', $this->contribuicao])
             ->andFilterWhere(['like', 'avaliacao2', $this->avaliacao2])
             ->andFilterWhere(['like', 'isAndamento', $this->isAndamento])
-            ->andFilterWhere(['like', 'editaAluno', $this->editaAluno])
-            ->andFilterWhere(['like', 'editaCoordenador', $this->editaCoordenador])
+            //->andFilterWhere(['like', 'editaAluno', $this->editaAluno])
+           // ->andFilterWhere(['like', 'editaCoordenador', $this->editaCoordenador])
             ->andFilterWhere(['like', 'participante', $this->participante])
             ->andFilterWhere(['like', 'tipoUsuario', $this->tipoUsuario]);
 

@@ -26,10 +26,9 @@ use yii\grid\GridView;
    else
 	echo $this->render('update', ['model' => $model]); 	
 ?>
-<h3 class="box-title"><i class="fa fa-list-ul"></i> Lista de Parceiros</h3>
 <div class="panel panel-info">
     <div class="panel-heading">
-        <h5 class="panel-title"><i class="fa fa-gear (alias)"></i> </h5>
+        <h5 class="panel-title"><i class="fa fa-list-ul"></i> Lista de Parceiros</h5>
     </div>
     <div class="box-body">
         
@@ -50,7 +49,7 @@ use yii\grid\GridView;
                         'template' => "{view} {update} {delete}  ", // altera a forma de exibição dos botões
                         'buttons' => [
                             'view' => function ($url, $model) {
-                                return Html::a('<i class="fa fa-eye fa fa-white"></i>', $url, ['title' => 'Visualisar Parceiro',
+                                return Html::a('<i class="fa fa-eye fa fa-white"></i>', $url, ['title' => 'Visualizar Parceiro',
                                             'class' => 'btn btn-info',
                                 ]);
                             },

@@ -8,13 +8,10 @@ use Yii;
  * This is the model class for table "relatorios".
  *
  * @property int $id
- * @property string $projeto_id
- * @property string $discente
- * @property string $tipo
- * @property string $dataEntrega
- * @property int $mes
- * 
+ * @property int $projeto_id
+ *
  * @property Projetos $projeto
+ * @property Relatoriosprojeto[] $relatoriosprojetos
  */
 class Relatorios extends \yii\db\ActiveRecord
 {
@@ -32,13 +29,10 @@ class Relatorios extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['projeto_id'], 'required'],
             //[['projeto_id'], 'unique'],
-            [['projeto_id', 'discente', 'tipo', 'mes'], 'required'],
-            [['dataEntrega'], 'safe'],
-            [['mes','projeto_id'], 'integer'],
-            [['discente', 'tipo'], 'string', 'max' => 50],
+            [['projeto_id','status'], 'integer'],
             [['projeto_id'], 'exist', 'skipOnError' => true, 'targetClass' => Projetos::className(), 'targetAttribute' => ['projeto_id' => 'id']],
-        
         ];
     }
 
@@ -50,27 +44,22 @@ class Relatorios extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'projeto_id' => Yii::t('app', 'Projeto'),
-            'discente' => Yii::t('app', 'Discente'),
-            'tipo' => Yii::t('app', 'Tipo'),
-            'dataEntrega' => Yii::t('app', 'Data Entrega'),
-            'mes' => Yii::t('app', 'Mes'),
         ];
     }
-    
-    
-        /**
+
+    /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProjetos()
+    public function getProjeto()
     {
         return $this->hasOne(Projetos::className(), ['id' => 'projeto_id']);
     }
-            /**
+
+    /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRelatorios()
+    public function getRelatoriosprojetos()
     {
-        return $this->hasOne(Relatorios::className(), ['id' => 'id']);
+        return $this->hasMany(Relatoriosprojeto::className(), ['id_relatorio' => 'id']);
     }
-    
 }

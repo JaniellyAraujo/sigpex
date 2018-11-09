@@ -14,52 +14,19 @@
  /******************************************************************/
 
 use yii\helpers\Html;
-use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\ProjetosSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-
-$this->params['breadcrumbs'][] = $this->title;
+/* @var $model app\models\Projetos */
 ?>
-<div class="reitoria-index">
+<div class="projetos-reitoria">
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]);  ?>
+    <h3><?= Html::encode($this->title) ?></h3>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Novo'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <div class="box box-default color-palette">
-        <div class="box-body">
-            <h4 class="box-title"><i class="fa fa-list-ul"></i> Listagem de Projetos</h4>
+<?= $this->render('reitoriaenvia', [
+    'model' => $model,
+])?>
 
-            <?=
-            GridView::widget([
-                'dataProvider' => $dataProvider,
-                //'filterModel' => $searchModel,
-                
-                'columns' => [
-                    'titulo',
-                    //[
-                       // 'attribute'  => 'Coordenador:',
-                        //'value' => 'user.nome',
-                      //],
-                    'tipoProjeto',
-                    'dataInicio',
-                    'datafim',
-                        [
-                        'label' => 'Ação',
-                        'format' => 'raw',
-                        'value' => function ($data) {
-                            return Html::a('Visualizar', ['projetos/view2', 'id' => $data->id], ['class' => 'profile-link']);
-                        },
-                    ],
-                ],
-            ]);
-            ?>         
-            <!--div class="box-footer">
-                <a href="gerar" target="_blank" class="btn btn-default"><i class="fa fa-print"></i><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> Impressão</font></font></a>
-            </div-->
-        </div>
-    </div>
 </div>
+
+
+

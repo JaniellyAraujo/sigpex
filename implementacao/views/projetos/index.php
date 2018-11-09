@@ -33,9 +33,7 @@ use app\models\Projetos;
         <div class="box-body">
             <div class="table-responsive">
             <div class="pull-right">
-                  <?php if((Yii::$app->user->can('servidor'))) { ?>
-                <?= Html::a('<b class="fa fa-plus"></b> Novo', ['create'], ['class' => 'btn btn  btn-social btn-success']) ?>
-                <?php } ?>
+                 
                 <!--?= Html::a('<b class="fa fa-download"></b>', ['gerar'], ['target' => '_blank', 'class' => 'btn btn-default', 'title' => 'Exportar', 'id' => 'modal-btn-pdf']) ?-->
             </div><br>
             <?=
@@ -148,7 +146,7 @@ use app\models\Projetos;
                            
                             'modificar' => function ($url, $data) {
                                 if (($data->isAtivo == 3)&&(Yii::$app->user->identity->nome == $data->coordenador)) {
-                                    return Html::a('<span class="btn btn-primary " role="button" title = "Modificar"><i class="fa fa-eyedropper fa fa-white" /n ></i></span> ', ['projetos/update2', 'id' => $data->id], ['class' => 'profile-link']);
+                                    return Html::a('<span class="btn btn-primary " role="button" title = "Modificar"><i class="fa fa-eyedropper fa fa-white" /n ></i></span> ', ['projetos/salvar?id=' . $data->id], ['class' => 'profile-link']);
                                 }
                             },
                             'visualizar' => function ($url, $data) {
@@ -165,9 +163,8 @@ use app\models\Projetos;
                             },
                             'update' => function ($url, $data) {
                                 if ((($data->isAtivo == 0)||($data->isAtivo == 5))&&(Yii::$app->user->identity->nome == $data->coordenador))  {
-                                    return Html::a('<i class="fa  fa-eyedropper fa fa-white"></i>', $url, ['title' => 'Editar',
-                                                'class' => 'btn btn-primary',
-                                    ]);
+                                   
+                                     return Html::a('<span class="btn btn-primary " role="button" title = "Editar"><i class="fa  fa-eyedropper fa fa-white" /n ></i></span> ', ['projetos/salvar?id=' . $data->id], ['class' => 'profile-link']);
                                 }
                             },
                         ]

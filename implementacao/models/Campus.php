@@ -38,6 +38,7 @@ class Campus extends \yii\db\ActiveRecord {
     public function rules() {
         return [
                 [['nome'], 'required'],
+                 [['id'], 'integer'],
                 [['nome'], 'string', 'max' => 500],
         ];
     }

@@ -64,10 +64,7 @@ use yii\grid\GridView;
             <div class="table-responsive">
                 <div class="pull-right" >
                     <?= Html::a('<b class="fa fa-arrow-left"></b> Voltar', ['projetos/solicitacao'], ['class' => 'btn btn-social btn-default', 'title' => 'Voltar', 'id' => 'modal-btn-voltar']) ?>
-                    <?= Html::a('<b class="fa fa-plus"></b> Novo', ['create'], ['class' => 'btn btn-social btn-success', 'title' => 'Cadastrar Projeto']) ?>
-                    <?= Html::a('<b class="fa fa-folder"></b> Arquivados', ['projetos/arquivados'], ['class' => 'btn btn-social btn-bitbucket ', 'title' => 'Projetos Encerrados ', 'id' => 'modal-btn-encerrados']) ?>
-
-                    <?= Html::a('<b class="fa fa-download"></b>', ['gerar'], ['target' => '_blank', 'class' => 'btn btn-default', 'title' => 'Exportar', 'id' => 'modal-btn-pdf']) ?>
+                    <?= Html::a('<b class="fa fa-download"></b>', ['gerar'], ['target' => '_blank', 'data-pjax'=>0, 'class' => 'btn btn-default', 'title' => 'Exportar', 'id' => 'modal-btn-pdf']) ?>
 
 
                 </div><br>

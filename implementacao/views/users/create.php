@@ -17,7 +17,6 @@
 /* @var $this yii\web\View */
 /* @var $model app\models\Users */
 
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="users-create">
 

@@ -33,7 +33,7 @@ use yii\widgets\DetailView;
         <div class="box-body">
             <div class="pull-right">
                 <?= Html::a('<b class="fa fa-arrow-left"></b> Voltar', ['#'], ['class' => 'btn btn-default', 'title' => 'Voltar', 'id' => 'modal-btn-voltar']) ?>
-                <?= Html::a('Atualizar', ['update0', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a('Atualizar', ['update0', 'id' => $model->idUser], ['class' => 'btn btn-primary']) ?>
                 </div> <br><br>
             <?=
             DetailView::widget([
@@ -63,25 +63,7 @@ use yii\widgets\DetailView;
 	<?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('username')); ?>:</b>
-	<?php echo CHtml::encode($data->username); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('nome')); ?>:</b>
+	<?php echo CHtml::encode($data->nome); ?>
 	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('password')); ?>:</b>
-	<?php echo CHtml::encode($data->password); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('profile')); ?>:</b>
-	<?php echo CHtml::encode($data->profile); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('created')); ?>:</b>
-	<?php echo CHtml::encode($data->created); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('updated')); ?>:</b>
-	<?php echo CHtml::encode($data->updated); ?>
-	<br />
-
-
 </div>

@@ -146,9 +146,15 @@ AppAsset::register($this);
             'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 1,
         ],
         //Menu Coordenador
+        
         ['label' => 'Início',
             'icon' => 'fa fa-list (alias)',
             'url' => '@web/projetos/solicitacao/',
+            'options' => ['class' => 'pull-right-container', "treeview-menu"],
+            'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 2],
+        ['label' => 'Novo',
+            'icon' => 'fa fa-plus',
+            'url' => '@web/projetos/create/',
             'options' => ['class' => 'pull-right-container', "treeview-menu"],
             'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 2],
         ['label' => 'Projetos',
@@ -171,19 +177,26 @@ AppAsset::register($this);
             'url' => '@web/relatorios/index/',
             'options' => ['class' => 'pull-right-container', "treeview-menu"],
             'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 2],
+        ['label' => 'Finalizados',
+            'icon' => 'glyphicon glyphicon-check',
+            'url' => '@web/projetos/arquivados/',
+            'options' => ['class' => 'pull-right-container', "treeview-menu"],
+            'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 2],
         ['label' => 'Relatório de Gestão',
             'icon' => 'fa fa-bar-chart',
-            'url' => '#',
+            'url' => '@web/projetos/gerar/',
             'options' => ['class' => 'pull-right-container', "treeview-menu"], 
             'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 2],
 
         ['label' => 'Configurações',
             'icon' => 'fa fa-cogs',
             'url' => '#',
+            
             'items' => [
                     [
                     'label' => 'Área de Conhecimento',
                     'icon' => 'fa fa-gear (alias)',
+                     //'template'=> '<a href="{url}" target="_blank">{label}</a>',
                     'url' => '@web/area',
                     'active' => $this->context->route == '#',
                 ],
@@ -199,18 +212,18 @@ AppAsset::register($this);
                     'url' => '@web/modalidade',
                     'active' => $this->context->route == '#',
                 ],
-                    [
-                    'label' => 'Parceiros',
+                [
+                    'label' => 'Município Beneficiado',
                     'icon' => 'fa fa-gear (alias)',
-                    'url' => '@web/parceiros',
+                    'url' => '@web/municipio',
                     'active' => $this->context->route == '#',
                 ],
-                    /*[
+                /*[
                     'label' => 'Status do Projeto',
                     'icon' => 'fa fa-gear (alias)',
                     'url' => '@web/status',
                     'active' => $this->context->route == '#',
-                ],
+                ],*/
                     [
                     'label' => 'Tipo de Projeto',
                     'icon' => 'fa fa-gear (alias)',
@@ -222,24 +235,60 @@ AppAsset::register($this);
                     'icon' => 'fa fa-gear (alias)',
                     'url' => '@web/users',
                     'active' => $this->context->route == '#',
-                ],*/
+                ],
             ],
             'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 2],
-            ['label' => 'Perfil',
+            /*['label' => 'Perfil',
             'icon' => 'fa fa-user (alias)',
             'url' => '@web/usuarios/index',
             'options' => ['class' => 'pull-right-container', "treeview-menu"],
-            'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 2],
+            'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 2],*/
+        
+        
+        // echo Html::a('<b class="fa fa-folder-open fa fa-white"></b> Arquivar', ['/projetos/arquivar', "id" => $model->id], ['class' => 'btn btn-social btn-bitbucket', 'style' => 'margin-left:10px'
+        
         //Menu Servidor
         ['label' => 'Início',
             'icon' => 'fa fa-list (alias)',
             'url' => '@web/projetos/index/',
             'options' => ['class' => 'pull-right-container', "treeview-menu"],
             'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 3],
-        ['label' => 'Perfil',
+        ['label' => 'Novo',
+            'icon' => 'fa fa-plus',
+            'url' => '@web/projetos/create/',
+            'options' => ['class' => 'pull-right-container', "treeview-menu"],
+            'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 3],
+        /*['label' => 'Perfil',
             'icon' => 'fa fa-user (alias)',
             'url' => '@web/usuarios/index0/',
             'options' => ['class' => 'pull-right-container', "treeview-menu"],
+            'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 3],*/
+        ['label' => 'Configurações',
+            'icon' => 'fa fa-cogs',
+            'url' => '#',
+            
+            'items' => [
+                    [
+                    'label' => 'Área de Conhecimento',
+                    'icon' => 'fa fa-gear (alias)',
+                     //'template'=> '<a href="{url}" target="_blank">{label}</a>',
+                    'url' => '@web/area',
+                    'active' => $this->context->route == '#',
+                ],
+                    [
+                    'label' => 'Campus',
+                    'icon' => 'fa fa-gear (alias)',
+                    'url' => '@web/campus',
+                    'active' => $this->context->route == '#',
+                ],
+                    
+                [
+                    'label' => 'Município Beneficiado',
+                    'icon' => 'fa fa-gear (alias)',
+                    'url' => '@web/municipio',
+                    'active' => $this->context->route == '#',
+                ],
+              ],
             'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 3],
         
         //Menu Discente
@@ -252,11 +301,11 @@ AppAsset::register($this);
         ['label' => 'Certificados',
             'icon' => 'fa fa-graduation-cap',
             'url' => ['#'], 'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 4],
-        ['label' => 'Perfil',
+       /* ['label' => 'Perfil',
             'icon' => 'fa fa-user (alias)',
             'url' => '@web/usuarios/index0/',
             'options' => ['class' => 'pull-right-container', "treeview-menu"],
-            'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 4],
+            'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 4],*/
     ],
 ]);
 ?>

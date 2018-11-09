@@ -26,10 +26,9 @@ use yii\grid\GridView;
    else
 	echo $this->render('update', ['model' => $model]); 	
 ?>
-<h3 class="box-title"><i class="fa fa-list-ul"></i> Lista de Tipo de Usuário</h3>
 <div class="panel panel-info">
     <div class="panel-heading">
-        <h5 class="panel-title"><i class="fa fa-gear (alias)"></i> </h5>
+        <h5 class="panel-title"><i class="fa fa-list-ul"></i> Lista de Tipo de Usuário</h5>
     </div>
     <div class="box-body">
         
@@ -41,17 +40,18 @@ use yii\grid\GridView;
             'summary' => "Exibindo <strong> {begin}</strong> - <strong>{end}</strong> de <strong>{totalCount}</strong> itens",
             'columns' => [
                     //['class' => 'yii\grid\SerialColumn'],
-                
+                'id',
                 'nome',
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Ações",
                         'headerOptions' => ['style' => 'width: 25%;'],
                         'contentOptions' => ['class' => 'text-center'],
+                        'visible'=>!Yii::$app->user->isGuest && Yii::$app->user->identity->role == 2,
                         'template' => "{view} {update} {delete}  ", // altera a forma de exibição dos botões
                         'buttons' => [
                             'view' => function ($url, $model) {
-                                return Html::a('<i class="fa fa-eye fa fa-white"></i>', $url, ['title' => 'Visualisar Tipo de Usuário',
+                                return Html::a('<i class="fa fa-eye fa fa-white"></i>', $url, ['title' => 'Visualizar Tipo de Usuário',
                                             'class' => 'btn btn-info',
                                 ]);
                             },

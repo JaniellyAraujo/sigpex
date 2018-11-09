@@ -1,20 +1,8 @@
 <?php
 
-/*****************************************************************
- * SIGPEX - SISTEMA  DE GERENCIAMENTO DE PROJETOS DE EXTENSÃO
-
- * O SigPex foi desenvolvido como Trabalho de Conclusão de Curso
- * e apresentado ao IFNMG – Campus Januária como parte das
- *  exigências do Programa de Graduação em Tecnologia em Análise
- *  e Desenvolvimento de Sistemas.
- *
- * Desenvolvido pela acadêmica: Janielly Araújo Lopes.
- * Orientadora: Cleiane Gonçalves Oliveira.
- *
- /******************************************************************/
-
 namespace app\models;
 
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\ProjetoEquipe;
@@ -22,22 +10,24 @@ use app\models\ProjetoEquipe;
 /**
  * ProjetoEquipeSearch represents the model behind the search form of `app\models\ProjetoEquipe`.
  */
-class ProjetoEquipeSearch extends ProjetoEquipe {
-
+class ProjetoEquipeSearch extends ProjetoEquipe
+{
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-    public function rules() {
+    public function rules()
+    {
         return [
-                [['id', 'projeto_id', 'participante_id'], 'integer'],
-                //[['tipoUsuario'], 'string'],
+            [['id', 'projeto_id', 'participante_id'], 'integer'],
+            [['tipo'], 'safe'],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-    public function scenarios() {
+    public function scenarios()
+    {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -49,7 +39,8 @@ class ProjetoEquipeSearch extends ProjetoEquipe {
      *
      * @return ActiveDataProvider
      */
-    public function search($params) {
+    public function search($params)
+    {
         $query = ProjetoEquipe::find();
 
         // add conditions that should always apply here
@@ -73,7 +64,8 @@ class ProjetoEquipeSearch extends ProjetoEquipe {
             'participante_id' => $this->participante_id,
         ]);
 
+        $query->andFilterWhere(['like', 'tipo', $this->tipo]);
+
         return $dataProvider;
     }
-
 }

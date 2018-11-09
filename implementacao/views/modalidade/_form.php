@@ -21,7 +21,12 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<h3 class="box-title"><i class="fa fa-plus"></i> Adicionar Modalidade de Projeto</h3>
+<?php if (($model->isNewRecord) != false) { ?> 
+    <h3 class="box-title"><i class="fa fa-plus"></i> Adicionar Modalidade de Projeto</h3>
+<?php } ?>
+<?php if (($model->isNewRecord) == false) { ?> 
+    <h3 class="box-title"><i class="fa fa-pencil-square"></i> Atualizar Modalidade de Projeto</h3>
+<?php } ?>
 <div class="panel panel-info">
     <div class="panel-heading">
         <h5 class="panel-title"><i class="fa fa-gear (alias)"></i> Preencha o Campo</h5>
@@ -30,7 +35,7 @@ use yii\widgets\ActiveForm;
 
         <?php
         if ($this->context->action->id == 'update')
-            $action = ['update', 'id' => $_REQUEST['id']];
+            $action = ['update', 'id' => $model['id']];
         else
             $action = ['create'];
         ?>
@@ -48,7 +53,14 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
 
         <div class="form-group">
-    <?= Html::submitButton(Yii::t('app', 'Salvar'), ['class' => 'btn btn-success']) ?>
+            <div class="pull-left">
+                <?php if (($model->isNewRecord) == false) { ?> 
+                <?= Html::a('Cancelar', ['modalidade/index'], ['class' => 'btn btn-default','style' => 'margin-right:10px']) ?>
+                 <?php } ?>
+            </div>
+            <div class="pull-left">
+                <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Salvar') : Yii::t('app', 'Alterar'), ['class' => $model->isNewRecord ? 'btn btn-block btn-success' : 'btn btn-block btn-primary']) ?>
+            </div>
         </div>
     </div>
 <?php ActiveForm::end(); ?>

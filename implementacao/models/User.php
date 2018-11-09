@@ -40,6 +40,9 @@ use yii\web\IdentityInterface;
  * @property string $codigoVerificacao
  * @property strigg $password_reset_token
  * @property int @isAtivo
+ * 
+ * @property Projetos $projeto
+ * @property ProjetoEquipe[] $projetoequipe
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -79,6 +82,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['email', 'unique'],
             ['cpf', 'unique'],
             ['rg', 'unique'],
+            [['projeto_id'], 'exist', 'skipOnError' => true, 'targetClass' => Projetos::className(), 'targetAttribute' => ['projeto_id' => 'id']],
         ];
     }
 
@@ -106,7 +110,14 @@ class User extends ActiveRecord implements IdentityInterface
             'isAtivo' => 'Status:'
         ];
     }
-
+    
+          /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProjeto() {
+        return $this->hasOne(Projetos::className(), ['id' => 'projeto_id']);
+    }
+    
     public function getAuthKey()
     {
         return null;

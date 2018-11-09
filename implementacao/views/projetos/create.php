@@ -22,7 +22,8 @@
 
     <?= $this->render('_form', [
         'model' => $model,
-        'modelUsuarios' => $modelUsuarios
+        //'modelUsuarios' => $modelUsuarios,
+
     ]) ?>
 
 </div>

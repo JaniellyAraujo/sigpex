@@ -29,7 +29,7 @@ class ParceirosSearch extends Parceiros {
      */
     public function rules() {
         return [
-                [['id'], 'integer'],
+                [['id','projeto_id'], 'integer'],
                 [['nome'], 'safe'],
         ];
     }
@@ -78,6 +78,7 @@ class ParceirosSearch extends Parceiros {
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'projeto_id' => $this->projeto_id,
         ]);
 
         $query->andFilterWhere(['like', 'nome', $this->nome]);

@@ -5,11 +5,14 @@ use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Relatorios */
-/* @var $modelsRelatorio app\models\Relatorios */
 
+$this->title = $model->id;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Relatorios'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="relatorios-view">
 
+    <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -27,10 +30,6 @@ use yii\widgets\DetailView;
         'attributes' => [
             'id',
             'projeto_id',
-            'discente',
-            'tipo',
-            'dataEntrega',
-            'mes',
         ],
     ]) ?>
 

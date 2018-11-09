@@ -17,19 +17,19 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'projeto_id') ?>
-
-    <?= $form->field($model, 'participante') ?>
+    <?= $form->field($model, 'id_projeto') ?>
 
     <?= $form->field($model, 'dataInicio') ?>
 
     <?= $form->field($model, 'dataFim') ?>
 
-    <?php // echo $form->field($model, 'dataEmissao') ?>
+    <?= $form->field($model, 'dataEmissao') ?>
 
     <?php // echo $form->field($model, 'cargaHoraria') ?>
 
     <?php // echo $form->field($model, 'status') ?>
+
+    <?php // echo $form->field($model, 'participante_id') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>

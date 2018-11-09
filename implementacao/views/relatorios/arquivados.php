@@ -6,13 +6,11 @@ use kartik\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\RelatoriosSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
-$this->title = Yii::t('app', 'Relatórios');
 ?>
 <div class="panel panel-primary">
 
         <div class="panel-heading">
-                <h5 class="panel-title"><i class="fa fa-folder"></i> Relatórios Arquivados</h5>
+                <h5 class="panel-title"><i class="fa fa-folder"></i> Relatórios Finalizados</h5>
             
             
         </div>
@@ -23,58 +21,54 @@ $this->title = Yii::t('app', 'Relatórios');
                 </div><br>
     <!--?php $rCount = app\models\Relatorios::find()->where(['projeto_id' =>'id', 'tipo' => 1])->count();?>
     < ?php $rCount = app\models\Relatorios::find()->where(['projeto_id' =>'id', 'tipo' => 2])->count();?-->
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        //'filterModel' => $searchModel,
-        'summary' => "Exibindo <strong> {begin}</strong> - <strong>{end}</strong> de <strong>{totalCount}</strong> itens",
-                
-        'columns' => [
-            //['class' => 'yii\grid\SerialColumn'],
-            [
-                        'class' => 'kartik\grid\ExpandRowColumn',
-                        //'width' => '50px','width' => '50px',
-                        'value' => function ($model, $key, $index, $column) {
-                            return GridView::ROW_COLLAPSED;
-                        },
-                        'detail' => function ($model, $key, $index, $column) {
-                            $searchModel = new \app\models\RelatoriosSearch();
-                            $searchModel->id = $model->id;
-                            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-                            
-                            return Yii::$app->controller->renderPartial('_relatorio', [
-                                'searchModel' => $searchModel,
-                                'dataProvider' => $dataProvider,
-                            ]);
-                        },
-                        //'headerOptions' => ['class' => 'kartik-sheet-style'] 
-                        //'expandOneOnly' => true
-                    ],            
-            //'id',
-            //'projeto_id',
-            [
-              'attribute'  => 'projeto_id',
-              'value' => 'projetos.titulo',
-              
-            ],
-            [
-              'attribute'  => 'projeto_id',
-              'header'  => 'Modalidade',
-              'value' => 'projetos.modalidade',
-                'headerOptions' => [
-                            'class' => 'CustomHeadClass ',
-                            ],
-                'contentOptions' => ['class' => 'text-center'],
-            ],
-                                
-          
-            //'discente',
-            //'tipo',
-            //'dataEntrega',
-            //'mes',
+   <?=
+        GridView::widget([
+            'dataProvider' => $dataProvider,
+            //'filterModel' => $searchModel,
+            'summary' => "Exibindo <strong> {begin}</strong> - <strong>{end}</strong> de <strong>{totalCount}</strong> itens",
+            'columns' => [
+                    [
+                    'class' => 'kartik\grid\ExpandRowColumn',
+                    //'width' => '50px','width' => '50px',
+                    'value' => function ($model, $key, $index, $column) {
+                        return GridView::ROW_COLLAPSED;
+                    },
+                    'detail' => function ($model, $key, $index, $column) {
+                        $searchModel = new \app\models\RelatoriosProjetoSearch();
+                        $searchModel->id_relatorio = $model->id;
+                        $data = $searchModel->search(Yii::$app->request->queryParams);
 
-            
-        ],
-    ]); ?>
+                        return Yii::$app->controller->renderPartial('_relatorio', [
+                                    'searchModel' => $searchModel,
+                                    'dataProvider' => $data,
+                        ]);
+                    },
+                ],
+                    [
+                        'attribute' => 'projeto.titulo',
+                        'header' => 'Projeto',
+                       // 'value' => 'projetos.modalidade',
+                        'headerOptions' => [
+                            'class' => 'color:3c8dbc',
+                    ],
+                    ],
+                    [
+                        'attribute' => 'projeto.dataInicio',
+                        'header' => 'Data de Início',
+                       // 'value' => 'projetos.modalidade',
+                   
+                    ],
+                    [
+                        'attribute' => 'projeto.datafim',
+                        'header' => 'Data de Término',
+                       // 'value' => 'projetos.modalidade',
+                   
+                    ],
+                    
+                    
+            ],
+        ]);
+        ?>
 </div>
     </div>
 <style>

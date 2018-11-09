@@ -80,14 +80,14 @@ $this->title = Yii::t('app', 'SigPex');
 
                                 <?=$form->field($model, 'role')->dropDownList(array('1' => 'Administrador',
                                 '2' => 'Coordenador de Projetos',
-                                '3' => 'Discente',
-                                '4' => 'Servidor'), ['prompt' => 'Selecione'], array('selected' => true))?>
+                                '3' => 'Servidor',
+                                '4' => 'Aluno'), ['prompt' => 'Selecione'], array('selected' => true))?>
                                 <?php } else { ?>
                                 <?php if ($this->context->action->id == 'create'){ ?>
                                     <?=$form->field($model, 'role')->dropDownList(array(//'1' => 'Administrador',
                                     //'2' => 'Coordenador de Extensão',
-                                    '3' => 'Discente',
-                                    '4' => 'Servidor'), ['prompt' => 'Selecione'], array('selected' => true))?>
+                                    '3' => 'Servidor',
+                                    '4' => 'Aluno'), ['prompt' => 'Selecione'], array('selected' => true))?>
                                     <?php }  ?>
                                 <?php }  ?>
                             </div>

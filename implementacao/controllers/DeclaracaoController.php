@@ -8,7 +8,6 @@ use app\models\DeclaracaoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use \yii\web\ForbiddenHttpException;
 
 /**
  * DeclaracaoController implements the CRUD actions for Declaracao model.
@@ -36,17 +35,15 @@ class DeclaracaoController extends Controller
      */
     public function actionIndex()
     {
-        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->role == 2) { 
         $searchModel = new DeclaracaoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
+        
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-        } else {
-            throw new \yii\web\ForbiddenHttpException('Você não tem permissão para acessar esta página.');
-        }
     }
 
     /**
@@ -57,14 +54,9 @@ class DeclaracaoController extends Controller
      */
     public function actionView($id)
     {
-        if (Yii::$app->user->can('coordenador')) {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
-        
-        } else {
-            throw new ForbiddenHttpException('Você não tem permissão para acessar esta página.');
-        }
     }
 
     /**
@@ -74,23 +66,60 @@ class DeclaracaoController extends Controller
      */
     public function actionCreate()
     {
-        if (Yii::$app->user->can('coordenador')) {
         $model = new Declaracao();
-        $model->dataEmissao = new \yii\db\Expression('NOW()');
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(array('declaracao/salvar?id=' . $model->id));
         }
 
         return $this->render('create', [
             'model' => $model,
         ]);
-        } else {
-            throw new ForbiddenHttpException('Você não tem permissão para acessar esta página.');
-        }
+    }
+    
+        public function  actionSalvar($id){
+       $model = $this->findModel($id);
+       $query = \app\models\Declaracaoprojeto::find()->where(['id_declaracao' => $id ]);
+       $data = new \yii\data\ActiveDataProvider ([
+            'query' => $query
+        ]);
+       
+       if ($model->load(Yii::$app->request->post()) && $model->save()) {
+           
+                $model->save(false);
+                return $this->redirect(array('declaracao/index'));
+            }
+        return $this->render('doc', [
+            'model' => $model,
+            'data' => $data,            
+        ]);   
     }
 
-    /**
-     * Updates an existing Declaracao model.
+       /**
+     * Creates a new Relatorios model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreateModal($id)
+    {
+        $model = $this->findModel($id);
+         $query = \app\models\Declaracaoprojeto::find()->where(['id_declaracao' => $id ]);
+       $data = new \yii\data\ActiveDataProvider ([
+            'query' => $query
+        ]);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['declaracao/index']);
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+            'data' => $data,
+        ]);
+    }
+    
+        /**
+     * Updates an existing Relatorios model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -98,19 +127,15 @@ class DeclaracaoController extends Controller
      */
     public function actionUpdate($id)
     {
-        if (Yii::$app->user->can('coordenador')) {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(array('declaracao/salvar?id=' . $model->id));
         }
 
         return $this->render('update', [
             'model' => $model,
         ]);
-        } else {
-            throw new ForbiddenHttpException('Você não tem permissão para acessar esta página.');
-        }
     }
 
     /**
@@ -122,13 +147,9 @@ class DeclaracaoController extends Controller
      */
     public function actionDelete($id)
     {
-        if (Yii::$app->user->can('coordenador')) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
-        } else {
-            throw new ForbiddenHttpException('Você não tem permissão para acessar esta página.');
-        }
     }
 
     /**

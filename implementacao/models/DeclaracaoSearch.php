@@ -18,8 +18,8 @@ class DeclaracaoSearch extends Declaracao
     public function rules()
     {
         return [
-            [['id', 'projeto_id', 'cargaHoraria', 'status'], 'integer'],
-            [['participante', 'dataInicio', 'dataFim', 'dataEmissao'], 'safe'],
+            [['id', 'id_projeto', 'status', 'participante_id'], 'integer'],
+            [[ 'dataEmissao'], 'safe'],
         ];
     }
 
@@ -60,15 +60,11 @@ class DeclaracaoSearch extends Declaracao
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'projeto_id' => $this->projeto_id,
-            'dataInicio' => $this->dataInicio,
-            'dataFim' => $this->dataFim,
+            'id_projeto' => $this->id_projeto,
             'dataEmissao' => $this->dataEmissao,
-            'cargaHoraria' => $this->cargaHoraria,
             'status' => $this->status,
+            'participante_id' => $this->participante_id,
         ]);
-
-        $query->andFilterWhere(['like', 'participante', $this->participante]);
 
         return $dataProvider;
     }

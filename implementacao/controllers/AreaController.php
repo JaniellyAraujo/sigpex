@@ -20,6 +20,7 @@ class AreaController extends Controller
     public function behaviors()
     {
         return [
+            
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -35,12 +36,14 @@ class AreaController extends Controller
      */
     public function actionIndex()
     {
+        
         $searchModel = new AreaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $model = new Area();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model' => $model,
         ]);
     }
 
@@ -62,17 +65,17 @@ class AreaController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
-        $model = new Area();
+    public function actionCreate(){
+       $model = new Area();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                
+                return $this->redirect(['index']);
+            }else{
+                return $this->renderAjax('create', [
+                   'model' => $model,
+                ]);
+            } 
     }
 
     /**
@@ -86,13 +89,13 @@ class AreaController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {    
+                return $this->redirect(['index']);
+            }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+            return $this->render('update', [
+                'model' => $model,
+            ]);
     }
 
     /**

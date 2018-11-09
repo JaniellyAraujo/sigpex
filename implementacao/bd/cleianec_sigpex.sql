@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 4.6.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: 14-Set-2018 às 18:06
--- Versão do servidor: 10.1.35-MariaDB
--- PHP Version: 5.6.30
+-- Host: 127.0.0.1
+-- Generation Time: 09-Nov-2018 às 17:10
+-- Versão do servidor: 5.7.14
+-- PHP Version: 5.6.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -38,8 +36,17 @@ CREATE TABLE `areaconhecimento` (
 --
 
 INSERT INTO `areaconhecimento` (`id`, `nome`) VALUES
-(1, 'Tecnologia'),
-(5, 'Administração');
+(1, 'Tecnologia '),
+(15, 'Humanas'),
+(16, 'Física'),
+(17, 'Ciências '),
+(14, 'Computação'),
+(18, 'tetse'),
+(19, 'oi'),
+(21, 'novidade'),
+(22, 'oig'),
+(23, 'cnvvn'),
+(24, 'jhg');
 
 -- --------------------------------------------------------
 
@@ -58,16 +65,25 @@ CREATE TABLE `auth_assignment` (
 --
 
 INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
-('admin', '1', 1534692565),
+('admin', '1', 1523756062),
+('admin', '12', 1527807125),
 ('admin', '6', 1523756044),
-('coordenador', '10', 1529696481),
-('coordenador', '2', 1523755883),
-('discente', '23', 1529104176),
-('discente', '4', 1523755896),
+('coordenador', '10', 1527798669),
+('coordenador', '33', 1529100175),
+('coordenador', '40', 1540681829),
+('coordenador', '7', 1540681825),
+('discente', '22', 1528837345),
+('discente', '34', 1539006944),
+('discente', '35', 1535386692),
+('discente', '39', 1538918421),
+('discente', '4', 1529020175),
 ('discente', '5', 1523755901),
-('servidor', '12', 1529696941),
-('servidor', '3', 1523755892),
-('servidor', '7', 1523821181),
+('servidor', '15', 1528835551),
+('servidor', '28', 1531697509),
+('servidor', '3', 1529784281),
+('servidor', '32', 1537217742),
+('servidor', '37', 1538396751),
+('servidor', '41', 1540411831),
 ('servidor', '8', 1523874464),
 ('servidor', '9', 1523886166);
 
@@ -119,18 +135,18 @@ CREATE TABLE `auth_item_child` (
 
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('admin', 'createPost'),
-('admin', 'deletePost'),
-('admin', 'indexPost'),
-('admin', 'updatePost'),
-('admin', 'viewPost'),
 ('coordenador', 'createPost'),
-('coordenador', 'deletePost'),
-('coordenador', 'indexPost'),
-('coordenador', 'updatePost'),
-('coordenador', 'viewPost'),
 ('discente', 'createPost'),
-('discente', 'viewPost'),
 ('servidor', 'createPost'),
+('admin', 'deletePost'),
+('coordenador', 'deletePost'),
+('admin', 'indexPost'),
+('coordenador', 'indexPost'),
+('admin', 'updatePost'),
+('coordenador', 'updatePost'),
+('admin', 'viewPost'),
+('coordenador', 'viewPost'),
+('discente', 'viewPost'),
 ('servidor', 'viewPost');
 
 -- --------------------------------------------------------
@@ -174,16 +190,49 @@ INSERT INTO `campus` (`id`, `nome`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `j_particprojetos`
+-- Estrutura da tabela `declaracao`
 --
 
-CREATE TABLE `j_particprojetos` (
+CREATE TABLE `declaracao` (
   `id` int(11) NOT NULL,
-  `titulo` varchar(500) NOT NULL,
-  `nome` varchar(30) DEFAULT NULL,
-  `tipoUsuario` varchar(20) DEFAULT NULL,
-  `justificativa` varchar(45) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `id_projeto` int(11) NOT NULL,
+  `dataInicio` date DEFAULT NULL,
+  `dataFim` date DEFAULT NULL,
+  `dataEmissao` date DEFAULT NULL,
+  `cargaHoraria` int(11) DEFAULT NULL,
+  `status` int(5) DEFAULT NULL,
+  `participante_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `declaracao`
+--
+
+INSERT INTO `declaracao` (`id`, `id_projeto`, `dataInicio`, `dataFim`, `dataEmissao`, `cargaHoraria`, `status`, `participante_id`) VALUES
+(1, 1, NULL, NULL, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `declaracaoprojeto`
+--
+
+CREATE TABLE `declaracaoprojeto` (
+  `id` int(11) NOT NULL,
+  `id_declaracao` int(11) NOT NULL,
+  `id_projeto` int(11) DEFAULT NULL,
+  `dataEmissao` date DEFAULT NULL,
+  `status` int(5) DEFAULT NULL,
+  `participante_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `declaracaoprojeto`
+--
+
+INSERT INTO `declaracaoprojeto` (`id`, `id_declaracao`, `id_projeto`, `dataEmissao`, `status`, `participante_id`) VALUES
+(1, 1, NULL, '2018-10-27', NULL, 4),
+(2, 1, NULL, '2018-10-27', NULL, 41);
 
 -- --------------------------------------------------------
 
@@ -219,21 +268,66 @@ INSERT INTO `modalidade` (`id`, `nome`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `municipio`
+--
+
+CREATE TABLE `municipio` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `estados_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `municipio`
+--
+
+INSERT INTO `municipio` (`id`, `nome`, `estados_id`) VALUES
+(1, 'Januária', NULL),
+(2, 'Pedras de Maria da Cruz', NULL),
+(3, 'Montes Claros', NULL),
+(4, 'Bonito de Minas', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `parceiros`
 --
 
 CREATE TABLE `parceiros` (
   `id` int(11) NOT NULL,
-  `nome` varchar(500) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `nome` varchar(500) NOT NULL,
+  `projeto_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `parceiros`
 --
 
-INSERT INTO `parceiros` (`id`, `nome`) VALUES
-(13, 'Carlos'),
-(10, 'Bruna');
+INSERT INTO `parceiros` (`id`, `nome`, `projeto_id`) VALUES
+(4, 'João', NULL),
+(6, 'Cecília', NULL),
+(7, 'Bruna', NULL),
+(12, 'isaque', NULL),
+(13, 'teste', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `parceirosprojeto`
+--
+
+CREATE TABLE `parceirosprojeto` (
+  `id` int(11) NOT NULL,
+  `id_parceiro` int(11) DEFAULT NULL,
+  `id_projeto` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `parceirosprojeto`
+--
+
+INSERT INTO `parceirosprojeto` (`id`, `id_parceiro`, `id_projeto`) VALUES
+(1, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -257,7 +351,7 @@ CREATE TABLE `projetos` (
   `datafim` date DEFAULT NULL,
   `cargHorariaSemanal` int(10) DEFAULT NULL,
   `cargHorariaTotal` int(10) DEFAULT NULL,
-  `parceiros` varchar(30) DEFAULT NULL,
+  `parceiro` varchar(30) DEFAULT NULL,
   `vinculo` varchar(5) DEFAULT NULL,
   `citarVinculo` varchar(100) DEFAULT NULL,
   `convenio` varchar(10) DEFAULT NULL,
@@ -265,10 +359,8 @@ CREATE TABLE `projetos` (
   `gerFundacao` varchar(10) DEFAULT NULL,
   `citarFundacao` varchar(50) DEFAULT NULL,
   `multicampi` varchar(100) DEFAULT NULL,
-  `publico` int(11) DEFAULT NULL,
   `valorFinanciamento` double DEFAULT NULL,
-  `contPublico` int(50) DEFAULT NULL,
-  `isUsuario` int(11) DEFAULT NULL,
+  `contPublico` int(11) DEFAULT NULL,
   `areaConhecimento` varchar(50) DEFAULT NULL,
   `campusDesenvolvido` varchar(50) DEFAULT NULL,
   `isStatus` varchar(45) DEFAULT NULL,
@@ -290,72 +382,48 @@ CREATE TABLE `projetos` (
   `contribuicao` text,
   `avaliacao2` text,
   `isAndamento` varchar(45) DEFAULT NULL,
-  `participante` varchar(500) DEFAULT NULL,
-  `tipoUsuario` varchar(30) DEFAULT NULL,
+  `final` varchar(45) DEFAULT NULL,
+  `mensal` varchar(45) DEFAULT NULL,
   `dataSolicitacao` date DEFAULT NULL,
-  `dataAnalise` date DEFAULT NULL
+  `dataAnalise` date DEFAULT NULL,
+  `idUser` int(11) DEFAULT NULL,
+  `participante` varchar(500) DEFAULT NULL,
+  `tipoUsuario` varchar(45) DEFAULT NULL,
+  `isUsuario` int(11) DEFAULT NULL,
+  `publico` int(11) DEFAULT NULL,
+  `parceiros` int(50) DEFAULT NULL,
+  `coordenador_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `projetos`
 --
 
-INSERT INTO `projetos` (`id`, `titulo`, `coordenador`, `tipoProjeto`, `objetivo`, `resumo`, `municipio`, `descricaoPopulacao`, `publicoAlvo`, `pesAtendidas`, `localExecucao`, `dataInicio`, `datafim`, `cargHorariaSemanal`, `cargHorariaTotal`, `parceiros`, `vinculo`, `citarVinculo`, `convenio`, `citarConvenio`, `gerFundacao`, `citarFundacao`, `multicampi`, `publico`, `valorFinanciamento`, `contPublico`, `isUsuario`, `areaConhecimento`, `campusDesenvolvido`, `isStatus`, `isControle`, `modalidade`, `isTipo`, `isAtivo`, `justificativa`, `mes`, `atividesenvolvidas`, `avaliacao`, `observacoes`, `objetalcancados`, `etapas`, `materiasutiliz`, `metodosutiliz`, `caracfacilitadora`, `caractdificultadora`, `contribuicao`, `avaliacao2`, `isAndamento`, `participante`, `tipoUsuario`, `dataSolicitacao`, `dataAnalise`) VALUES
-(40, 'Projeto Exemplo I', NULL, 'Tecnológico', 'O Sistema de Gerenciamento de Projetos de Extensão visa proporcionar benefícios como: maior velocidade de aquisição de dados, maior rapidez na geração de documentos, maior segurança de informações, menor probabilidade de erros, controle em tempo real, otimização do tempo de tomada de decisões e redução das dificuldades de produção. Esse gerenciamento envolve o cadastro do projeto, cadastro de servidores e discentes envolvidos, acompanhamento dos relatórios periódicos e finais, acompanhamento da realização das atividades propostas, emissão de certificados para participantes das ações de extensão, emissão de declarações para os responsáveis pelas ações, geração de relatórios periódicos e anuais para acompanhamento da ação da instituição na comunidade.', 'O Sistema de Gerenciamento de Projetos de Extensão visa proporcionar benefícios como: maior velocidade de aquisição de dados, maior rapidez na geração de documentos, maior segurança de informações, menor probabilidade de erros, controle em tempo real, otimização do tempo de tomada de decisões e redução das dificuldades de produção. Esse gerenciamento envolve o cadastro do projeto, cadastro de servidores e discentes envolvidos, acompanhamento dos relatórios periódicos e finais, acompanhamento da realização das atividades propostas, emissão de certificados para participantes das ações de extensão, emissão de declarações para os responsáveis pelas ações, geração de relatórios periódicos e anuais para acompanhamento da ação da instituição na comunidade.', 'Januária', 'O Sistema de Gerenciamento de Projetos de Extensão visa proporcionar benefícios como: maior velocidade de aquisição de dados, maior rapidez na geração de documentos, maior segurança de informações, menor probabilidade de erros, controle em tempo real, otimização do tempo de tomada de decisões e redução das dificuldades de produção. Esse gerenciamento envolve o cadastro do projeto, cadastro de servidores e discentes envolvidos, acompanhamento dos relatórios periódicos e finais, acompanhamento da realização das atividades propostas, emissão de certificados para participantes das ações de extensão, emissão de declarações para os responsáveis pelas ações, geração de relatórios periódicos e anuais para acompanhamento da ação da instituição na comunidade.', 'Acadêmicos ', 33, 'IFNMG', '2018-08-01', '2018-10-31', 30, 400, '', 'Não', '---', 'Não', '', 'Não', '', 'Não', 0, NULL, 0, NULL, 'Tecnologia', 'IFNMG - Januária', NULL, 1, 'Fomento Interno', '1', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(41, 'Projeto Exemplo II', '', 'Esportivo', 'O acompanhamento dos projetos de extensão no DEX é realizado com o auxílio de editores de texto e planilhas eletrônicas. Assim, as informações não estão relacionadas e várias conferências, inclusive, em papéis impressos precisam ser realizadas para a geração de documentos. Há também o tempo gasto em copiar todos os dados preenchidos no formulário de cadastro dos projetos para a planilha eletrônica que é utilizada.', 'O acompanhamento dos projetos de extensão no DEX é realizado com o auxílio de editores de texto e planilhas eletrônicas. Assim, as informações não estão relacionadas e várias conferências, inclusive, em papéis impressos precisam ser realizadas para a geração de documentos. Há também o tempo gasto em copiar todos os dados preenchidos no formulário de cadastro dos projetos para a planilha eletrônica que é utilizada.', 'Januária', 'O acompanhamento dos projetos de extensão no DEX é realizado com o auxílio de editores de texto e planilhas eletrônicas. Assim, as informações não estão relacionadas e várias conferências, inclusive, em papéis impressos precisam ser realizadas para a geração de documentos.', 'Crianças e adolescentes', 35, 'IFNMG', '2018-08-01', '2018-12-31', 30, 60, 'Bruna', 'Não', '---', 'Não', '--', 'Não', '--', 'Não', 0, NULL, 0, 0, 'Administração', 'IFNMG - Januária', NULL, 3, 'Voluntário', '6', 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(42, 'Projeto Exemplo III', '', 'Artístico', '', '', '', '', '', NULL, '', '2018-08-01', '2018-08-30', 30, 80, '', '', '', '', '', '', '', '', 0, NULL, 0, NULL, '', '', NULL, 1, 'Fomento Interno', '5', 4, 'Há também o tempo gasto em copiar todos os dados preenchidos no formulário de cadastro dos projetos para a planilha eletrônica que é utilizada.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(43, 'Projeto Exemplo IV', NULL, 'Empreendedor', '', '', '', '', '', NULL, '', '2018-08-01', '2018-08-31', 40, 80, '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, '', '', NULL, 1, 'Fomento Interno', '2', 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(44, 'Projeto Exemplo V ', NULL, 'Social', '', '', '', '', '', NULL, '', '2018-08-01', '2018-08-31', 30, 80, '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, '', '', NULL, 2, 'Fomento Externo', '3', 3, 'Preencha os formulários', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(45, 'Projeto Exemplo VI', NULL, 'Artístico', '', '', '', '', '', NULL, '', '2018-08-01', '2018-08-31', 30, 80, '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, '', '', NULL, 3, 'Voluntário', '5', 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(46, 'Projeto  Exemplo VII', NULL, 'Cultural', '', '', '', '', '', NULL, '', '2018-08-01', '2018-08-01', 30, 80, '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, '', '', NULL, 1, 'Fomento Interno', '4', 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(47, 'Projeto Exemplo VIII', NULL, 'Esportivo', '', '', '', '', '', NULL, '', '2018-08-01', '2018-08-30', 30, 60, '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, '', '', NULL, 1, 'Fomento Interno', '6', 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(48, 'para servidor sem acesso', NULL, 'Tecnológico', '', '', '', '', '', NULL, '', '2018-01-01', '2019-01-01', 10, 10, '', '', '', '', '', '', '', '', NULL, NULL, NULL, 10000, '', '', NULL, 3, 'Voluntário', '1', 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(49, 'sem servidor2', NULL, 'Tecnológico', '', '', '', '', '', NULL, '', '2018-01-01', '2019-01-01', 10, 10, '', '', '', '', '', '', '', '', NULL, NULL, NULL, 1000, '', '', NULL, 1, 'Fomento Interno', '1', 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(50, 'xxxx', NULL, 'Tecnológico', '', '', '', '', '', NULL, '', '2018-12-01', '2019-01-01', 10, 10, '', '', '', '', '', '', '', '', NULL, NULL, NULL, 22, '', '', NULL, 1, 'Fomento Interno', '1', 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(51, 'projeto Exemplo', NULL, 'Empreendedor', '', '', '', '', '', NULL, '', '2018-09-07', '2018-09-29', 30, 60, '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, '', '', NULL, 3, 'Voluntário', '2', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `projetos` (`id`, `titulo`, `coordenador`, `tipoProjeto`, `objetivo`, `resumo`, `municipio`, `descricaoPopulacao`, `publicoAlvo`, `pesAtendidas`, `localExecucao`, `dataInicio`, `datafim`, `cargHorariaSemanal`, `cargHorariaTotal`, `parceiro`, `vinculo`, `citarVinculo`, `convenio`, `citarConvenio`, `gerFundacao`, `citarFundacao`, `multicampi`, `valorFinanciamento`, `contPublico`, `areaConhecimento`, `campusDesenvolvido`, `isStatus`, `isControle`, `modalidade`, `isTipo`, `isAtivo`, `justificativa`, `mes`, `atividesenvolvidas`, `avaliacao`, `observacoes`, `objetalcancados`, `etapas`, `materiasutiliz`, `metodosutiliz`, `caracfacilitadora`, `caractdificultadora`, `contribuicao`, `avaliacao2`, `isAndamento`, `final`, `mensal`, `dataSolicitacao`, `dataAnalise`, `idUser`, `participante`, `tipoUsuario`, `isUsuario`, `publico`, `parceiros`, `coordenador_id`) VALUES
+(1, 'Exemplo l', 'jany araujo', 'Cultural', 'teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste vteste teste teste teste teste teste teste teste teste ', 'teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste ', 'Januária', 'teste teste teste teste teste teste teste teste teste teste teste ', 'Crianças e adolescentes', 35, 'teste teste teste ', '2018-10-27', '2018-11-03', 30, 60, NULL, 'Não', '', 'Não', '', 'Não', '', 'Não', NULL, NULL, 'Computação', 'IFNMG - Januária', NULL, 1, 'Fomento Interno', '0', 5, 'teste teste teste teste teste teste ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-10-27', '2018-10-27', NULL, NULL, NULL, 0, NULL, NULL, NULL),
+(2, 'Exemplo ll', 'jany araujo', 'Empreendedor', 'teste', 'teste', 'Januária', 'teste', '', 12, 'IFNMG', '2018-11-07', '2018-12-01', 30, 60, NULL, 'Não', '', 'Não', '', 'Não', '', 'Não', NULL, NULL, 'Computação', 'IFNMG - Januária', NULL, 1, 'Fomento Interno', '2', 6, 'teste', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-11-07', '2018-11-08', NULL, NULL, NULL, 0, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `projeto_usuario`
+-- Estrutura da tabela `projeto_equipe`
 --
 
-CREATE TABLE `projeto_usuario` (
+CREATE TABLE `projeto_equipe` (
   `id` int(11) NOT NULL,
   `projeto_id` int(11) NOT NULL,
-  `usuario_id` int(11) NOT NULL,
+  `participante_id` int(11) NOT NULL,
   `tipo` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `projeto_usuario`
+-- Extraindo dados da tabela `projeto_equipe`
 --
 
-INSERT INTO `projeto_usuario` (`id`, `projeto_id`, `usuario_id`, `tipo`) VALUES
-(1, 40, 4, 'Discente Voluntário'),
-(2, 40, 7, 'Colaborador'),
-(3, 40, 26, 'Técnico Administrativo'),
-(9, 43, 7, 'Docente - Coordenador'),
-(10, 43, 4, 'Discente Bolsista'),
-(11, 44, 7, 'Docente - Coordenador'),
-(12, 44, 2, 'Técnico Administrativo - Colaborador'),
-(13, 45, 7, 'Docente - Coordenador'),
-(14, 45, 28, 'Discente Bolsista'),
-(15, 45, 4, 'Discente Bolsista'),
-(16, 46, 7, 'Docente - Coordenador'),
-(17, 46, 28, 'Discente Voluntário'),
-(18, 46, 4, 'Discente Bolsista'),
-(19, 41, 7, 'Docente - Coordenador'),
-(20, 41, 4, 'Discente Voluntário'),
-(21, 41, 26, 'Docente - Colaborador'),
-(22, 47, 7, 'Docente - Coordenador'),
-(23, 47, 28, 'Discente Voluntário'),
-(24, 48, 7, 'Docente - Coordenador'),
-(25, 49, 28, 'Docente - Coordenador'),
-(26, 42, 7, 'Docente - Coordenador'),
-(27, 42, 28, 'Discente Bolsista'),
-(28, 50, 7, 'Docente - Coordenador'),
-(29, 51, 7, 'Docente - Coordenador');
+INSERT INTO `projeto_equipe` (`id`, `projeto_id`, `participante_id`, `tipo`) VALUES
+(1, 1, 41, '4'),
+(2, 1, 4, '2'),
+(3, 2, 41, '4');
 
 -- --------------------------------------------------------
 
@@ -366,20 +434,39 @@ INSERT INTO `projeto_usuario` (`id`, `projeto_id`, `usuario_id`, `tipo`) VALUES
 CREATE TABLE `relatorios` (
   `id` int(11) NOT NULL,
   `projeto_id` int(11) NOT NULL,
-  `discente` varchar(50) NOT NULL,
-  `tipo` varchar(50) NOT NULL,
-  `dataEntrega` date DEFAULT NULL,
-  `mes` int(11) NOT NULL,
-  `status` int(5) DEFAULT NULL
+  `status` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `relatorios`
 --
 
-INSERT INTO `relatorios` (`id`, `projeto_id`, `discente`, `tipo`, `dataEntrega`, `mes`, `status`) VALUES
-(9, 53, 'jany', '2', '2020-10-18', 2, 0),
-(11, 51, 'jany', '2', '2018-09-14', 5, 1);
+INSERT INTO `relatorios` (`id`, `projeto_id`, `status`) VALUES
+(1, 1, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `relatoriosprojeto`
+--
+
+CREATE TABLE `relatoriosprojeto` (
+  `id` int(11) NOT NULL,
+  `id_relatorio` int(11) DEFAULT NULL,
+  `id_projeto` int(11) DEFAULT NULL,
+  `discente` varchar(50) NOT NULL,
+  `tipo` varchar(50) NOT NULL,
+  `dataEntrega` date DEFAULT NULL,
+  `mes` int(11) NOT NULL,
+  `istipo` int(5) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `relatoriosprojeto`
+--
+
+INSERT INTO `relatoriosprojeto` (`id`, `id_relatorio`, `id_projeto`, `discente`, `tipo`, `dataEntrega`, `mes`, `istipo`) VALUES
+(1, 1, NULL, 'Mariah ', 'Mensal', '2018-10-27', 10, 0);
 
 -- --------------------------------------------------------
 
@@ -391,14 +478,6 @@ CREATE TABLE `status` (
   `id` int(11) NOT NULL,
   `nome` varchar(250) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `status`
---
-
-INSERT INTO `status` (`id`, `nome`) VALUES
-(1, 'teste'),
-(4, 'Pendente');
 
 -- --------------------------------------------------------
 
@@ -431,20 +510,40 @@ INSERT INTO `tipoprojeto` (`id`, `nome`) VALUES
 
 CREATE TABLE `tipousuario` (
   `id` int(11) NOT NULL,
-  `nome` varchar(500) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `nome` varchar(500) NOT NULL,
+  `id_role` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tipousuario`
 --
 
-INSERT INTO `tipousuario` (`id`, `nome`) VALUES
-(1, 'Discente Voluntário'),
-(15, 'Docente - Colaborador'),
-(6, 'Discente Bolsista'),
-(13, 'Técnico Administrativo - Colaborador'),
-(14, 'Técnico Administrativo - Coordenador'),
-(16, 'Docente - Coordenador');
+INSERT INTO `tipousuario` (`id`, `nome`, `id_role`) VALUES
+(1, 'Aluno Voluntário', NULL),
+(2, 'Aluno Bolsista', NULL),
+(3, 'Docente - Colaborador', NULL),
+(4, 'Docente - Coordenador', NULL),
+(5, 'Técnico Administrativo - Colaborador', NULL),
+(6, 'Técnico Administrativo - Coordenador', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tipo_relatorio`
+--
+
+CREATE TABLE `tipo_relatorio` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tipo_relatorio`
+--
+
+INSERT INTO `tipo_relatorio` (`id`, `nome`) VALUES
+(1, 'Mensal'),
+(2, 'Final');
 
 -- --------------------------------------------------------
 
@@ -473,21 +572,22 @@ CREATE TABLE `usuarios` (
   `isAtivo` tinyint(1) NOT NULL DEFAULT '0',
   `codVerificacao` varchar(255) DEFAULT NULL,
   `password_reset_token` varchar(45) DEFAULT NULL,
-  `dtnascimento` varchar(45) DEFAULT NULL
+  `dtnascimento` varchar(45) DEFAULT NULL,
+  `projeto_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nome`, `cpf`, `rg`, `email`, `rua`, `numero`, `complemento`, `bairro`, `cidade`, `estado`, `telefone`, `role`, `siapeMatric`, `formacaoCurso`, `instituicao`, `password_hash`, `isAtivo`, `codVerificacao`, `password_reset_token`, `dtnascimento`) VALUES
-(1, 'admin', '111.111.111-11', '111111111111', 'admin@gmail.com', '11', 11, '7', '11', '11', 'Minas Gerais', '(11)11111-1111', '1', NULL, NULL, NULL, '$2y$13$Yvh4pSLejR1v3XOxWLrcX.cFmeKwZGt71I3/mMvIZb2oXVakZB0.y', 1, '0', NULL, ''),
-(2, 'Coordenador', '222.222.222-22', '222222222222', 'coordenador@gmail.com', '22', 22, '22', '22', '22', 'Minas Gerais', '(22)22222-2222', '2', NULL, NULL, NULL, '$2y$13$rYb/myNAYrnesofWzvyrLO2/r/og/jQfMNdwsalBsrT5ruB73HA0u', 1, '0', NULL, ''),
-(4, 'Discente', '444.444.444-44', '444444444444', 'discente@gmail.com', '44', 44, '44', '44', '44', 'Minas Gerais', '(44)44444-4444', '4', NULL, NULL, NULL, '$2y$13$ptipbCV7NBdqsR1Fx87yv.BEHdrp0wbLNT0WcudIHILhdZ/LTuV8y', 1, '0', NULL, ''),
-(7, 'Servidor', '122.121.211-21', '111212112121', 'servidor@gmail.com', '12', 12, '12', '12', '12', 'Minas Gerais', '(21)21212-1212', '3', NULL, NULL, NULL, '$2y$13$ii2SquRkTxoNkF0cBRoIkuWY34HZgP8xQuZR5H0C8ZRxDeNoyxd3m', 1, '0', NULL, NULL),
-(26, 'Maria', '857.898.787-87', '', 'maria@gmail.com', '', NULL, '', '', '', '', '', '3', NULL, NULL, NULL, '$2y$13$SSqTAYza/UHImL8pc6.1oOKlzZG9HLddqDqjx4YRpZz8nakYBuzzy', 2, '0', NULL, NULL),
-(27, 'João', '767.575.565-77', '', 'joao@gmail.com', '', NULL, '', '', '', '', '', '3', NULL, NULL, NULL, '$2y$13$HQgjy4CbBQz73awdI21BWe2jkiywcAKHnnIZfA1f.Q642xJICDtYO', 0, '0', NULL, NULL),
-(28, 'jany araujo', '838.358.357-35', '', 'janielly300@gmail.com', '', NULL, '', '', 'januaria', 'Minas Gerais', '', '4', NULL, NULL, NULL, '$2y$13$1l/wGNytZMvCGkRHTJ766.1CR7G/qqE8m7LZMFs6cf6l5YGqR8hSK', 1, '0', NULL, NULL);
+INSERT INTO `usuarios` (`id`, `nome`, `cpf`, `rg`, `email`, `rua`, `numero`, `complemento`, `bairro`, `cidade`, `estado`, `telefone`, `role`, `siapeMatric`, `formacaoCurso`, `instituicao`, `password_hash`, `isAtivo`, `codVerificacao`, `password_reset_token`, `dtnascimento`, `projeto_id`) VALUES
+(1, 'admin', '111.111.111-11', '111111111111', 'admin@gmail.com', '11', 11, '7', '11', '11', 'Minas Gerais', '(11)11111-1111', '1', NULL, NULL, NULL, '$2y$13$PzIX61Z6oC6Hi5yX.WvNQOQmqkKTUWWrcvGkfYXWf6U9YrarBZf/i', 1, '0', NULL, '', NULL),
+(4, 'Mariah Mendes', '444.444.444-44', '444444444444', 'janielly300@gmail.com', '44', 44, '44', '44', '44', 'Minas Gerais', '(44)44444-4444', '4', NULL, NULL, NULL, '$2y$13$ptipbCV7NBdqsR1Fx87yv.BEHdrp0wbLNT0WcudIHILhdZ/LTuV8y', 1, '0', NULL, '', NULL),
+(7, 'Bruna Dias Lopes', '122.121.211-21', '111212112121', 'janiellyaraujo@yahoo.com', '12', 12, '12', '12', '12', 'Minas Gerais', '(21)21212-1212', '2', NULL, NULL, NULL, '$2y$13$ii2SquRkTxoNkF0cBRoIkuWY34HZgP8xQuZR5H0C8ZRxDeNoyxd3m', 1, '0', NULL, NULL, NULL),
+(32, 'Tiago', '310.627.298-89', '334935155', 'thiagovidal@gmail.com', '', NULL, '', '', 'Barueri', 'SÃ£o Paulo', '(11)43757-084_', '3', NULL, NULL, NULL, '$2y$13$EO4HcJszfcg9tVd0YuB1AeAMsgNDdOLrtgiNlEdZ39daQRS9N0k/2', 1, '0', NULL, NULL, NULL),
+(38, 'Helena Guedes Souza', '093.509.590-39', '2222222222', 'city.janu@gmail.com', 'Av. ItapiraÃ§aba', 12, '-', 'JatobÃ¡', 'januaria', 'Minas Gerais', '(38)94538-9494', '4', NULL, NULL, NULL, '$2y$13$XDIauhZ60UDgQItUUUvS5Oz1iJqS3eQGV.sTpHAq8RGrrmFe8bTaO', 1, '0', NULL, NULL, NULL),
+(40, 'coordenador', '983.939.839-89', '989892898989', 'coordenador@gmail.com', 'São Mateus', 567, 'A', 'Centro', 'januaria', 'Minas Gerais', '(09)09039-4093', '2', NULL, NULL, NULL, '$2y$13$9VhVYlPbMM5oyuVkHS2cy.HfP643dC3.ugREwOQL4cvO2ld8yPi4i', 1, '0', NULL, NULL, NULL),
+(41, 'jany araujo', '232.232.333-23', '', 'janielly@gmail.com', '', NULL, '', '', 'januaria', 'Minas Gerais', '', '3', NULL, NULL, NULL, '$2y$13$ZpSKf.Dvkj1vbkPiO7EmiuJhIu3U75vaB.V.eamoEceuuaWvoeNeO', 1, '0', NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -534,10 +634,20 @@ ALTER TABLE `campus`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `j_particprojetos`
+-- Indexes for table `declaracao`
 --
-ALTER TABLE `j_particprojetos`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `declaracao`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `projeto_id` (`id_projeto`),
+  ADD KEY `usuarios_ibfk_2` (`participante_id`);
+
+--
+-- Indexes for table `declaracaoprojeto`
+--
+ALTER TABLE `declaracaoprojeto`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `declaracaoprojeto_ibfk_1` (`id_declaracao`),
+  ADD KEY `declaracaoprojeto_ibfk_2` (`id_projeto`);
 
 --
 -- Indexes for table `migration`
@@ -552,10 +662,26 @@ ALTER TABLE `modalidade`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `municipio`
+--
+ALTER TABLE `municipio`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_municipio_estados1` (`estados_id`);
+
+--
 -- Indexes for table `parceiros`
 --
 ALTER TABLE `parceiros`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `parceiros_ibfk_2` (`projeto_id`);
+
+--
+-- Indexes for table `parceirosprojeto`
+--
+ALTER TABLE `parceirosprojeto`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_parceiro` (`id_parceiro`),
+  ADD KEY `id_projeto` (`id_projeto`);
 
 --
 -- Indexes for table `projetos`
@@ -564,12 +690,12 @@ ALTER TABLE `projetos`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `projeto_usuario`
+-- Indexes for table `projeto_equipe`
 --
-ALTER TABLE `projeto_usuario`
+ALTER TABLE `projeto_equipe`
   ADD PRIMARY KEY (`id`),
   ADD KEY `projeto_id` (`projeto_id`),
-  ADD KEY `usuario_id` (`usuario_id`);
+  ADD KEY `participante_id` (`participante_id`);
 
 --
 -- Indexes for table `relatorios`
@@ -577,6 +703,14 @@ ALTER TABLE `projeto_usuario`
 ALTER TABLE `relatorios`
   ADD PRIMARY KEY (`id`),
   ADD KEY `projeto_id` (`projeto_id`);
+
+--
+-- Indexes for table `relatoriosprojeto`
+--
+ALTER TABLE `relatoriosprojeto`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_relatorio` (`id_relatorio`),
+  ADD KEY `id_projeto` (`id_projeto`);
 
 --
 -- Indexes for table `status`
@@ -594,13 +728,21 @@ ALTER TABLE `tipoprojeto`
 -- Indexes for table `tipousuario`
 --
 ALTER TABLE `tipousuario`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `tipousuario_ibfk_2` (`id_role`);
+
+--
+-- Indexes for table `tipo_relatorio`
+--
+ALTER TABLE `tipo_relatorio`
   ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `usuarios_ibfk_2` (`projeto_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -610,74 +752,87 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT for table `areaconhecimento`
 --
 ALTER TABLE `areaconhecimento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT for table `campus`
 --
 ALTER TABLE `campus`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
--- AUTO_INCREMENT for table `j_particprojetos`
+-- AUTO_INCREMENT for table `declaracao`
 --
-ALTER TABLE `j_particprojetos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
+ALTER TABLE `declaracao`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `declaracaoprojeto`
+--
+ALTER TABLE `declaracaoprojeto`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `modalidade`
 --
 ALTER TABLE `modalidade`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `municipio`
+--
+ALTER TABLE `municipio`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
 -- AUTO_INCREMENT for table `parceiros`
 --
 ALTER TABLE `parceiros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+--
+-- AUTO_INCREMENT for table `parceirosprojeto`
+--
+ALTER TABLE `parceirosprojeto`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `projetos`
 --
 ALTER TABLE `projetos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT for table `projeto_usuario`
+-- AUTO_INCREMENT for table `projeto_equipe`
 --
-ALTER TABLE `projeto_usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
-
+ALTER TABLE `projeto_equipe`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `relatorios`
 --
 ALTER TABLE `relatorios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `relatoriosprojeto`
+--
+ALTER TABLE `relatoriosprojeto`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `status`
 --
 ALTER TABLE `status`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `tipoprojeto`
 --
 ALTER TABLE `tipoprojeto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `tipousuario`
 --
 ALTER TABLE `tipousuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `tipo_relatorio`
+--
+ALTER TABLE `tipo_relatorio`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 --
 -- Constraints for dumped tables
 --
@@ -702,12 +857,62 @@ ALTER TABLE `auth_item_child`
   ADD CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `projeto_usuario`
+-- Limitadores para a tabela `declaracao`
 --
-ALTER TABLE `projeto_usuario`
-  ADD CONSTRAINT `projeto_usuario_ibfk_1` FOREIGN KEY (`projeto_id`) REFERENCES `projetos` (`id`),
-  ADD CONSTRAINT `projeto_usuario_ibfk_2` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
-COMMIT;
+ALTER TABLE `declaracao`
+  ADD CONSTRAINT `declaracao_ibfk_2` FOREIGN KEY (`id_projeto`) REFERENCES `projetos` (`id`);
+
+--
+-- Limitadores para a tabela `declaracaoprojeto`
+--
+ALTER TABLE `declaracaoprojeto`
+  ADD CONSTRAINT `declaracaoprojeto_ibfk_1` FOREIGN KEY (`id_declaracao`) REFERENCES `declaracao` (`id`),
+  ADD CONSTRAINT `declaracaoprojeto_ibfk_2` FOREIGN KEY (`id_projeto`) REFERENCES `projetos` (`id`);
+
+--
+-- Limitadores para a tabela `parceiros`
+--
+ALTER TABLE `parceiros`
+  ADD CONSTRAINT `parceiros_ibfk_2` FOREIGN KEY (`projeto_id`) REFERENCES `projetos` (`id`);
+
+--
+-- Limitadores para a tabela `parceirosprojeto`
+--
+ALTER TABLE `parceirosprojeto`
+  ADD CONSTRAINT `parceirosprojeto_ibfk_1` FOREIGN KEY (`id_parceiro`) REFERENCES `parceiros` (`id`),
+  ADD CONSTRAINT `parceirosprojeto_ibfk_2` FOREIGN KEY (`id_projeto`) REFERENCES `projetos` (`id`);
+
+--
+-- Limitadores para a tabela `projeto_equipe`
+--
+ALTER TABLE `projeto_equipe`
+  ADD CONSTRAINT `projeto_equipe_ibfk_1` FOREIGN KEY (`projeto_id`) REFERENCES `projetos` (`id`),
+  ADD CONSTRAINT `projeto_equipe_ibfk_2` FOREIGN KEY (`participante_id`) REFERENCES `usuarios` (`id`);
+
+--
+-- Limitadores para a tabela `relatorios`
+--
+ALTER TABLE `relatorios`
+  ADD CONSTRAINT `relatorios_ibfk_2` FOREIGN KEY (`projeto_id`) REFERENCES `projetos` (`id`);
+
+--
+-- Limitadores para a tabela `relatoriosprojeto`
+--
+ALTER TABLE `relatoriosprojeto`
+  ADD CONSTRAINT `relatoriosprojeto_ibfk_1` FOREIGN KEY (`id_relatorio`) REFERENCES `relatorios` (`id`),
+  ADD CONSTRAINT `relatoriosprojeto_ibfk_2` FOREIGN KEY (`id_projeto`) REFERENCES `projetos` (`id`);
+
+--
+-- Limitadores para a tabela `tipousuario`
+--
+ALTER TABLE `tipousuario`
+  ADD CONSTRAINT `tipousuario_ibfk_2` FOREIGN KEY (`id_role`) REFERENCES `usuarios` (`id`);
+
+--
+-- Limitadores para a tabela `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`projeto_id`) REFERENCES `projetos` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

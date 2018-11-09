@@ -43,8 +43,14 @@ use yii\widgets\DetailView;
                 <?php if (Yii::$app->user->identity->role != 1) {?>
                     <?= Html::a('<b class="fa fa-arrow-left"></b> Voltar', ['usuarios/index0'], ['class' => 'btn btn-default', 'title' => 'Voltar', 'id' => 'modal-btn-voltar']) ?>
                 <?php } ?>
-                <?= Html::a('Atualizar', ['atualiza', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-                </div> <br><br>
+                <?php if (!Yii::$app->user->identity->role == 1) {?>
+                      <?= Html::a('Atualizar', ['atualiza', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+                <?php } ?>
+                    <?php if (Yii::$app->user->identity->role == 1) {?>
+                
+                     <?= Html::a(Yii::t('app', 'Atualizar'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+                <?php } ?>
+            </div> <br><br>
             <?=
             DetailView::widget([
                 'model' => $model,

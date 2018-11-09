@@ -1,18 +1,5 @@
 <?php
 
-/******************************************************************
- * SIGPEX - SISTEMA  DE GERENCIAMENTO DE PROJETOS DE EXTENSÃO
-
- * O SigPex foi desenvolvido como Trabalho de Conclusão de Curso
- * e apresentado ao IFNMG – Campus Januária como parte das
- *  exigências do Programa de Graduação em Tecnologia em Análise
- *  e Desenvolvimento de Sistemas.
- *
- * Desenvolvido pela acadêmica: Janielly Araújo Lopes.
- * Orientadora: Cleiane Gonçalves Oliveira.
- *
- /******************************************************************/
-
 namespace app\controllers;
 
 use Yii;
@@ -25,17 +12,18 @@ use yii\filters\VerbFilter;
 /**
  * ProjetoEquipeController implements the CRUD actions for ProjetoEquipe model.
  */
-class ProjetoEquipeController extends Controller {
-
+class ProjetoEquipeController extends Controller
+{
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['GET','POST'],
                 ],
             ],
         ];
@@ -45,13 +33,14 @@ class ProjetoEquipeController extends Controller {
      * Lists all ProjetoEquipe models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $searchModel = new ProjetoEquipeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -61,9 +50,10 @@ class ProjetoEquipeController extends Controller {
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($projeto_id, $participante_id) {
+    public function actionView($id)
+    {
         return $this->render('view', [
-                    'model' => $this->findModel($projeto_id, $participante_id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -72,15 +62,19 @@ class ProjetoEquipeController extends Controller {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate() {
+    public function actionCreate($id)
+    {
         $model = new ProjetoEquipe();
 
-        if ($participanteModel->load(Yii::$app->request->post()) && $participanteModel->save()) {
-            return $this->redirect(['view', 'projeto_id' => $participanteModel->projeto_id, 'participante_id' => $participanteModel->participante_id]);
+        $model->projeto_id = $id;
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                
+            echo 1;
         }
 
-        return $this->render('create', [
-                    'model' => $participanteModel,
+        return $this->renderAjax('create', [
+            'model' => $model,
         ]);
     }
 
@@ -91,15 +85,16 @@ class ProjetoEquipeController extends Controller {
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($projeto_id, $participante_id) {
-        $model = $this->findModel($projeto_id, $participante_id);
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'projeto_id' => $model->projeto_id, 'participante_id' => $model->participante_id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -110,12 +105,13 @@ class ProjetoEquipeController extends Controller {
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($projeto_id, $participante_id) {
-        $this->findModel($projeto_id, $participante_id)->delete();
+    public function actionDelete($id)
+    {
+        $id = $this->findModel($id);       
+        
+        $this->findModel($id)->delete();
 
-
-
-        return $this->redirect(['index']);
+        return $this->redirect(['projetos/salvar?id='  . $id->projeto_id]);
     }
 
     /**
@@ -125,12 +121,12 @@ class ProjetoEquipeController extends Controller {
      * @return ProjetoEquipe the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($projeto_id, $participante_id) {
-        if (($model = ProjetoEquipe::findOne(['$projeto_id' => $projeto_id, 'participante_id' => $participante_id])) !== null) {
+    protected function findModel($id)
+    {
+        if (($model = ProjetoEquipe::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
-
 }

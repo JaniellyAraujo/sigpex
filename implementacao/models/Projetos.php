@@ -35,7 +35,7 @@ use Yii;
  * @property string $datafim
  * @property int $cargHorariaSemanal
  * @property int $cargHorariaTotal
- * @property string $parceiros
+ * @property int $parceiros
  * @property string $vinculo
  * @property string $citarVinculo
  * @property string $convenio
@@ -56,7 +56,9 @@ use Yii;
  * @property string $tipoUsuario 
  * 
  * 
- * @property string $coordenador
+ * @property string $coordenador_id
+ * @property string $mensal
+ * @property string $final
  * @property int $publico
  * @property int $contPublico
  * @property int $isUsuario
@@ -83,16 +85,16 @@ class Projetos extends \yii\db\ActiveRecord {
     public function rules() {
         return [
                 [['titulo', 'tipoProjeto', 'modalidade', 'dataInicio', 'datafim', 'cargHorariaSemanal', 'cargHorariaTotal'], 'required'],
-                [['objetivo', 'resumo', 'descricaoPopulacao', 'justificativa', 'isTipo', 'isStatus', 'tipoUsuario', 'participante'], 'string'],
-                [['id', 'pesAtendidas', 'cargHorariaSemanal', 'cargHorariaTotal', 'isControle', 'isUsuario','publico'], 'integer'],
+                [['objetivo', 'resumo', 'descricaoPopulacao', 'justificativa', 'isTipo', 'isStatus', 'tipoUsuario', 'participante','mensal','final'], 'string'],
+                [['id', 'pesAtendidas', 'cargHorariaSemanal', 'cargHorariaTotal', 'isControle', 'isUsuario','publico','parceiros', 'coordenador_id'], 'integer'],
             //['pesAtendidas','max'=> 6],
             [['dataInicio', 'datafim', 'dataSolicitacao', 'dataAnalise','modalidade'], 'safe'],
             //[['dataInicio', 'datafim'], 'date'],
             [['valorFinanciamento'], 'number'],
                 [['titulo'], 'string', 'max' => 500],
-                [['coordenador', 'citarConvenio', 'citarFundacao', 'areaConhecimento', 'campusDesenvolvido'], 'string', 'max' => 50],
+                [[ 'citarConvenio', 'citarFundacao', 'areaConhecimento', 'campusDesenvolvido'], 'string', 'max' => 50],
                 [['tipoProjeto', 'modalidade'], 'string', 'max' => 40],
-                [['municipio', 'publicoAlvo', 'localExecucao', 'parceiros'], 'string', 'max' => 30],
+                [['municipio', 'publicoAlvo', 'localExecucao'], 'string', 'max' => 30],
                 [['vinculo',], 'string', 'max' => 5],
                 [['citarVinculo'], 'string', 'max' => 100],
                 [['convenio', 'gerFundacao', 'multicampi', 'dataInicio', 'datafim'], 'string', 'max' => 10],
@@ -115,7 +117,7 @@ class Projetos extends \yii\db\ActiveRecord {
             'id' => Yii::t('app', 'ID'),
             'idUser' => 'Coordenador:',
             'titulo' => Yii::t('app', 'Título'),
-            'coordenador' => Yii::t('app', 'Coordenador'),
+            //'coordenador' => Yii::t('app', 'Coordenador'),
             'modalidade' => Yii::t('app', 'Modalidade'),
             'tipoProjeto' => Yii::t('app', 'Tipo de Projeto'),
             'objetivo' => Yii::t('app', 'Objetivo'),
@@ -146,6 +148,7 @@ class Projetos extends \yii\db\ActiveRecord {
             'justificativa' => Yii::t('app', 'Informe o(s) motivo(s) da necessidade de modificação do projeto:'),
             'participante' => Yii::t('app', 'Participante:'),
             'isAtivo' => Yii::t('app', 'Status'),
+            'dataAnalise'=> Yii::t('app', 'Data de Envio à Reitoria'),
         ];
     }
 

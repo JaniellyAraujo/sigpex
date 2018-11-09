@@ -22,6 +22,9 @@ use Yii;
  *
  * @property int $id
  * @property string $nome
+ * 
+ * @property Projetos $projeto
+ * @property ParceirosProjeto[] $parceirosProjeto
  */
 class Parceiros extends \yii\db\ActiveRecord {
 
@@ -40,6 +43,8 @@ class Parceiros extends \yii\db\ActiveRecord {
                 [['id'], 'integer'],
                 [['nome'], 'required'],
                 [['nome'], 'string', 'max' => 500],
+                [['projeto_id'], 'exist', 'skipOnError' => true, 'targetClass' => Projetos::className(), 'targetAttribute' => ['projeto_id' => 'id']],
+        
         ];
     }
 
@@ -50,7 +55,23 @@ class Parceiros extends \yii\db\ActiveRecord {
         return [
             'id' => Yii::t('app', 'ID'),
             'nome' => Yii::t('app', 'Nome'),
+            'projeto_id' => Yii::t('app', 'Projeto'),
         ];
     }
+    
+        /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProjeto() {
+        return $this->hasOne(Projetos::className(), ['id' => 'projeto_id']);
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     
+    public function getParceirosProjeto()
+    {
+        return $this->hasMany(Parceiros::className(), ['id_parceiros' => 'id']);
+    }*/
 
 }
